@@ -1,6 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_health/badge.svg?branch=master)](https://coveralls.io/github/kurtrm/homeless_to_health?branch=master)
-
-[![Build Status](https://travis-ci.org/kurtrm/homeless_to_health.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_health)
+[![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_health/badge.svg?branch=master)](https://coveralls.io/github/kurtrm/homeless_to_health?branch=master)[![Build Status](https://travis-ci.org/kurtrm/homeless_to_health.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_health)
 
 # Seattle Homeless to Health Pipeline
 
