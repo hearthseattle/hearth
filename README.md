@@ -7,13 +7,13 @@ resources to offer people in need. As organizations continue to pop up and suppo
 difficult to guide people to the organizations that can meet their specific needs. This project aims to address this problem 
 in the following ways:
 
-    - Aggregate resources into one, reliable web application
+   - Aggregate resources into **one**, **reliable** web application
 
-    - Categorize organizations based on the specific care they provide
+   - **Categorize organizations** based on the specific care they provide
 
-    - Tailor effective search results based on individual needs
+   - **Tailor effective search results** based on individual needs
 
-    Our ultimate goal is to connect people in need to the care they require as quickly and easily as possible.
+Our ultimate goal is to connect people in need to the care they require as quickly and easily as possible.
 
 
 ## Getting Started
