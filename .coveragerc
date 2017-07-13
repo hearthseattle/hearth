@@ -1,0 +1,17 @@
+[run]
+source = 
+    imagersite
+    imager_profile
+    imager_images
+omit = 
+    */migrations/*
+    */admin.py
+    */tests.py
+    */__init__.py
+    */apps.py
+    imagersite/imagersite/settings.py
+    imagersite/manage.py
+    imagersite/imagersite/wsgi.py
+
+[report]
+show_missing = True
