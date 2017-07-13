@@ -2,8 +2,19 @@
 
 # Seattle Homeless to Health Pipeline
 
-The Homeless to Health Pipeline Project aims to aggregate and categorize King County's numerous resources for people in need,
-so that the needy are empowered to find the resources they need, and the people who help them are better able to give direction.
+    Seattle has the third largest homeless population in the country. Fortunately, it also has some of the best and numerous 
+resources to offer people in need. As organizations continue to pop up and support networks grow, it is becoming increasingly
+difficult to guide people to the organizations that can meet their specific needs. This project aims to address this problem 
+in the following ways:
+
+    --Aggregate resources into one, reliable web application
+
+    --Categorize organizations based on the specific care they provide
+
+    --Tailor effective search results based on individual needs
+
+    Our ultimate goal is to connect people in need to the care they require as quickly and easily as possible.
+
 
 ## Getting Started
 
@@ -30,7 +41,7 @@ so that the needy are empowered to find the resources they need, and the people 
 
 ## Built With
 
-Django
+    Django, React.js, Bootstrap.js
 
 ## Contributing
 
@@ -38,7 +49,7 @@ Django
 
 ## Versioning
 
-
+Version 0.0
 
 ## Authors
 
@@ -53,6 +64,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+*
+*
+*
