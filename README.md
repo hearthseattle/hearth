@@ -1,6 +1,6 @@
-[![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_health/badge.svg?branch=master)](https://coveralls.io/github/kurtrm/homeless_to_health?branch=master)[![Build Status](https://travis-ci.org/kurtrm/homeless_to_health.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_health)
+[![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_hearth/badge.svg?branch=master)](https://coveralls.io/github/kurtrm/homeless_to_hearth?branch=master)[![Build Status](https://travis-ci.org/kurtrm/homeless_to_hearth.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_hearth)
 
-# Seattle Homeless to Health Pipeline
+# Seattle Homeless to Hearth Pipeline
 
    Seattle has the third largest homeless population in the country. Fortunately, it also has some of the best and numerous 
 resources to offer people in need. As organizations continue to pop up and support networks grow, it is becoming increasingly
