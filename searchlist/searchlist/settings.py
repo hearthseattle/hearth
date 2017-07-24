@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'searchlist',
     'bootstrap3',
     'search'
+    'taggit'
 ]
 
 MIDDLEWARE = [
