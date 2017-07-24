@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'searchlist',
     'bootstrap3',
-    'search'
+    'search',
     'taggit'
 ]
 
