@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'searchlist'
+    'searchlist',
     'search'
 ]
 
@@ -76,19 +77,22 @@ WSGI_APPLICATION = 'searchlist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+
+# dj-database-url takes care of setting database variables for us.... I hope
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME', ''),
-        'USER': os.environ.get('DATABASE_USER', ''),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
-        'HOST': os.environ.get('DATABASE_HOST', ''),
-        'PORT': '5432',
-        'TEST': {
-            'NAME': 'test_db'
-        }
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': os.environ.get('DATABASE_NAME', ''),
+    #     'USER': os.environ.get('DATABASE_USER', ''),
+    #     'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
+    #     'HOST': os.environ.get('DATABASE_HOST', ''),
+    #     'PORT': '5432',
+    #     'TEST': {
+    #         'NAME': 'test_db'
+    #     }
+    # }
 }
+DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 
 # Password validation
@@ -128,7 +132,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 LOGIN_REDIRECT_URL = 'home'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),) # Extra places for collectstatic to find static files.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
 MEDIA_URL = '/MEDIA/'
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
