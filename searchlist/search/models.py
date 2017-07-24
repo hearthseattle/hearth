@@ -10,7 +10,7 @@ from taggit.managers import TaggableManager
 
 
 MAIN_CATEGORY = (
-    ("center", "center")
+    ("center", "center"),
     ("shelter", "shelter"),
     ("food", "food"),
     ("clinic", "clinic")
@@ -20,6 +20,12 @@ RATINGS = (
     ("one badge", "one badge"),
     ("two badge", "two badge"),
     ("three badge", "three badge")
+)
+
+AGE_RANGE = (
+    ("<=17", "<=17"),
+    ("18-25", "18-25"),
+    (">26", ">26")
 )
 
 
@@ -49,7 +55,13 @@ class SearchProfile(models.Model):
     ratings = models.CharField(
         max_length=25,
         choices=RATINGS,
-        default="color",
+        default="one badge",
+        null=True
+    )
+
+    age_range = models.CharField(
+        max_length=25,
+        choices=AGE_RANGE,
         null=True
     )
 
@@ -59,7 +71,6 @@ class SearchProfile(models.Model):
     objects = models.Manager()
     active = ProfileManager()
     tags = TaggableManager()
-
 
     @property
     def is_active(self):
@@ -74,7 +85,7 @@ class SearchProfile(models.Model):
         ratings: {}
         location: {}
         website: {}
-        """.format(self.org.username, self.main_category, self.ratings, self.location, self.website)
+        """.format(self.org.username, self.main_category, self.age_range, self.ratings, self.location, self.website)
 
     def __str__(self):
         """Print organization name."""
@@ -86,6 +97,6 @@ def make_profile_for_new_org(sender, **kwargs):
     """New Profile instances."""
     if kwargs['created']:
         new_profile = SearchProfile(
-            user=kwargs['instance']
+            org=kwargs['instance']
         )
         new_profile.save()
