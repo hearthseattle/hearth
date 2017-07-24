@@ -10,7 +10,7 @@ from taggit.managers import TaggableManager
 
 
 MAIN_CATEGORY = (
-    ("center", "center")
+    ("center", "center"),
     ("shelter", "shelter"),
     ("food", "food"),
     ("clinic", "clinic")

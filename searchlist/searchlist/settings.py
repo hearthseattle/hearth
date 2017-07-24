@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'searchlist',
-    'bootstrap3',
-    'search'
-    'taggit'
+    'search',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -82,17 +81,17 @@ WSGI_APPLICATION = 'searchlist.wsgi.application'
 
 # dj-database-url takes care of setting database variables for us.... I hope
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': os.environ.get('DATABASE_NAME', ''),
-    #     'USER': os.environ.get('DATABASE_USER', ''),
-    #     'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
-    #     'HOST': os.environ.get('DATABASE_HOST', ''),
-    #     'PORT': '5432',
-    #     'TEST': {
-    #         'NAME': 'test_db'
-    #     }
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DATABASE_NAME', ''),
+        'USER': os.environ.get('DATABASE_USER', ''),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
+        'HOST': os.environ.get('DATABASE_HOST', ''),
+        'PORT': '5432',
+        'TEST': {
+            'NAME': 'test_db'
+        }
+    }
 }
 DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
@@ -144,3 +143,7 @@ MEDIA_URL = '/MEDIA/'
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+STATIC_BOOTSTRAP = (
+    '/homeless_to_hearth/searchlist/searchlist/static/',
+)
