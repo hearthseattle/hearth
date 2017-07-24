@@ -1,0 +1,19 @@
+{% extends 'bootstrap.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
+    <div class="container">
+        <h1>{% block title %}(no title){% endblock %}</h1>
+
+        <p>
+            <a href="{% url 'home' %}">home</a>
+        </p>
+
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}(no content){% endblock %}
+    </div>
+
+{% endblock %}
+Contact GitHub API Training Shop Blog About
