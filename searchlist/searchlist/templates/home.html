@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Homeless to Hearth{% endblock %}
+
+{% block content %}
+    This is <em>bootstrap3</em> for <strong>Django</strong>.
+    <form role="form" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons submit="Search" reset="Cancel" %}{% endbuttons %}
+    </form>
+        
+{% endblock %}
