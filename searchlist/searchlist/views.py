@@ -15,9 +15,3 @@ class HomePageView(TemplateView):
 #     page_template = 
 #     context_object_name = 
 #     model = 
-
-#     def get_context_data(self, **kwargs):
-#         context = super(SearchView, self).get_context_data(**kwargs)
-#         context.update({
-#             ''
-#         })
