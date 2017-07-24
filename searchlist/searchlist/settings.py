@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'searchlist',
     'bootstrap3',
     'search',
-    'taggit'
+    'taggit',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -134,13 +135,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 LOGIN_REDIRECT_URL = 'home'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),) # Extra places for collectstatic to find static files.
-MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
-MEDIA_URL = '/MEDIA/'
+
+if not DEBUG:
+    AWS_STORAGE_BUCKET_NAME = 'homeless-to-hearth'
+    AWS_ACCESS_KEY_ID = os.environ.get('IAM_USER_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('IAM_USER_SECRET_ACCESS_KEY', '')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'django_lender.custom_storages.StaticStorage'
+    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_FILE_STORAGE = 'django_lender.custom_storages.MediaStorage'
+    MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+else:
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+    MEDIA_URL = '/imgs/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
