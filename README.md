@@ -57,6 +57,8 @@ Version 0.0
 * **Ophelia Yin**
 * **Anna Shelby**
 * **Carlos Cadena**
+* **Miguel Pena**
+* **Casey O'Kane**
 
 ## License
 
