@@ -1,1 +1,1 @@
-web: gunicorn searchlist.wsgi --log-file -
+web: ./run
