@@ -1,4 +1,4 @@
-"""searchlist URL Configuration
+"""searchlist URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from searchlist.views import HomePageView
 
@@ -21,4 +21,5 @@ from searchlist.views import HomePageView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomePageView.as_view(), name='home'),
+    url(r'^search/', include("search.urls", namespace="search", app_name="search"))
 ]

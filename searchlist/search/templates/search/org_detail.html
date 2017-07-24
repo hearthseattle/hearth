@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Organization: {{ org.org.username }}</h1>
+<ul>
+    <li>Main Category: {{ org.main_category }}</li>
+    <li>Ratings: {{ org.ratings }}</li>
+    <li>Tags:
+        {% for tag in org.tags.all %}
+            <a href="{% url "search:tagged" tag.slug %}">{{ tag }}</a>,
+        {% endfor %}
+    </li>
+    <li>location: {{ org.location }}</li>
+</ul>
+
+{% endblock %}

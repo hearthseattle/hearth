@@ -14,14 +14,14 @@ class HomePageView(TemplateView):
         messages.info(self.request, 'hello http://example.com')
         return context
 
-class SearchView(generic.ListView):
-    template_name = 
-    page_template = 
-    context_object_name = 
-    model = 
+# class SearchView(generic.ListView):
+#     template_name = 
+#     page_template = 
+#     context_object_name = 
+#     model = 
 
-    def get_context_data(self, **kwargs):
-        context = super(SearchView, self).get_context_data(**kwargs)
-        context.update({
-            ''
-        })
+#     def get_context_data(self, **kwargs):
+#         context = super(SearchView, self).get_context_data(**kwargs)
+#         context.update({
+#             ''
+#         })

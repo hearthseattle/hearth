@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>List of Organizations</h1>
+
+{% if tag %}
+    <h2>Organizations Tagged As {{ tag }}</h2>
+{% endif %}
+
+<ul>
+    {% for org in orgs %}
+        <li>
+            <h3>
+                <a href="{% url "search:org_detail" org.id %}">{{ org.org }}</a>
+            </h3>
+            <p><strong>ratings:</strong> {{ org.ratings }} </p>
+            <p><strong>wetsite:</strong> {{ org.website }} </p>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
