@@ -5,7 +5,7 @@
 # # command to install dependencies
 # install:
 #   - pip install --upgrade pip
-#   - pip install -r requirements.pip
+#   - pip install -r requirements.txt
 #   - pip install coveralls
 #   - pip install python-coveralls
 # # command to run tests
@@ -19,7 +19,7 @@
 #   - psql -c "CREATE DATABASE test_database;" -U postgres
 
 # script: 
-#   - python imagersite/manage.py migrate
-#   - coverage run imagersite/manage.py test imagersite
+#   - python searchlist/manage.py migrate
+#   - coverage run searchlist/manage.py test searchlist
 # after_success:
 #   - coveralls
