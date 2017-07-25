@@ -1,23 +1,24 @@
 """Organization Profile View."""
 
 
-from django.contrib.auth.models import User
-from search.models import SearchProfile
+from search.models import Resource
 from django.views.generic import DetailView, ListView
-from django.shortcuts import render
 
 
 class OrgListView(ListView):
     """Organization profile."""
 
     template_name = "search/org_list.html"
-    model = SearchProfile
+    model = Resource
     context_object_name = "orgs"
 
 
-def org_detail(request, id):
+class OrgDetailView(DetailView):
     """Detail view for one organization."""
-    return render(request, "search/org_detail.html")
+
+    template_name = "search/org_detail.html"
+    model = Resource
+    context_object_name = "org"
 
 
 class TagListView(ListView):
@@ -27,7 +28,7 @@ class TagListView(ListView):
 
     def get_queryset(self):
         """Get all organizations in category."""
-        return SearchProfile.active.filter(tags_slug=self.kwargs.get("slug")).all()
+        return Resource.objects.filter(tags_slug=self.kwargs.get("slug")).all()
 
     def get_context_data(self, **kwargs):
         """."""
