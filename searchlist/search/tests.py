@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import reverse_lazy
 from django.test import TestCase, Client, RequestFactory
 from search.models import Resource
+from search.views import OrgListView, OrgDetailView
 from bs4 import BeautifulSoup
 import factory
 import faker
@@ -35,7 +36,7 @@ AGE_RANGE = (
 
 HERE = os.path.dirname(__file__)
 
-
+############ MODEL TESTS
 class ResourceFactory(factory.django.DjangoModelFactory):
     """Factory for creating resources."""
 
@@ -98,3 +99,17 @@ class ResourceTestModels(TestCase):
         for resource in more_resources:
             resource.save()
         self.assertTrue(Resource.objects.count(), 6)
+
+
+############ VIEW TESTS
+class OrgListTestView(TestCase):
+    """."""
+    def testOrgListValues(self):
+        view = OrgListView.as_view()
+        request = RequestFactory().get('/fake-path')
+        response = view(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template_name[0], "search/org_list.html")
+        import pdb; pdb.set_trace()
+        self.assertEqual(response.model, Resource)
+        self.assertEqual(response.context_object_name, 'orgs')
