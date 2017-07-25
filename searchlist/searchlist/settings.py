@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'searchlist',
     'search',
     'taggit',
-    'storages'
+    'storages',
+    'resource_admins'
 ]
 
 MIDDLEWARE = [
