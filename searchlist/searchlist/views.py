@@ -5,7 +5,11 @@ from django.db.models.fields.files import FieldFile
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.shortcuts import render
+# from search.models import SearchProfile
+import operator
+from django.db.models import Q
 from search.models import Resource
+
 
 
 class HomePageView(TemplateView):
@@ -19,19 +23,19 @@ class HomePageView(TemplateView):
         return context
 
 
-class SearchView(ListView):
-    """Class based search view."""
-
-    template_name = "search.html"
-    model = Resource
-
+class SearchFormView(ListView):
+    """Display a Resource list filtered by a search query."""
     def get_queryset(self):
-        try:
-            o_name = self.kwargs['org_name']
-        except:
-            o_name = ''
-        if (o_name != ''):
-            object_list = self.model.objects.filter(self.model.objects.org_name)
-        else:
-            object_list = self.model.objects.all()
-        return object_list
+        """Get a query for our search."""
+        result = super(SearchFormView, self).get_queryset()
+
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                       (Q(tags__icontains=q) for q in query_list)) | 
+                reduce(operator.and_,
+                       (Q(tags__icontains=q) for q in query_list))
+            )
+        return result

@@ -9,6 +9,7 @@
     <link href="{% static 'searchlist/css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
+<!-- NavBar  -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -37,7 +38,8 @@
         </div>
       </div>
     </nav>
-   <div class="wrap" style="width: 80%; left: 20%; position: absolute">
+    <!--   Search Bar but not sure if we need this anymore -->
+ <!--   <div class="wrap" style="width: 80%; left: 20%; position: absolute">
      <div class="search">
         <input type="text" class="searchTerm" style="width: 70%" placeholder="What resource are you looking for?">
         <button type="submit" class="searchButton" style="height: 22px">
@@ -45,7 +47,16 @@
           <i class="fa fa-search"></i>
        </button>
      </div>
-  </div>
+  </div> -->
+  <!--    This is the search for our form and filters    -->
+  <form id="searchform" action="{%  url 'search_results' %}" method="get" accept-charset="utf-8" style="width: 80%; left: 20%; position: absolute">
+    <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search" style="width: 70%">
+    <button class= "seachbutton" type="submit" style="height: 22px">
+      <i class="fa-fa-seach"></i>
+      <label for="button">Submit</label>
+    </button>
+  </form>
+  <!-- Radio buttons for our searches  -->
   <div class="container" style="margin-top: 75px;">
       <div class="row">
           <div class="checkbox checkbox-primary">
@@ -63,5 +74,6 @@
       </div>
   </div>
 </body>
+<!-- Scripts for our Bootstap3 Javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="{% static 'searchlist/js/bootstrap.min.js' %}"></script>
