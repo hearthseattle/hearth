@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'searchlist',
     'search',
     'taggit',
-    'storages'
+    'storages',
+    'resource_admins'
 ]
 
 MIDDLEWARE = [
@@ -144,11 +145,11 @@ if not DEBUG:
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
     STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'django_lender.custom_storages.StaticStorage'
+    STATICFILES_STORAGE = 'searchlist.custom_storages.StaticStorage'
     STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
     MEDIAFILES_LOCATION = 'media'
-    DEFAULT_FILE_STORAGE = 'django_lender.custom_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'searchlist.custom_storages.MediaStorage'
     MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 else:

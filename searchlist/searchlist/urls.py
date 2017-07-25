@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomePageView.as_view(), name='home'),
     url(r'^search/', include("search.urls", namespace="search", app_name="search")),
+    url(r'^resource/', include("resource_admins.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

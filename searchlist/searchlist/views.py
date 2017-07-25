@@ -22,7 +22,7 @@ class HomePageView(TemplateView):
 class SearchView(ListView):
     """Class based search view."""
 
-    template_name = "search.html"
+    template_name = ".html"
     model = Resource
 
     def get_queryset(self):
