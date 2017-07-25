@@ -1,0 +1,8 @@
+{% extends 'searchlist/base.html' %}
+
+{% block content %}
+<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add/Update Image" />
+</form>
+{% endblock %}
