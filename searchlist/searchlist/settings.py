@@ -155,6 +155,7 @@ if not DEBUG:
 else:
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     STATIC_URL = '/static/'
+
     STATIC_ROOT = '/static/'
 
     MEDIA_URL = '/imgs/'
