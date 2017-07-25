@@ -1,2 +1,0 @@
-cd searchlist
-gunicorn searchlist.wsgi --log-file -
