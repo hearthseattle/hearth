@@ -8,6 +8,8 @@ from django.shortcuts import render
 # from search.models import SearchProfile
 import operator
 from django.db.models import Q
+from search.models import Resource
+
 
 
 class HomePageView(TemplateView):

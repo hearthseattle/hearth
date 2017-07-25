@@ -1,11 +1,17 @@
+appnope==0.1.0
 astroid==1.5.3
+beautifulsoup4==4.6.0
 boto==2.48.0
+bs4==0.0.1
 decorator==4.1.2
 dj-database-url==0.4.2
 dj-static==0.0.6
 Django==1.11.3
 django-storages==1.6.3
+django-taggit==0.22.1
 django-toolbelt==0.0.1
+factory-boy==2.8.1
+Faker==0.7.18
 gunicorn==19.7.1
 ipython==6.1.0
 ipython-genutils==0.2.0
@@ -20,6 +26,7 @@ psycopg2==2.7.3
 ptyprocess==0.5.2
 Pygments==2.2.0
 pylint==1.7.2
+python-dateutil==2.6.1
 pytz==2017.2
 simplegeneric==0.8.1
 six==1.10.0
@@ -28,4 +35,3 @@ traitlets==4.3.2
 wcwidth==0.1.7
 whitenoise==3.3.0
 wrapt==1.10.10
-django-taggit

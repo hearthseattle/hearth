@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com', 'localhost', '127.0.0.1']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -134,7 +134,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 LOGIN_REDIRECT_URL = 'home'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),) # Extra places for collectstatic to find static files.
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
 
 if not DEBUG:
     AWS_STORAGE_BUCKET_NAME = 'homeless-to-hearth'
@@ -143,11 +144,11 @@ if not DEBUG:
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
     STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'django_lender.custom_storages.StaticStorage'
+    STATICFILES_STORAGE = 'searchlist.custom_storages.StaticStorage'
     STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
     MEDIAFILES_LOCATION = 'media'
-    DEFAULT_FILE_STORAGE = 'django_lender.custom_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'searchlist.custom_storages.MediaStorage'
     MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 else:
