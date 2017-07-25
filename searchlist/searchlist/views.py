@@ -5,7 +5,6 @@ from django.db.models.fields.files import FieldFile
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.shortcuts import render
-# from search.models import SearchProfile
 import operator
 from django.db.models import Q
 
