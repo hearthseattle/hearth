@@ -13,7 +13,7 @@ from django.db.models import Q
 class HomePageView(TemplateView):
     """Class home page view."""
 
-    template_name = "home.html"
+    template_name = "searchlist/home.html"
 
     def get_context_data(self, **kwargs):
         """."""
