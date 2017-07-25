@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'searchlist',
-    'bootstrap3',
     'search',
-    'taggit'
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +90,7 @@ DATABASES = {
         'PORT': '5432',
         'TEST': {
             'NAME': 'test_db'
-        }
+        },
     }
 }
 # DATABASES['default'] = dj_database_url.config(
