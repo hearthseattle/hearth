@@ -8,10 +8,10 @@ from search.models import Resource
 class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
-    template_name = 'resource_admins/delete_resource.html'
+    template_name = 'resource_admins/resource_form.html'
     model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
-              'description', 'location', 'website', 'phone_regex',
+              'description', 'location', 'website',
               'phone_number', 'tags']
     success_url = reverse_lazy('home')
 
@@ -25,10 +25,10 @@ class CreateResource(LoginRequiredMixin, CreateView):
 class EditResource(LoginRequiredMixin, UpdateView):
     """Class-based view to edit resources."""
 
-    template_name = 'resource_admins/delete_resource.html'
+    template_name = 'resource_admins/resource_form.html'
     model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
-              'description', 'location', 'website', 'phone_regex',
+              'description', 'location', 'website',
               'phone_number', 'tags']
     success_url = reverse_lazy('home')
 
