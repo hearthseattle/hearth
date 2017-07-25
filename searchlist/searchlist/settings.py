@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'searchlist',
-    'bootstrap3',
     'search',
     'taggit',
     'storages'
@@ -93,7 +92,7 @@ DATABASES = {
         'PORT': '5432',
         'TEST': {
             'NAME': 'test_db'
-        }
+        },
     }
 }
 
@@ -164,3 +163,4 @@ else:
 
 # do this later...maybe?
 # boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
