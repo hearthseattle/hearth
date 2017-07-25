@@ -23,5 +23,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomePageView.as_view(), name='home'),
-    url(r'^search/', include("search.urls", namespace="search", app_name="search"),
+    url(r'^search/', include("search.urls", namespace="search", app_name="search")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -90,7 +90,7 @@ DATABASES = {
         'PORT': '5432',
         'TEST': {
             'NAME': 'test_db'
-        }
+        },
     }
 }
 # DATABASES['default'] = dj_database_url.config(
@@ -145,7 +145,3 @@ MEDIA_URL = '/MEDIA/'
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-STATIC_BOOTSTRAP = (
-    '/homeless_to_hearth/searchlist/searchlist/static/',
-)
