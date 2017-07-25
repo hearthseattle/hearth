@@ -15,15 +15,34 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+<<<<<<< HEAD
+from django.contrib.auth import views as auth_views
+from searchlist.views import HomePageView
+=======
 from searchlist.views import HomePageView, SearchFormView
+>>>>>>> master
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^$', HomePageView.as_view(), name='home'),
+<<<<<<< HEAD
+    # url(r'^search/', include("search.urls",
+    #                          namespace="search",
+    #                          app_name="search")),
+    url(r'^resource/', include("resource_admins.urls")),
+    url(r'^login/$', auth_views.LoginView.as_view(
+        template_name='registration/login.html'),
+        name='login'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(
+        template_name='searchlist/home.html'),
+        name='logout')
+=======
     url(r'^search/', include("search.urls", namespace="search", app_name="search")),
     url(r'^resource/', include("resource_admins.urls")),
     url(r'^$', SearchFormView.as_view(), name='search_results')
+>>>>>>> master
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
