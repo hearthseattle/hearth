@@ -1,25 +1,25 @@
-# language: python
-# python:
-#   - "2.7"
-#   - "3.6"
-# # command to install dependencies
-# install:
-#   - pip install --upgrade pip
-#   - pip install -r requirements.txt
-#   - pip install coveralls
-#   - pip install python-coveralls
-# # command to run tests
-# env:
-#   - SECRET_KEY='cakecake' DATABASE_NAME='test_database' DATABASE_USER='postgres' DATABASE_HOST="127.0.0.1" DATABASE_PASSWORD=''
+language: python
+python:
+  - "2.7"
+  - "3.6"
+# command to install dependencies
+install:
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install python-coveralls
+# command to run tests
+env:
+  - SECRET_KEY='cakecake' DATABASE_NAME='test_database' DATABASE_USER='postgres' DATABASE_HOST="127.0.0.1" DATABASE_PASSWORD=''
 
-# services:
-#   - postgresql
+services:
+  - postgresql
 
-# before_script:
-#   - psql -c "CREATE DATABASE test_database;" -U postgres
+before_script:
+  - psql -c "CREATE DATABASE test_database;" -U postgres
 
-# script: 
-#   - python searchlist/manage.py migrate
-#   - coverage run searchlist/manage.py test searchlist
-# after_success:
-#   - coveralls
+script: 
+  - python searchlist/manage.py migrate
+  - coverage run searchlist/manage.py test searchlist
+after_success:
+  - coveralls

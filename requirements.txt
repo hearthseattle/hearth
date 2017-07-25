@@ -28,3 +28,4 @@ traitlets==4.3.2
 wcwidth==0.1.7
 whitenoise==3.3.0
 wrapt==1.10.10
+django-taggit
