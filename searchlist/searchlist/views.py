@@ -4,7 +4,6 @@ from django.core.files.storage import default_storage
 from django.db.models.fields.files import FieldFile
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
-from search.models import SearchProfile
 
 
 class HomePageView(TemplateView):
