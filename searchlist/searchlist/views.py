@@ -5,6 +5,7 @@ from django.db.models.fields.files import FieldFile
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.shortcuts import render
+from search.models import Resource
 
 
 class HomePageView(TemplateView):
