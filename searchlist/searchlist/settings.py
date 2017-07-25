@@ -161,3 +161,6 @@ else:
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
+
+# do this later...maybe?
+# boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
