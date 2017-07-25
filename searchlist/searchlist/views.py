@@ -5,7 +5,6 @@ from django.db.models.fields.files import FieldFile
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.shortcuts import render
-# from search.models import SearchProfile
 import operator
 from django.db.models import Q
 
@@ -13,7 +12,7 @@ from django.db.models import Q
 class HomePageView(TemplateView):
     """Class home page view."""
 
-    template_name = "home.html"
+    template_name = "searchlist/home.html"
 
     def get_context_data(self, **kwargs):
         """."""
