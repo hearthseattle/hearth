@@ -21,17 +21,17 @@ class OrgDetailView(DetailView):
     context_object_name = "org"
 
 
-class TagListView(ListView):
-    """Display a list of tagged organizations."""
+# class TagListView(ListView):
+#     """Display a list of tagged organizations."""
 
-    template_name = "org_list.html"
+#     template_name = "org_list.html"
 
-    def get_queryset(self):
-        """Get all organizations in category."""
-        return Resource.objects.filter(tags_slug=self.kwargs.get("slug")).all()
+#     def get_queryset(self):
+#         """Get all organizations in category."""
+#         return Resource.objects.filter(tags_slug=self.kwargs.get("slug")).all()
 
-    def get_context_data(self, **kwargs):
-        """."""
-        context = super(TagListView, self).get_context_data(**kwargs)
-        context["tag"] = self.kwargs.get("slug")
-        return context
+#     def get_context_data(self, **kwargs):
+#         """."""
+#         context = super(TagListView, self).get_context_data(**kwargs)
+#         context["tag"] = self.kwargs.get("slug")
+#         return context
