@@ -13,5 +13,6 @@
     <li>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</li>
     <li>Description: {{ resource.description }}</li>
 </ul>
+<iframe class="map-class "width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=13"></iframe>
 
 {% endblock %}
