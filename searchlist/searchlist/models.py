@@ -4,7 +4,7 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import TaggableManager
-from django.core.validators import RegexValidator
+from phonenumber_field.modelfields import PhoneNumberField
 import django_filters
 
 
@@ -56,8 +56,7 @@ class Resource(models.Model):
     description = models.CharField(max_length=400, default='')
     location = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$')
-    phone_number = models.CharField(max_length=20, validators=[phone_regex], blank=True)
+    phone_number = PhoneNumberField()
     tags = TaggableManager(blank=True)
 
     def __repr__(self):
