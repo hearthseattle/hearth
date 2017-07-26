@@ -95,3 +95,11 @@ class ResourceDetailView(DetailView):
     # {% for tag in resource.tags.all %}
     # <a href="{% url "search:tagged" tag.slug %}">{{ tag }}</a>,
     # {% endfor %}
+
+
+# class resource_list(FilterView):
+#     """Filter view for our resource list."""
+
+#     f = ResourceFilter(reques.GET, queryset=Resource.objects.all())
+#     return render(request, 'searchlist/template.html', {'filter: f'})
+
