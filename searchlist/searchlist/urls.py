@@ -41,5 +41,4 @@ urlpatterns = [
     url(r'^new/$', CreateResource.as_view(), name='create_resource'),
     url(r'^(?P<pk>\d+)/edit/$', EditResource.as_view(), name='edit_resource'),
     url(r'^(?P<id>\d+)$', ResourceDetailView.as_view(), name="resource_detail")
-
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
