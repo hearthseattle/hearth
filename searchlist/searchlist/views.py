@@ -12,6 +12,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from searchlist.models import Resource
+# from searchlist.forms import ResourceForm
+# from django.shortcuts import render_to_response
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
@@ -76,23 +78,23 @@ class HomePageView(ListView):
         return context
 
 
-class SearchFormView(ListView):
-    """Display a Resource list filtered by a search query."""
+# class SearchFormView(ListView):
+#     """Display a Resource list filtered by a search query."""
 
-    def get_queryset(self):
-        """Get a query for our search."""
-        result = super(SearchFormView, self).get_queryset()
+#     def get_queryset(self):
+#         """Get a query for our search."""
+#         result = super(SearchFormView, self).get_queryset()
 
-        query = self.request.GET.get('q')
-        if query:
-            query_list = query.split()
-            result = result.filter(
-                reduce(operator.and_,
-                       (Q(tags__icontains=q) for q in query_list)) |
-                reduce(operator.and_,
-                       (Q(tags__icontains=q) for q in query_list))
-            )
-        return result
+#         query = self.request.GET.get('q')
+#         if query:
+#             query_list = query.split()
+#             result = result.filter(
+#                 reduce(operator.and_,
+#                        (Q(tags__icontains=q) for q in query_list)) |
+#                 reduce(operator.and_,
+#                        (Q(tags__icontains=q) for q in query_list))
+#             )
+#         return result
 
 
 class ResourceDetailView(DetailView):
@@ -112,3 +114,35 @@ class ResourceDetailView(DetailView):
 #     f = ResourceFilter(reques.GET, queryset=Resource.objects.all())
 #     return render(request, 'searchlist/template.html', {'filter: f'})
 
+
+# def filter_resources(request=None, tags=None):
+#     query = Resource.objects.filter()
+#     if tags and tags != "All tags":
+#         try:
+#             tag = tags.objects.get(name=tags)
+#             query = query.filter(tags=tag)
+#         except:
+#             return None
+#     return query
+
+
+# def resource_list(request):
+#     d = getVariables(request)
+#     if request.method == "GET":
+#         form = ResourceForm(request.GET)
+#         try:
+#             t_name = request.GET["tags"]
+#         except:
+#             t_name = None
+#         d["t_name"] = t_name
+#         try:
+#             resources = filter_resources(request=request, tags=t_name)
+#         except Exception:
+#             return error404(request)
+#         if resources is None:
+#             return error404(request)
+#         if len(resources) == 0:
+#             d["not_found"] = "Oh hi there."
+#     else:
+#         form = ResourceForm()
+#     return render_to_response('searchlist/Resource_filter.html', d, context_instance=RequestContext(request))

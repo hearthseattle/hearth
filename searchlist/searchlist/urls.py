@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from searchlist.views import (
     HomePageView,
-    SearchFormView,
+    # SearchFormView,
     CreateResource,
     EditResource,
     ResourceDetailView,
@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^logout/$', auth_views.LogoutView.as_view(
         template_name='searchlist/home.html'),
         name='logout'),
-    url(r'^$', SearchFormView.as_view(), name='search_results'),
+    # url(r'^$', SearchFormView.as_view(), name='search_results'),
     url(
         r'^resource/new/$',
         CreateResource.as_view(),
