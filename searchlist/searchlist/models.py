@@ -28,7 +28,7 @@ AGE_RANGE = (
 
 
 @python_2_unicode_compatible
-class Resources(models.Model):
+class Resource(models.Model):
     """Model for the organization."""
 
     main_category = models.CharField(
