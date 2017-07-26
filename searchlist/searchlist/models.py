@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import TaggableManager
 from django.core.validators import RegexValidator
+import django_filters
 
 
 MAIN_CATEGORY = (
@@ -75,3 +76,23 @@ class Resource(models.Model):
     def __str__(self):
         """Print organization information."""
         return self.__repr__()
+
+
+class ResourceFilter(django_filters.FilterSet):
+    """Filter class for filtering our resources."""
+
+    org_name = django_filters.CharFilter(lookup_expr='iexact')
+
+    class Meta:
+        """Meta class for our resource filter."""
+
+        model = Resource
+        fields = ['location', 'description']
+
+    @property
+    def qs(self):
+        """Query for our resource list."""
+        parent = super(ResourceFilter, self).qs
+        tags = getattr(self.request, 'tags', None)
+
+        return parent.filter(tags=tags)

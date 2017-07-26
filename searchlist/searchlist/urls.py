@@ -26,11 +26,12 @@ from searchlist.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
+from django_filters.views import FilterView
+from searchlist.models import Resource
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^$', HomePageView.as_view(), name='home'),
     url(r'^login/$', auth_views.LoginView.as_view(
         template_name='registration/login.html'),
@@ -50,7 +51,7 @@ urlpatterns = [
         name='edit_resource'
     ),
     url(
-        r'^resource/(?P<id>\d+)$',
+        r'^resource/(?P<pk>\d+)$',
         ResourceDetailView.as_view(),
         name="resource_detail"
     ),
@@ -60,5 +61,9 @@ urlpatterns = [
             success_message="The resource has been successfully deleted"
         ),
         name="delete"
-    )
+    ),
+    url(
+      r'^resource_list/$', 
+      FilterView.as_view(model=Resource)
+    ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
