@@ -26,22 +26,18 @@ Our ultimate goal is to connect people in need to the care they require as quick
 
 ### Installing
 
+    pip install -r requirements.txt
 
 ## Running the tests
-
-
-### Break down into end to end tests
-
-
-### And coding style tests
 
 
 ## Deployment
 
 
+
 ## Built With
 
-    Django, React.js, Bootstrap.js
+    Django and Bootstrap.js
 
 ## Contributing
 
@@ -66,6 +62,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-*
-*
-*
+* **Robert Snow**
+* **Austin Briggs**
+* **Wes Moore**
