@@ -21,15 +21,17 @@ from searchlist.views import (
     SearchFormView,
     CreateResource,
     EditResource,
-    ResourceDetailView
+    ResourceDetailView,
+    DeleteResource
 )
 from django.conf import settings
 from django.conf.urls.static import static
+from django_filters.views import FilterView
+from searchlist.models import Resource
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^$', HomePageView.as_view(), name='home'),
     url(r'^login/$', auth_views.LoginView.as_view(
         template_name='registration/login.html'),
@@ -38,7 +40,30 @@ urlpatterns = [
         template_name='searchlist/home.html'),
         name='logout'),
     url(r'^$', SearchFormView.as_view(), name='search_results'),
-    url(r'^new/$', CreateResource.as_view(), name='create_resource'),
-    url(r'^(?P<pk>\d+)/edit/$', EditResource.as_view(), name='edit_resource'),
-    url(r'^(?P<id>\d+)$', ResourceDetailView.as_view(), name="resource_detail")
+    url(
+        r'^resource/new/$',
+        CreateResource.as_view(),
+        name='create_resource'
+    ),
+    url(
+        r'^resource/(?P<pk>\d+)/edit/$',
+        EditResource.as_view(),
+        name='edit_resource'
+    ),
+    url(
+        r'^resource/(?P<pk>\d+)$',
+        ResourceDetailView.as_view(),
+        name="resource_detail"
+    ),
+    url(
+        r'^resource/(?P<pk>\d+)/delete/$',
+        DeleteResource.as_view(
+            success_message="The resource has been successfully deleted"
+        ),
+        name="delete"
+    ),
+    url(
+        r'^resource_list/$', 
+        FilterView.as_view(model=Resource)
+    ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

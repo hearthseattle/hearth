@@ -11,14 +11,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
-# from searchlist.models import Resource
+from searchlist.models import Resource
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
     template_name = 'searchlist/resource_form.html'
-    # model = Resource
+    model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
               'description', 'location', 'website',
               'phone_number', 'tags']
@@ -35,7 +35,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
     """Class-based view to edit resources."""
 
     template_name = 'searchlist/resource_form.html'
-    # model = Resource
+    model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
               'description', 'location', 'website',
               'phone_number', 'tags']
@@ -47,23 +47,32 @@ class EditResource(LoginRequiredMixin, UpdateView):
         self.object.save()
         return super(EditResource, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        """."""
+        context = super(EditResource, self).get_context_data(**kwargs)
+        context["edit"] = True
+        return context
+
 
 class DeleteResource(LoginRequiredMixin, DeleteView):
     """Class-based view for deleting resources."""
 
     template_name = 'searchlist/delete_resource.html'
-    # model = Resource
+    success_message = "Resource was deleted successfully."
+    model = Resource
     success_url = reverse_lazy('home')
 
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
     """Class home page view."""
 
     template_name = "searchlist/home.html"
+    model = Resource
 
     def get_context_data(self, **kwargs):
-        """."""
+        """Get context to populate page with resources."""
         context = super(HomePageView, self).get_context_data(**kwargs)
+        # import pdb; pdb.set_trace()
         return context
 
 
@@ -90,5 +99,16 @@ class ResourceDetailView(DetailView):
     """Detail view for one organization."""
 
     template_name = "searchlist/resource_detail.html"
-    # model = Resource
+    model = Resource
     context_object_name = "resource"
+    # {% for tag in resource.tags.all %}
+    # <a href="{% url "search:tagged" tag.slug %}">{{ tag }}</a>,
+    # {% endfor %}
+
+
+# class resource_list(FilterView):
+#     """Filter view for our resource list."""
+
+#     f = ResourceFilter(reques.GET, queryset=Resource.objects.all())
+#     return render(request, 'searchlist/template.html', {'filter: f'})
+
