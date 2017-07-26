@@ -1,4 +1,4 @@
-"""Tests for resource models."""
+"""Tests for views, model and user privileges."""
 
 from django.conf import settings
 from django.urls import reverse_lazy
@@ -54,6 +54,9 @@ class ResourceFactory(factory.django.DjangoModelFactory):
     age_range = random.choice(AGE_RANGE)[0]
     location = fake.address()
     website = fake.domain_name()
+    org_name = fake.name()
+    phone_number = fake.number(10)
+    tags = ['substance recovery', 'mental health', 'disability', 'food', 'domestic violence', 'service animals']
 
 
 class ResourceTestModels(TestCase):
@@ -69,9 +72,28 @@ class ResourceTestModels(TestCase):
         """Test that we successfully add resources."""
         self.assertEqual(Resource.objects.count(), 1)
 
-    def test_no_null_values_for_some(self):
-        """Test that we can't put null values for certain fields."""
-        pass
+    def test_model_fields(self):
+        """Test organization is created with designated fields."""
+        test_org = Resource()
+        test_org.main_category = 'shelter'
+        test_org.org_name = 'test_org'
+        test_org.description = 'test case'
+        test_org.age_range = '18-25'
+        test_org.ratings = 'two badge'
+        test_org.location = 'seattle'
+        test_org.website = 'http://www.test_org.com'
+        test_org.phone_number = '1234567890'
+        test_org.tags = 'shelter'
+        test_org.save()
+        self.assertTrue(test_org.main_category == 'shelter')
+        self.assertTrue(test_org.org_name == 'test_org')
+        self.assertTrue(test_org.description == 'test case')
+        self.assertTrue(test_org.age_range == '18-25')
+        self.assertTrue(test_org.ratings == 'two badge')
+        self.assertTrue(test_org.location == 'seattle')
+        self.assertTrue(test_org.website == 'http://www.test_org.com')
+        self.assertTrue(test_org.phone_number == '1234567890')
+        self.assertTrue(test_org.tags == 'shelter')
 
     def test_can_change_settings(self):
         """Test that settings can be changed for certain resources."""
@@ -92,7 +114,7 @@ class ResourceTestModels(TestCase):
         resource_two.delete()
         self.assertEqual(Resource.objects.count(), 1)
 
-    def test_adding_a_bunch_of_resources(self):
+    def test_add_resources(self):
         """Test adding a bunch of resources."""
         self.assertEqual(Resource.objects.count(), 1)
         more_resources = [ResourceFactory.build() for i in range(5)]
@@ -102,14 +124,17 @@ class ResourceTestModels(TestCase):
 
 
 ############ VIEW TESTS
-class OrgListTestView(TestCase):
+class HomeTestView(TestCase):
     """."""
-    def testOrgListValues(self):
-        view = OrgListView.as_view()
+
+    class 
+    def test_homepage_view(self):
+        view = OrgListVi.as_view()
         request = RequestFactory().get('/fake-path')
         response = view(request)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], "search/org_list.html")
-        import pdb; pdb.set_trace()
         self.assertEqual(response.model, Resource)
         self.assertEqual(response.context_object_name, 'orgs')
+
+    def 
