@@ -36,8 +36,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(
         template_name='registration/login.html'),
         name='login'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(
-        template_name='searchlist/home.html'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(),
         name='logout'),
     url(r'^$', SearchFormView.as_view(), name='search_results'),
     url(

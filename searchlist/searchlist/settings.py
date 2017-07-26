@@ -29,7 +29,8 @@ ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com', 'localhost'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 # Application definition
 
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'searchlist',
     'taggit',
-    'storages',
+    'storages'
 ]
 
 MIDDLEWARE = [
