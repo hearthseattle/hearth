@@ -5,4 +5,7 @@
     {{ form.as_p }}
     <input type="submit" value="Add/Update Image" />
 </form>
+{% if edit %}
+  <a href="{% url 'delete' pk=resource.id %}" type="button">Delete this resource</a>
+{% endif %}
 {% endblock %}
