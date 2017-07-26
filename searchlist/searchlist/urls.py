@@ -29,7 +29,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^$', HomePageView.as_view(), name='home'),
     url(r'^login/$', auth_views.LoginView.as_view(
         template_name='registration/login.html'),
@@ -40,5 +39,5 @@ urlpatterns = [
     url(r'^$', SearchFormView.as_view(), name='search_results'),
     url(r'^new/$', CreateResource.as_view(), name='create_resource'),
     url(r'^(?P<pk>\d+)/edit/$', EditResource.as_view(), name='edit_resource'),
-    url(r'^(?P<id>\d+)$', ResourceDetailView.as_view(), name="resource_detail")
+    url(r'^(?P<pk>\d+)$', ResourceDetailView.as_view(), name="resource_detail")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
