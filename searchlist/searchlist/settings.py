@@ -151,8 +151,8 @@ if not DEBUG:
     MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 else:
-    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-    STATIC_URL = '/static/'
+    # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    STATIC_URL = os.path.join(BASE_DIR, 'static/')
 
     STATIC_ROOT = '/static/'
 
@@ -164,4 +164,4 @@ else:
 
 # do this later...maybe?
 # boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

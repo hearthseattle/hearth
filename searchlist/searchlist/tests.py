@@ -3,12 +3,11 @@
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.test import TestCase, Client, RequestFactory
-from search.models import Resource
-from search.views import OrgListView, OrgDetailView
-from bs4 import BeautifulSoup
+from django.contrib.auth.models import User
+from searchlist.models import Resource
+from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, SearchFormView, ResourceDetailView
 import factory
 import faker
-import datetime
 import os
 import random
 
@@ -55,7 +54,7 @@ class ResourceFactory(factory.django.DjangoModelFactory):
     location = fake.address()
     website = fake.domain_name()
     org_name = fake.name()
-    phone_number = fake.number(10)
+    phone_number = factory.Sequence(lambda n: '123-555-%04d' % n)
     tags = ['substance recovery', 'mental health', 'disability', 'food', 'domestic violence', 'service animals']
 
 
@@ -123,18 +122,102 @@ class ResourceTestModels(TestCase):
         self.assertTrue(Resource.objects.count(), 6)
 
 
-############ VIEW TESTS
-class HomeTestView(TestCase):
+############ ROUTE, TEMPLATE TESTS
+class ViewRouteTest(TestCase):
     """."""
 
-    class 
-    def test_homepage_view(self):
-        view = OrgListVi.as_view()
-        request = RequestFactory().get('/fake-path')
-        response = view(request)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.template_name[0], "search/org_list.html")
-        self.assertEqual(response.model, Resource)
-        self.assertEqual(response.context_object_name, 'orgs')
+    def setUp(self):
+        self.client = Client()
+        self.request = RequestFactory()
 
-    def 
+    def test_homepage_view(self):
+        """Reverse home route to test link exist."""
+        response = self.client.get(reverse_lazy('home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'searchlist/home.html')
+
+    def test_homepage_has_checkbox(self):
+        """Test homepage checkbox exists."""
+        response = self.client.get(reverse_lazy('home'))
+        self.assertTrue(b'checkbox' in response.content)
+
+    def test_404_view(self):
+        """Test not exist resource 404 page appears."""
+        response = self.client.get('foo')
+        self.assertEqual(response.status_code, 404)
+        # self.assertTemplateUsed(response, 'searchlist/404.html')
+
+    def test_createresource_view(self):
+        """Test reverse creatersource route to test link exists."""
+        response = self.client.get(reverse_lazy('create_resource'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'searchlist/resource_form.html')
+
+    def test_Editresource_view(self):
+        """Test reverse editsource route to test link exists."""
+        response = self.client.get(reverse_lazy('edit_resource'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'searchlist/resource_form.html')
+
+    def test_Deleteresource_view(self):
+        """Test reverse deletesource route to test link exists."""
+        response = self.client.get(reverse_lazy('delete'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'searchlist/delete_resource.html')
+
+    def test_Resourcedetail_view(self):
+        """Test reverse resourcedetail route to test link exists."""
+        response = self.client.get(reverse_lazy('resource_detail/1'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'searchlist/resource_detail.html')
+
+    def test_Login_view(self):
+        """Test reverse login route to test link exists."""
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
+
+
+############ View TESTS
+
+class RegistrationTest(TestCase):
+    """."""
+
+    def setUp(self):
+        """."""
+        self.client = Client()
+
+    def test_valid_user_login(self):
+        """Test login process."""
+        user = User(username='fred', email='test@test.com')
+        user.set_password('temporary')
+        user.save()
+        self.client.login(username='fred', password='temporary')
+        response = self.client.get('/login/', follow=True)
+        self.assertTrue(response.context['user'].is_active)
+
+    def test_invalid_user_login_username(self):
+        """Test login process."""
+        user = User(username='fred', email='test@test.com')
+        user.set_password('temporary')
+        user.save()
+        self.client.login(username='bill', password='temporary')
+        response = self.client.get('/login/', follow=True)
+        self.assertFalse(response.context['user'].is_authenticated)
+
+    def test_valid_user_logout(self):
+        """Test logout process."""
+        user = User(username='fred', email='test@test.com')
+        user.set_password('temporary')
+        user.save()
+        self.client.login(username='fred', password='temporary')
+        response = self.client.get('/logout/')
+        self.assertEqual(response.status_code, 200)
+
+
+class CreateResourceTest(TestCase):
+    """."""
+
+    def setUp(self):
+        """."""
+        self.client = Client()
