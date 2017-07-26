@@ -41,10 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'searchlist',
-    'search',
     'taggit',
     'storages',
-    'resource_admins'
 ]
 
 MIDDLEWARE = [

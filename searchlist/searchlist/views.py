@@ -7,6 +7,53 @@ from django.views.generic.list import ListView
 from django.shortcuts import render
 import operator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView
+# from searchlist.models import Resource
+
+
+class CreateResource(LoginRequiredMixin, CreateView):
+    """Class-based view to create new resources."""
+
+    template_name = 'searchlist/resource_form.html'
+    # model = Resource
+    fields = ['main_category', 'ratings', 'age_range', 'org_name',
+              'description', 'location', 'website',
+              'phone_number', 'tags']
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        """Save form if valid."""
+        self.object = form.save(commit=False)
+        self.object.save()
+        return super(CreateResource, self).form_valid(form)
+
+
+class EditResource(LoginRequiredMixin, UpdateView):
+    """Class-based view to edit resources."""
+
+    template_name = 'searchlist/resource_form.html'
+    # model = Resource
+    fields = ['main_category', 'ratings', 'age_range', 'org_name',
+              'description', 'location', 'website',
+              'phone_number', 'tags']
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        """Save form if valid."""
+        self.object = form.save(commit=False)
+        self.object.save()
+        return super(EditResource, self).form_valid(form)
+
+
+class DeleteResource(LoginRequiredMixin, DeleteView):
+    """Class-based view for deleting resources."""
+
+    template_name = 'searchlist/delete_resource.html'
+    # model = Resource
+    success_url = reverse_lazy('home')
 
 
 class HomePageView(TemplateView):
@@ -32,8 +79,16 @@ class SearchFormView(ListView):
             query_list = query.split()
             result = result.filter(
                 reduce(operator.and_,
-                       (Q(tags__icontains=q) for q in query_list)) | 
+                       (Q(tags__icontains=q) for q in query_list)) |
                 reduce(operator.and_,
                        (Q(tags__icontains=q) for q in query_list))
             )
         return result
+
+
+class ResourceDetailView(DetailView):
+    """Detail view for one organization."""
+
+    template_name = "searchlist/resource_detail.html"
+    # model = Resource
+    context_object_name = "resource"
