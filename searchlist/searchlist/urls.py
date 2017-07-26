@@ -63,7 +63,7 @@ urlpatterns = [
         name="delete"
     ),
     url(
-      r'^resource_list/$', 
-      FilterView.as_view(model=Resource)
+        r'^resource_list/$', 
+        FilterView.as_view(model=Resource)
     ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
