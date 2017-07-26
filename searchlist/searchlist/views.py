@@ -20,7 +20,7 @@ class CreateResource(LoginRequiredMixin, CreateView):
     template_name = 'searchlist/resource_form.html'
     model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
-              'description', 'location', 'website',
+              'description', 'street', 'city', 'state', 'zip_code', 'website',
               'phone_number', 'tags']
     success_url = reverse_lazy('home')
 
@@ -37,7 +37,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
     template_name = 'searchlist/resource_form.html'
     model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
-              'description', 'location', 'website',
+              'description', 'street', 'city', 'state', 'zip_code', 'website',
               'phone_number', 'tags']
     success_url = reverse_lazy('home')
 
