@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import TaggableManager
 from django.core.validators import RegexValidator
+from localflavor.us.models import USStateField, USZipCodeField
 import django_filters
 
 
@@ -54,7 +55,10 @@ class Resource(models.Model):
 
     org_name = models.CharField(max_length=100, default='')
     description = models.CharField(max_length=400, default='')
-    location = models.CharField(max_length=255, blank=True, null=True)
+    street = models.CharField(max_length=128, default='')
+    city = models.CharField(max_length=128, default='')
+    state = USStateField(default='')
+    zip_code = USZipCodeField(default='')
     website = models.URLField(blank=True, null=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$')
     phone_number = models.CharField(max_length=20, validators=[phone_regex], blank=True)
@@ -68,10 +72,10 @@ class Resource(models.Model):
         main_category: {}
         age_range: {}
         ratings: {}
-        location: {}
+        address: {} {}, {} {}
         website: {}
         phone_number: {}
-        """.format(self.org_name, self.description, self.main_category, self.age_range, self.ratings, self.location, self.website, self.phone_number)
+        """.format(self.org_name, self.description, self.main_category, self.age_range, self.ratings, self.street, self.city, self.state, self.zip_code, self.website, self.phone_number)
 
     def __str__(self):
         """Print organization information."""
@@ -87,7 +91,7 @@ class ResourceFilter(django_filters.FilterSet):
         """Meta class for our resource filter."""
 
         model = Resource
-        fields = ['location', 'description']
+        fields = ['description']
 
     @property
     def qs(self):

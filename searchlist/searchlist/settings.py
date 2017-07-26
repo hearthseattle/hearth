@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'searchlist',
     'taggit',
     'storages',
+    'localflavor',
 ]
 
 MIDDLEWARE = [
@@ -89,9 +90,9 @@ DATABASES = {
         'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
         'HOST': os.environ.get('DATABASE_HOST', ''),
         'PORT': '5432',
-        'TEST': {
-            'NAME': 'test_db'
-        },
+        # 'TEST': {
+        #     'NAME': 'test_db'
+        # },
     }
 }
 
