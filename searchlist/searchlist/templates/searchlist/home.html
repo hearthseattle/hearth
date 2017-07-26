@@ -26,4 +26,20 @@
               <label for="checkbox3">Option 3</label>
           </div>
       </div>
+
+  <h1>List of Organizations</h1>
+
+{% if tag %}
+    <h2>Organizations Tagged As {{ tag }}</h2>
+{% endif %}
+
+<ul>
+    {% for org in orgs %}
+        <li>
+            <p><strong>organization:</strong> {{ org.org_name }} </p>
+            <p><strong>ratings:</strong> {{ org.ratings }} </p>
+            <p><strong>age range:</strong> {{ org.age_range }} </p>
+        </li>
+    {% endfor %}
+</ul>
 {% endblock %}
