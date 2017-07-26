@@ -25,6 +25,8 @@ from searchlist.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
+from django_filters.views import FilterView
+from searchlist.models import Resource
 
 
 urlpatterns = [
@@ -40,5 +42,6 @@ urlpatterns = [
     url(r'^$', SearchFormView.as_view(), name='search_results'),
     url(r'^new/$', CreateResource.as_view(), name='create_resource'),
     url(r'^(?P<pk>\d+)/edit/$', EditResource.as_view(), name='edit_resource'),
-    url(r'^(?P<id>\d+)$', ResourceDetailView.as_view(), name="resource_detail")
+    url(r'^(?P<id>\d+)$', ResourceDetailView.as_view(), name="resource_detail"),
+    url(r'^resource_list/$', FilterView.as_view(model=Resource)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
