@@ -63,14 +63,16 @@ class DeleteResource(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('home')
 
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
     """Class home page view."""
 
     template_name = "searchlist/home.html"
+    model = Resource
 
     def get_context_data(self, **kwargs):
-        """."""
+        """Get context to populate page with resources."""
         context = super(HomePageView, self).get_context_data(**kwargs)
+        # import pdb; pdb.set_trace()
         return context
 
 
