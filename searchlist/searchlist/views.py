@@ -11,14 +11,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
-# from searchlist.models import Resource
+from searchlist.models import Resource
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
     template_name = 'searchlist/resource_form.html'
-    # model = Resource
+    model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
               'description', 'location', 'website',
               'phone_number', 'tags']
@@ -35,7 +35,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
     """Class-based view to edit resources."""
 
     template_name = 'searchlist/resource_form.html'
-    # model = Resource
+    model = Resource
     fields = ['main_category', 'ratings', 'age_range', 'org_name',
               'description', 'location', 'website',
               'phone_number', 'tags']
@@ -47,12 +47,19 @@ class EditResource(LoginRequiredMixin, UpdateView):
         self.object.save()
         return super(EditResource, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        """."""
+        context = super(EditResource, self).get_context_data(**kwargs)
+        context["edit"] = True
+        return context
+
 
 class DeleteResource(LoginRequiredMixin, DeleteView):
     """Class-based view for deleting resources."""
 
     template_name = 'searchlist/delete_resource.html'
-    # model = Resource
+    success_message = "Resource was deleted successfully."
+    model = Resource
     success_url = reverse_lazy('home')
 
 
@@ -90,5 +97,5 @@ class ResourceDetailView(DetailView):
     """Detail view for one organization."""
 
     template_name = "searchlist/resource_detail.html"
-    # model = Resource
+    model = Resource
     context_object_name = "resource"
