@@ -29,7 +29,8 @@ ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com', 'localhost'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 # Application definition
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'taggit',
     'storages',
     'localflavor',
+    'phonenumber_field'
 ]
 
 MIDDLEWARE = [
@@ -166,3 +168,5 @@ else:
 # do this later...maybe?
 # boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+PHONENUMBER_DB_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_REGION = 'US'

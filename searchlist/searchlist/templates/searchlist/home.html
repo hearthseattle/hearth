@@ -20,12 +20,29 @@
       </div>
 
   <h1>Resources</h1>
-
-<ul>
-    {% for resource in object_list %}
-        <li>
-            <p><strong>organization:</strong> {{ resource.org_name }} </p>
-        </li>
-    {% endfor %}
-</ul>
+  {% for resource in resource_list %}
+  <div class="row align-items-start">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div
+     <div class="container">
+      <div class="row">
+        <div class="col">
+          One of three columns
+        </div>
+        <div class="col align-self-start">
+          <h3>{{ resource.org_name }}</h3>
+        </div>
+        <div class="col align-self-start">
+          {{ resource.description }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}
