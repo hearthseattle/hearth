@@ -47,23 +47,32 @@ class EditResource(LoginRequiredMixin, UpdateView):
         self.object.save()
         return super(EditResource, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        """."""
+        context = super(EditResource, self).get_context_data(**kwargs)
+        context["edit"] = True
+        return context
+
 
 class DeleteResource(LoginRequiredMixin, DeleteView):
     """Class-based view for deleting resources."""
 
     template_name = 'searchlist/delete_resource.html'
+    success_message = "Resource was deleted successfully."
     model = Resource
     success_url = reverse_lazy('home')
 
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
     """Class home page view."""
 
     template_name = "searchlist/home.html"
+    model = Resource
 
     def get_context_data(self, **kwargs):
-        """."""
+        """Get context to populate page with resources."""
         context = super(HomePageView, self).get_context_data(**kwargs)
+        # import pdb; pdb.set_trace()
         return context
 
 
