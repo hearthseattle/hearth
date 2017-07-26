@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'searchlist',
     'taggit',
     'storages',
+    'localflavor',
 ]
 
 MIDDLEWARE = [
