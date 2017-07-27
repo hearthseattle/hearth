@@ -47,7 +47,7 @@ class Resource(models.Model):
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
     tags = TaggableManager(blank=True)
-    image = models.ImageField(upload_to='photos')
+    image = models.ImageField(upload_to='photos', null=True)
 
     def __repr__(self):
         """Print org info."""
@@ -58,7 +58,7 @@ class Resource(models.Model):
         address: {} {}, {} {}
         website: {}
         phone_number: {}
-        """.format(self.org_name, self.description, self.main_category, self.age_range, self.ratings, self.street, self.city, self.state, self.zip_code, self.website, self.phone_number)
+        """.format(self.org_name, self.description, self.main_category, self.street, self.city, self.state, self.zip_code, self.website, self.phone_number)
 
     def __str__(self):
         """Print organization information."""
