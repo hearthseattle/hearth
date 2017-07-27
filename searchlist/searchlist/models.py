@@ -38,13 +38,6 @@ class Resource(models.Model):
         choices=MAIN_CATEGORY
     )
 
-    ratings = models.CharField(
-        max_length=25,
-        default="one badge",
-        blank=True,
-        null=True
-    )
-
     org_name = models.CharField(max_length=100, default='')
     description = models.CharField(max_length=400, default='')
     street = models.CharField(max_length=128, default='')
