@@ -64,8 +64,8 @@ class DeleteResource(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def delete(self, request, *args, **kwargs):
-    messages.success(self.request, self.success_message)
-    return super(DeleteResource, self).delete(request, *args, **kwargs)
+        messages.success(self.request, self.success_message)
+        return super(DeleteResource, self).delete(request, *args, **kwargs)
 
 
 class HomePageView(ListView):
