@@ -13,6 +13,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from searchlist.models import Resource
 from taggit.models import Tag
+from django.contrib import messages
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
@@ -100,6 +101,7 @@ class HomePageView(ListView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['choices'] = [category[0] for category in main_category]
         context['tags'] = Tag.objects.all()
+        # import pdb; pdb.set_trace()
         return context
 
 
