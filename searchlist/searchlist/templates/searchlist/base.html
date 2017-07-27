@@ -8,8 +8,56 @@
     <title>Shoe strap</title>
     <!-- Bootstrap3 CSS  -->
     <link href="{% static 'searchlist/css/bootstrap.min.css' %}" rel="stylesheet">
+      <!-- Custom Fonts -->
+    <link href="{% static 'searchlist/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Plugin CSS -->
+    <link href="{% static 'searchlist/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link href="{% static 'searchlist/css/creative.min.css' %}" rel="stylesheet">
 </head>
-<body style="background-color: #fcfcfc;">
+<!-- New Body -->
+<body id="page-top">
+
+     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Homeless to Hearth</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">Header</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services">Resources</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+  <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">The best resource app in King County.</h1>
+                <hr>
+                <p>This is the sub paragraph.</p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Resources here!</a>
+            </div>
+        </div>
+    </header>
+</body>
+<!-- End New Body -->
+<!-- <body style="background-color: #fcfcfc;">
     <nav class="navbar navbar-default" style="background-color: #88ce8d;">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -45,13 +93,13 @@
         </div>
       </div>
     </nav>
-</div>
+</div> -->
   <!--  Search Form Views to our Home page  -->
 
     {% block content %}
     {% endblock %}
-  </div>
-</body>
+ <!--  </div>
+</body> -->
 <!-- Boostrap3 JS Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="{% static 'searchlist/js/bootstrap.min.js' %}"></script>
