@@ -3,11 +3,11 @@
 {% block title %}Homeless to Hearth{% endblock %}
 
 {% block content %}
-<div class="jumbotron jumbotron-fluid">
-    <div class="container" style="background-image: url({% static 'searchlist/imgs/cascade.jpg' %});background-size: cover;">
-    <h1 class="display-3">HOLY SHIT LOOK AT THIS JUMBO PRAWN.<br \><br \><br \><br \><br \></h1>
-    <p class="lead">this just takes up space.</p>
-</div>
+<!-- <div class="jumbotron jumbotron-fluid">
+    <div class="container" style="background-image: url({% static 'searchlist/imgs/splash.jpg' %});background-size: cover;">
+    <h1 class="display-3">Homeless to Hearth.<br \><br \><br \><br \><br \></h1>
+    <p class="lead">Python 401d6.</p>
+</div> -->
   <div class="container" style="margin-top: 75px;">
       <div class="row">
           <div class="checkbox checkbox-primary">
@@ -23,7 +23,36 @@
               <label for="checkbox3">Medical Attention</label>
           </div>
       </div>
-
+  </div>
+  <!-- New section from bootstrap -->
+  <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Resources</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        {% for resource in resource_list %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
+                        <h3><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.org_name }}</a></h3>
+                        <h5 class="text-muted"><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</a></h5>
+                        <h6 class="text-muted">{{ resource.phone_number}}</h6>
+                        <p>{{ resource.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endblock %} 
+    <!-- End of new section -->
+<!--   <h1>Resources</h1>
   <h1>Resources</h1>
   {% for resource in resource_list %}
   <div class="row">
@@ -46,8 +75,10 @@
   <div class="">
     <p>{{ resource.description }}</p>
   </div><hr>
+  </div> -->
   <script src="{% static 'js/checkboxes.js' %}"></script>
   {% endfor %}
 
 
-{% endblock %}
+
+<!-- {% endblock %} -->
