@@ -1,28 +1,26 @@
 {% extends 'searchlist/base.html' %}
-
+{% load static %}
 {% block title %}Homeless to Hearth{% endblock %}
 
 {% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container" style="background-image: url({% static 'searchlist/imgs/cascade.jpg' %});background-size: cover;">
+    <h1 class="display-3">HOLY SHIT LOOK AT THIS JUMBO PRAWN.<br \><br \><br \><br \><br \></h1>
+    <p class="lead">this just takes up space.</p>
+</div>
   <div class="container" style="margin-top: 75px;">
-      <div class="row">
+      <div class="row categories">
+        {% for choice in choices %}
           <div class="checkbox checkbox-primary">
-              <input id="checkbox1" type="checkbox">
-              <label for="checkbox1">Food</label>
+              <input class type="checkbox" val="{{ choice }}">
+              <label for="checkbox1">{{ choice }}</label>
           </div>
-          <div class="checkbox checkbox-secondary">
-              <input id="checkbox2" type="checkbox">
-              <label for="checkbox2">Shelter</label>
-          </div>
-          <div class="checkbox checkbox-thirdary">
-              <input id="checkbox3" type="checkbox">
-              <label for="checkbox3">Medical Attention</label>
-          </div>
+        {% endfor %}
       </div>
-
+  </div>
   <h1>Resources</h1>
   {% for resource in resource_list %}
-
-  <div class="row">
+  <div class="row {{ resource.main_category }} category_list ">
     <div class="col-xs-12 col-md-12 col-lg-12">
       <h4><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.org_name }}</a></h4>
     </div>
@@ -36,13 +34,12 @@
         <div class="">
           <a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</a>
         </div>
-
       </div>
     </div>
-  </div>
   <div class="">
     <p>{{ resource.description }}</p>
   </div><hr>
+  </div>
   {% endfor %}
 
 

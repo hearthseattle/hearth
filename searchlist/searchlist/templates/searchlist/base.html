@@ -9,8 +9,8 @@
     <!-- Bootstrap3 CSS  -->
     <link href="{% static 'searchlist/css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar navbar-default">
+<body style="background-color: #fcfcfc;">
+    <nav class="navbar navbar-default" style="background-color: #88ce8d;">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url "home" %}">Homeless to Hearth</a>
+          <a class="navbar-brand" href="{% url "home" %}" style="color: white;">Homeless to Hearth</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
@@ -28,11 +28,11 @@
                     <li><a href='{% url "logout" %}'>Logout</a></li>
                     <li><a href='{% url "create_resource" %}'>Add Resource</a></li>
                     {% else %}
-                    <li><a href='{% url "login" %}'>Login</a></li>
+                    <li><a href='{% url "login" %}' style="color: white;">Login</a></li>
                 {% endif %}
             {% endblock %}
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: white;">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">content 1</a></li>
                 <li><a href="#">content 2</a></li>
@@ -45,7 +45,11 @@
         </div>
       </div>
     </nav>
+<<<<<<< HEAD
 
+=======
+</div>
+>>>>>>> ff0ccce5f6a17ff112b37db9dcbe8f10236ba330
   <!--  Search Form Views to our Home page  -->
 
     {% block content %}
@@ -53,3 +57,4 @@
 <!-- Boostrap3 JS Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="{% static 'searchlist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'searchlist/js/checkboxes.js' %}"></script>
