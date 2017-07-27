@@ -71,9 +71,31 @@ class HomePageView(ListView):
     template_name = "searchlist/home.html"
     model = Resource
 
+
     def get_context_data(self, **kwargs):
         """Get context to populate page with resources."""
+        MAIN_CATEGORY = [
+            ("Crisis", "Crisis"),
+            ("Addiction", "Addiction"),
+            ("Childcare", "Childcare"),
+            ("Youth Services", "Youth Services"),
+            ("Veteran", "Veteran"),
+            ("Rehabilitation", "Rehabilitation"),
+            ("Mental/Physical Disability", "Mental/Physical Disability"),
+            ("Education", "Education"),
+            ("Employment", "Employment"),
+            ("Finances", "Finances"),
+            ("Clothing/Housewares", "Clothing/Housewares"),
+            ("Food", "Food"),
+            ("Healthcare", "Healthcare"),
+            ("Shelter", "Shelter"),
+            ("Legal", "Legal"),
+            ("Identification", "Identification"),
+            ("Spiritual", "Spiritual")
+        ]
+
         context = super(HomePageView, self).get_context_data(**kwargs)
+        context['choices'] = [category[0] for category in MAIN_CATEGORY]
         # import pdb; pdb.set_trace()
         return context
 
