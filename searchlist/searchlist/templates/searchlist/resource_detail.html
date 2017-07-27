@@ -8,11 +8,15 @@
 <ul>
     <li>Main Category: {{ resource.main_category }}</li>
     <li>Ratings: {{ resource.ratings }}</li>
-    <li>Tags:{{ resource.tags }}</li>
+    {% for tag in resource.tags.all %}
+        <li>Tags:{{ tag.name }}</li>
+    {% endfor %}
     <li>Website: {{ resource.website }}</li>
     <li>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</li>
     <li>Description: {{ resource.description }}</li>
 </ul>
-<iframe class="map-class "width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=13"></iframe>
-
+<iframe class="map-class "width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.org_name}}+{{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=14"></iframe>
+{% if resource.image %}
+    <img src="{{MEDIA_URL}}/{{resource.image.url}}"/>
+{% endif %}
 {% endblock %}
