@@ -3,11 +3,11 @@
 {% block title %}<a href="{% url 'home' %}">Homeless to Hearth.</a>{% endblock %}
 
 {% block content %}
-<div class="jumbotron jumbotron-fluid">
+<!-- <div class="jumbotron jumbotron-fluid">
     <div class="container" style="background-image: url({% static 'searchlist/imgs/splash.jpg' %});background-size: cover;">
     <h1 class="display-3">Homeless to Hearth.<br \><br \><br \><br \><br \></h1>
     <p class="lead">Python 401d6.</p>
-</div>
+</div> -->
   <div class="container" style="margin-top: 75px;">
       <div class="row categories">
         {% for choice in choices %}
@@ -44,8 +44,9 @@
         </div>
         {% endfor %}
     </section>
+    {% endblock %} 
     <!-- End of new section -->
-  <h1>Resources</h1>
+<!--   <h1>Resources</h1>
   {% for resource in resource_list %}
   <div class="row {{ resource.main_category }} category_list ">
     <div class="col-xs-12 col-md-12 col-lg-12">
@@ -66,7 +67,7 @@
   <div class="">
     <p>{{ resource.description }}</p>
   </div><hr>
-  </div>
+  </div> -->
 
 
-{% endblock %}
+<!-- {% endblock %} -->
