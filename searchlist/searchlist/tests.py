@@ -1,11 +1,12 @@
 """Tests for views, model and user privileges."""
 
 from django.conf import settings
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from searchlist.models import Resource
-from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, SearchFormView, ResourceDetailView
+from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, ResourceDetailView
+from bs4 import BeautifulSoup
 import factory
 import faker
 import os
@@ -149,31 +150,31 @@ class ViewRouteTest(TestCase):
 
     def test_createresource_view(self):
         """Test reverse creatersource route to test link exists."""
-        response = self.client.get(reverse_lazy('create_resource'))
+        response = self.client.get(reverse_lazy('/resource/new/'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'searchlist/resource_form.html')
 
     def test_Editresource_view(self):
         """Test reverse editsource route to test link exists."""
-        response = self.client.get(reverse_lazy('edit_resource'))
+        response = self.client.get(reverse_lazy('/resource/1/edit/'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'searchlist/resource_form.html')
 
     def test_Deleteresource_view(self):
         """Test reverse deletesource route to test link exists."""
-        response = self.client.get(reverse_lazy('delete'))
+        response = self.client.get(reverse_lazy('/resource/1/delete/'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'searchlist/delete_resource.html')
 
     def test_Resourcedetail_view(self):
         """Test reverse resourcedetail route to test link exists."""
-        response = self.client.get(reverse_lazy('resource_detail/1'))
+        response = self.client.get(reverse_lazy('/resource/1'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'searchlist/resource_detail.html')
 
     def test_Login_view(self):
         """Test reverse login route to test link exists."""
-        response = self.client.get(reverse('login'))
+        response = self.client.get(reverse('/login/'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
 
@@ -212,12 +213,51 @@ class RegistrationTest(TestCase):
         user.save()
         self.client.login(username='fred', password='temporary')
         response = self.client.get('/logout/')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 
-class CreateResourceTest(TestCase):
-    """."""
+# class CreateResourceTest(TestCase):
+#     """Create a resource."""
+
+#     def setUp(self):
+#         """."""
+#         self.client = Client()
+
+#     def test_CreateResourceView()
+
+
+class DeleteResourceTest(TestCase):
+    """Delete a resource."""
 
     def setUp(self):
-        """."""
+        """Create a resource."""
         self.client = Client()
+        self.resource = ResourceFactory.build()
+        self.resource.save()
+
+    def test_Deleteresource_cancel_button(self):
+        """Test cancel button."""
+        self.assertEqual(Resource.objects.count(), 1)
+        idx = self.resource.id
+        response = self.client.get('/resource/{}/delete/'.format(idx))
+        html = BeautifulSoup(response.content, 'Cancel')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Resource.objects.count(), 1)
+
+    def test_Deleteresource_confirm_button(self):
+        """Test confirm button."""
+        self.assertEqual(Resource.objects.count(), 1)
+        idx = self.resource.id
+        self.client.post('/resource/{}/delete/'.format(idx))
+        self.assertEqual(Resource.objects.count(), 0)
+        self.assertEqual(response.status_code, 302)
+
+    # class EditResourceTest(TestCase):
+    # """Edit a resource."""
+
+    # def setUp(self):
+    #     """."""
+    #     self.client = Client()
+
+    # def test_edit
+
