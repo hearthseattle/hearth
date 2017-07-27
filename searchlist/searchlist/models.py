@@ -8,25 +8,25 @@ from localflavor.us.models import USStateField, USZipCodeField, PhoneNumberField
 import django_filters
 
 
-
-MAIN_CATEGORY = (
-    ("shelter", "shelter"),
-    ("food", "food"),
-    ("clinic", "clinic")
-)
-
-RATINGS = (
-    ("one badge", "one badge"),
-    ("two badge", "two badge"),
-    ("three badge", "three badge")
-)
-
-AGE_RANGE = (
-    ("<=17", "<=17"),
-    ("18-25", "18-25"),
-    (">26", ">26"),
-    ("all", "all")
-)
+MAIN_CATEGORY = [
+    ("Crisis", "Crisis"),
+    ("Addiction", "Addiction"),
+    ("Childcare", "Childcare"),
+    ("Youth Services", "Youth Services"),
+    ("Veteran", "Veteran"),
+    ("Rehabilitation", "Rehabilitation"),
+    ("Mental/Physical Disability", "Mental/Physical Disability"),
+    ("Education", "Education"),
+    ("Employment", "Employment"),
+    ("Finances", "Finances"),
+    ("Clothing/Housewares", "Clothing/Housewares"),
+    ("Food", "Food"),
+    ("Healthcare", "Healthcare"),
+    ("Shelter", "Shelter"),
+    ("Legal", "Legal"),
+    ("Identification", "Identification"),
+    ("Spiritual", "Spiritual")
+]
 
 
 @python_2_unicode_compatible
@@ -40,15 +40,7 @@ class Resource(models.Model):
 
     ratings = models.CharField(
         max_length=25,
-        choices=RATINGS,
         default="one badge",
-        blank=True,
-        null=True
-    )
-
-    age_range = models.CharField(
-        max_length=25,
-        choices=AGE_RANGE,
         blank=True,
         null=True
     )
@@ -69,8 +61,6 @@ class Resource(models.Model):
         org_name: {}
         description: {}
         main_category: {}
-        age_range: {}
-        ratings: {}
         address: {} {}, {} {}
         website: {}
         phone_number: {}
