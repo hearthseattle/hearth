@@ -27,15 +27,20 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Homeless to Hearth</a>
+                <a class="navbar-brand page-scroll" href="{% url 'home' %}">Homeless to Hearth</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">Home</a>
-                    </li>
+                    {% block login %}
+                    {% if user.is_authenticated %}
+                    <li><a href='{% url "logout" %}'>Logout</a></li>
+                    <li><a href='{% url "create_resource" %}'>Add Resource</a></li>
+                    {% else %}
+                    <li><a href='{% url "login" %}' style="color: white;">Login</a></li>
+                    {% endif %}
+                    {% endblock %}
                     <li>
                         <a class="page-scroll" href="#services">Resources</a>
                     </li>
@@ -75,14 +80,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            {% block login%}
-                {% if user.is_authenticated %}
-                    <li><a href='{% url "logout" %}'>Logout</a></li>
-                    <li><a href='{% url "create_resource" %}'>Add Resource</a></li>
-                    {% else %}
-                    <li><a href='{% url "login" %}' style="color: white;">Login</a></li>
-                {% endif %}
-            {% endblock %}
+
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: white;">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
