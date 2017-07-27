@@ -2,7 +2,6 @@ $(document).ready(function(){
   $('.categories :checkbox').click(function(){
     $('.category_list').hide();
     $('.categories :checkbox:checked').each(function(){
-        console.log($('.categories :checkbox:checked').val())
       $('.' + $(this).val()).show();
     });
   });
