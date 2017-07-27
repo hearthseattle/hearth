@@ -6,6 +6,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from searchlist.models import Resource
 from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, ResourceDetailView
+from bs4 import BeautifulSoup
 import factory
 import faker
 import os
