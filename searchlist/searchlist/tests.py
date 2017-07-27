@@ -3,8 +3,8 @@
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.test import TestCase, Client, RequestFactory
-from search.models import Resource
-from search.views import OrgListView, OrgDetailView
+from searchlist.models import Resource
+from searchlist.views import OrgListView, OrgDetailView
 from bs4 import BeautifulSoup
 import factory
 import faker
