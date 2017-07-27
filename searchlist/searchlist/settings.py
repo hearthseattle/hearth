@@ -137,7 +137,7 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = 'home'
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
 
 if not DEBUG:
     AWS_STORAGE_BUCKET_NAME = 'homeless-to-hearth'
@@ -167,6 +167,6 @@ else:
 
 # do this later...maybe?
 # boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
