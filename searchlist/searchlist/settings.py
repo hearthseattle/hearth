@@ -137,7 +137,6 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = 'home'
 
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
 
 if not DEBUG:
     AWS_STORAGE_BUCKET_NAME = 'homeless-to-hearth'
@@ -154,6 +153,7 @@ if not DEBUG:
     MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 else:
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     STATIC_URL = '/static/'
 
