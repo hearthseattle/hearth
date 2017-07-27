@@ -47,6 +47,7 @@ class Resource(models.Model):
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
     tags = TaggableManager(blank=True)
+    image = ImageField(upload_to='photos')
 
     def __repr__(self):
         """Print org info."""

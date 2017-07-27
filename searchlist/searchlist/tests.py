@@ -6,11 +6,11 @@ from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from searchlist.models import Resource
 from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, ResourceDetailView
-from bs4 import BeautifulSoup
 import factory
 import faker
 import os
 import random
+import googlemaps
 
 
 fake = faker.Faker()
@@ -199,43 +199,94 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
 
+#need to work on syntax below
     def test_homepageview(self):
+        """Test homepage resource list total."""
+        response = self.client.get(reverse_lazy('home'))
+        total number of resource_list = tot of list
+
+    def test_homepageview_checkbox(self):
         """Test homepage."""
         response = self.client.get(reverse_lazy('home'))
-        import pdb; pdb.set_trace()
+        assert checkbox selection is save
+
+    def test_homepageview_filtercontent(self):
+        """Test homepage."""
+        response = self.client.get(reverse_lazy('home'))
+        assert filter content displays per selected criteria
+
+    def test_deleteresource_cancel_button(self):
+        """Test cancel button."""
+        self.assertEqual(Resource.objects.count(), 1)
+        idx = self.resource.id
+        response = self.client.get('/resource/{}/delete/'.format(idx))
+        html = BeautifulSoup(response.content, 'Cancel')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Resource.objects.count(), 1)
+
+    def test_deleteresource_confirm_button(self):
+        """Test confirm button."""
+        self.assertEqual(Resource.objects.count(), 1)
+        idx = self.resource.id
+        self.client.post('/resource/{}/delete/'.format(idx))
+        self.assertEqual(Resource.objects.count(), 0)
+        self.assertEqual(response.status_code, 302)
+        test html success_message
+
+    def test_createresource(self):
+        """Test adding resource."""
+        self.assertEqual(Resource.objects.count(), 1)
+        add resource:fields = ['main_category', 'org_name',
+              'description', 'street', 'city', 'state', 'zip_code', 'website',
+              'phone_number', 'tags']
+        resource.object.save()
+        success_url = reverse_lazy('home')
+        self.assertEqual(Resource.objects.count(), 2)
+
+    def test_updateresource(self):
+        """Test updating resource."""
+        current resource = etc.
+        change some fields = ['main_category', 'org_name',
+              'description', 'street', 'city', 'state', 'zip_code', 'website',
+              'phone_number', 'tags']
+        resource.oject.save()
+        current resource = changed fields
+        success_url = reverse_lazy('home')
 
 
-# class DeleteResourceTest(TestCase):
-#     """Delete a resource."""
+class DetailResourceTest(TestCase):
+    """Test google map api."""
 
-#     def setUp(self):
-#         """Create a resource."""
-#         self.client = Client()
-#         self.resource = ResourceFactory.build()
-#         self.resource.save()
+    def setUp(self):
+        """."""
+        self.key = ''
+        self.client = googlemaps.Client(self.key)
+        self.location = (lat, long )
+        self.type = 'shelter'
+        self.language = 'en-ENG'
+        self.radius = 10
 
-#     def test_Deleteresource_cancel_button(self):
-#         """Test cancel button."""
-#         self.assertEqual(Resource.objects.count(), 1)
-#         idx = self.resource.id
-#         response = self.client.get('/resource/{}/delete/'.format(idx))
-#         html = BeautifulSoup(response.content, 'Cancel')
-#         self.assertEqual(response.status_code, 302)
-#         self.assertEqual(Resource.objects.count(), 1)
+@responses.activate
+    def test_places_text_search(self):
+        url = 'https://maps.googleapis.com/maps/api/place/textsearch/json'
+        responses.add(responses.GET, url,
+                      body='{"status": "OK", "results": [], "html_attributions": []}',
+                      status=200, content_type='application/json')
 
-#     def test_Deleteresource_confirm_button(self):
-#         """Test confirm button."""
-#         self.assertEqual(Resource.objects.count(), 1)
-#         idx = self.resource.id
-#         self.client.post('/resource/{}/delete/'.format(idx))
-#         self.assertEqual(Resource.objects.count(), 0)
-#         self.assertEqual(response.status_code, 302)
+        self.client.places('restaurant', location=self.location,
+                           radius=self.radius, language=self.language,
+                           min_price=1, max_price=4, open_now=True,
+                           type=self.type)
 
-#     # class EditResourceTest(TestCase):
-#     # """Edit a resource."""
+        self.assertEqual(1, len(responses.calls))
+        self.assertURLEqual('%s?language=en-AU&location=-33.86746%%2C151.20709&'
+                            'maxprice=4&minprice=1&opennow=true&query=restaurant&'
+                            'radius=100&type=shelter&key=%s'
+                            % (url, self.key), responses.calls[0].request.url)
 
-#     # def setUp(self):
-#     #     """."""
-#     #     self.client = Client()
-
-#     # def test_edit
+    def test_detailresource_edit_button(self):
+        """Test edit button."""
+        idx = self.resource.id
+        response = self.client.get('/resource/{}/delete/'.format(idx))
+        html = BeautifulSoup(response.content, 'Edit')
+        self.assertEqual(response.status_code, 302) #redirect to edit page
