@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('searchlist', '0007_auto_20170727_0342'),
+        ('searchlist', '0001_initial'),
     ]
 
     operations = [
