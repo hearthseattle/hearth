@@ -148,7 +148,7 @@ if not DEBUG:
     STATICFILES_STORAGE = 'searchlist.custom_storages.StaticStorage'
     STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
-    MEDIAFILES_LOCATION = 'media'
+    MEDIAFILES_LOCATION = 'searchlist/media'
     DEFAULT_FILE_STORAGE = 'searchlist.custom_storages.MediaStorage'
     MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
