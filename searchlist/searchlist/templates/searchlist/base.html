@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Homeless to Hearth</a>
+          <a class="navbar-brand" href="{% url "home" %}">Homeless to Hearth</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
@@ -46,13 +46,7 @@
       </div>
     </nav>
   <!--  Search Form Views to our Home page  -->
-  <form id="searchform" action="{%  url 'search_results' %}" method="get" accept-charset="utf-8" style="width: 80%; left: 20%; position: absolute">
-    <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search" style="width: 70%">
-    <button class= "seachbutton" type="submit" style="height: 22px">
-      <i class="fa-fa-seach"></i>
-      <label for="button">Submit</label>
-    </button>
-  </form>
+
     {% block content %}
     {% endblock %}
   </div>
