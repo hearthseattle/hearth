@@ -12,8 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from searchlist.models import Resource
-# from searchlist.forms import ResourceForm
-# from django.shortcuts import render_to_response
+from taggit.models import Tag
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
@@ -64,6 +63,10 @@ class DeleteResource(LoginRequiredMixin, DeleteView):
     model = Resource
     success_url = reverse_lazy('home')
 
+    def delete(self, request, *args, **kwargs):
+    messages.success(self.request, self.success_message)
+    return super(DeleteResource, self).delete(request, *args, **kwargs)
+
 
 class HomePageView(ListView):
     """Class home page view."""
@@ -71,10 +74,10 @@ class HomePageView(ListView):
     template_name = "searchlist/home.html"
     model = Resource
 
-
     def get_context_data(self, **kwargs):
         """Get context to populate page with resources."""
-        MAIN_CATEGORY = [
+
+        main_category = [
             ("Crisis", "Crisis"),
             ("Addiction", "Addiction"),
             ("Childcare", "Childcare"),
@@ -95,15 +98,15 @@ class HomePageView(ListView):
         ]
 
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context['choices'] = [category[0] for category in MAIN_CATEGORY]
-        # import pdb; pdb.set_trace()
+        context['choices'] = [category[0] for category in main_category]
+        context['tags'] = Tag.objects.all()
         return context
 
 
 # class SearchFormView(ListView):
 #     """Display a Resource list filtered by a search query."""
 
-#     def get_queryset(self):
+#     def get_queryset(self)
 #         """Get a query for our search."""
 #         result = super(SearchFormView, self).get_queryset()
 
