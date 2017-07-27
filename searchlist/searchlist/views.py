@@ -23,7 +23,7 @@ class CreateResource(LoginRequiredMixin, CreateView):
     model = Resource
     fields = ['main_category', 'org_name',
               'description', 'street', 'city', 'state', 'zip_code', 'website',
-              'phone_number', 'tags']
+              'phone_number', 'image', 'tags']
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
@@ -40,7 +40,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
     model = Resource
     fields = ['main_category', 'org_name',
               'description', 'street', 'city', 'state', 'zip_code', 'website',
-              'phone_number', 'tags']
+              'phone_number', 'image', 'tags']
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
