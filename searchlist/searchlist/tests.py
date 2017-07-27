@@ -21,18 +21,6 @@ MAIN_CATEGORY = (
     ("clinic", "clinic")
 )
 
-RATINGS = (
-    ("one badge", "one badge"),
-    ("two badge", "two badge"),
-    ("three badge", "three badge")
-)
-
-AGE_RANGE = (
-    ("<=17", "<=17"),
-    ("18-25", "18-25"),
-    (">26", ">26")
-)
-
 HERE = os.path.dirname(__file__)
 
 
@@ -50,8 +38,6 @@ class ResourceFactory(factory.django.DjangoModelFactory):
     )
     main_category = random.choice(MAIN_CATEGORY)[0]
     description = fake.text(254)
-    ratings = random.choice(RATINGS)[0]
-    age_range = random.choice(AGE_RANGE)[0]
     website = fake.domain_name()
     org_name = fake.name()
     phone_number = factory.Sequence(lambda n: '123-555-%04d' % n)
@@ -77,8 +63,6 @@ class ResourceTestModels(TestCase):
         test_org.main_category = 'shelter'
         test_org.org_name = 'test_org'
         test_org.description = 'test case'
-        test_org.age_range = '18-25'
-        test_org.ratings = 'two badge'
         test_org.website = 'http://www.test_org.com'
         test_org.phone_number = '1234567890'
         test_org.tags = 'shelter'
@@ -86,21 +70,14 @@ class ResourceTestModels(TestCase):
         self.assertTrue(test_org.main_category == 'shelter')
         self.assertTrue(test_org.org_name == 'test_org')
         self.assertTrue(test_org.description == 'test case')
-        self.assertTrue(test_org.age_range == '18-25')
-        self.assertTrue(test_org.ratings == 'two badge')
         self.assertTrue(test_org.website == 'http://www.test_org.com')
         self.assertTrue(test_org.phone_number == '1234567890')
         self.assertTrue(test_org.tags == 'shelter')
 
     def test_can_change_settings(self):
         """Test that settings can be changed for certain resources."""
-        self.resource.age_range = AGE_RANGE[1][0]
-        self.resource.ratings = RATINGS[1][0]
         self.resource.main_category = MAIN_CATEGORY[1][0]
-        self.assertEqual([self.resource.age_range,
-                          self.resource.ratings,
-                          self.resource.main_category],
-                         ["18-25", "two badge", "shelter"])
+        self.assertEqual(self.resource.main_category,"shelter")
 
     def test_delete_resources(self):
         """Test that delete works."""
@@ -261,4 +238,3 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
 #     #     self.client = Client()
 
 #     # def test_edit
-
