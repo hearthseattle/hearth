@@ -4,9 +4,9 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import TaggableManager
-from localflavor.us.models import USStateField, USZipCodeField
-from phonenumber_field.modelfields import PhoneNumberField
+from localflavor.us.models import USStateField, USZipCodeField, PhoneNumberField
 import django_filters
+
 
 
 MAIN_CATEGORY = (
