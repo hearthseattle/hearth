@@ -3,30 +3,14 @@
 {% block title %}Homeless to Hearth{% endblock %}
 
 {% block content %}
-<div class="container" style="margin-top: 75px;">
-      <div class="row categories">
-        {% for choice in choices %}
-          <div class="row">
-                <div class="checkbox checkbox-primary">
-                  <input type="checkbox" value="{{ choice }}">
-                  <label for="checkbox">{{ choice }}</label>
-                </div>
-          </div>
-        {% endfor %}
-        {% for tag in tags %}
-          <div class="row">
-                <div class="checkbox checkbox-primary">
-                  <input type="checkbox" value="{{ tag }}">
-                  <label for="checkbox">{{ tag }}</label>
-                </div>
 <div id="about">
   <div class="container" style="margin-top: 75px;">
+          <div class="row categories">
           {% for choice in choices %}
-            <div class="row align-items-start">
                 <div class="col-6 col-md-4 text-left">
                   <div class="checkbox checkbox-primary">
                     <input class type="checkbox" value="{{ choice }}">
-                    <label for="checkbox1">{{ choice }}</label>
+                    <label for="checkbox">{{ choice }}</label>
                   </div>
 <!--                 </div> -->
             </div>
@@ -36,7 +20,7 @@
                 <div class="col-6 col-md-4 text-left">
                   <div class="checkbox checkbox-primary">
                     <input class type="checkbox" value="{{ tag }}">
-                    <label for="checkbox1">{{ tag }}</label>
+                    <label for="checkbox">{{ tag }}</label>
                   </div>
 <!--                 </div> -->
             </div>
@@ -47,7 +31,7 @@
     <section id="services">
           <div class="container">
 <!--               <div class="row"> -->
-                  <div class="col col-md-8 text-right">
+                  <div class="col col-md-8 text-center">
                       <h2 class="section-heading">Resources</h2>
                       <hr class="primary">
                   </div>
@@ -56,7 +40,7 @@
           {% for resource in resource_list %}
           <div class="container">
               <div class="row category_list {{ resource.main_category }}{% for tag in resource.tags.all %} {{ tag.name }}{% endfor %}">
-                  <div class="col col-md-8 text-right">
+                  <div class="col col-md-8 text-center">
                       <div class="service-box">
                           <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
                           <h3><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.org_name }}</a></h3>
@@ -71,8 +55,8 @@
       </section>
     </div>
 </div>
-    <!-- End of new section -->
 {% endblock %} 
+    <!-- End of new section -->
 
 
 
