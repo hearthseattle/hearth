@@ -199,6 +199,16 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
 
+    def test_delete_resource_shows_cancel_button(self):
+            """Test cancel button."""
+            self.assertEqual(Resource.objects.count(), 1)
+            idx = self.resource.id
+            response = self.client.get(reverse('delete', kwargs={'pk': idx}))
+            import pdb; pdb.set_trace()
+            # html = BeautifulSoup(response.content, 'Cancel')
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(Resource.objects.count(), 1)
+
 #need to work on syntax below
 #     def test_homepageview(self):
 #         """Test homepage resource list total."""
@@ -215,14 +225,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
 #         response = self.client.get(reverse_lazy('home'))
 #         assert filter content displays per selected criteria
 #
-#     def test_deleteresource_cancel_button(self):
-#         """Test cancel button."""
-#         self.assertEqual(Resource.objects.count(), 1)
-#         idx = self.resource.id
-#         response = self.client.get('/resource/{}/delete/'.format(idx))
-#         html = BeautifulSoup(response.content, 'Cancel')
-#         self.assertEqual(response.status_code, 302)
-#         self.assertEqual(Resource.objects.count(), 1)
+#
 #
 #     def test_deleteresource_confirm_button(self):
 #         """Test confirm button."""
