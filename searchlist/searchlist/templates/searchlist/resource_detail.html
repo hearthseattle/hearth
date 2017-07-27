@@ -17,6 +17,6 @@
 </ul>
 <iframe class="map-class "width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.org_name}}+{{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=14"></iframe>
 {% if resource.image %}
-    <img src="{{MEDIA_URL}}/{{resource.image.url}}"/>
+    <img src="{{resource.image.url}}"/>
 {% endif %}
 {% endblock %}
