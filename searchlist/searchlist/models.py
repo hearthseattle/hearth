@@ -1,14 +1,12 @@
 """Model for search profiles."""
-
-
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from taggit.managers import TaggableManager
 from localflavor.us.models import (
     USStateField,
     USZipCodeField,
     PhoneNumberField
 )
+from taggit.managers import TaggableManager
 
 
 MAIN_CATEGORY = [

@@ -1,16 +1,17 @@
 """Tests for views, model and user privileges."""
-
-from django.conf import settings
-from django.urls import reverse_lazy, reverse
-from django.test import TestCase, Client, RequestFactory
+from bs4 import BeautifulSoup as soup
 from django.contrib.auth.models import User
+from django.test import (
+    TestCase,
+    Client,
+    RequestFactory
+)
+from django.urls import reverse_lazy
 from searchlist.models import Resource
-from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, ResourceDetailView
 import factory
 import faker
 import os
 import random
-from bs4 import BeautifulSoup as soup
 
 fake = faker.Faker()
 
@@ -102,6 +103,7 @@ class ViewRouteTest(TestCase):
     """Test for the various views."""
 
     def setUp(self):
+        """Set up for view tests."""
         self.client = Client()
         self.request = RequestFactory()
         self.resource = ResourceFactory.build()
@@ -172,7 +174,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
     """."""
 
     def setUp(self):
-        """."""
+        """Set up for resource tests."""
         self.client = Client()
         test_fred = User()
         test_fred.username = 'fred'

@@ -25,7 +25,9 @@ SECRET_KEY = 'SECRET_KEY'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
 
-ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com',
+                 'localhost',
+                 '127.0.0.1']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -44,8 +46,7 @@ INSTALLED_APPS = [
     'searchlist',
     'taggit',
     'storages',
-    'localflavor',
-    'phonenumber_field'
+    'localflavor'
 ]
 
 MIDDLEWARE = [
@@ -149,17 +150,16 @@ if not DEBUG:
 
     STATICFILES_LOCATION = 'static'
     STATICFILES_STORAGE = 'searchlist.custom_storages.StaticStorage'
-    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
+                                         STATICFILES_LOCATION)
 
     MEDIAFILES_LOCATION = 'searchlist/media'
     DEFAULT_FILE_STORAGE = 'searchlist.custom_storages.MediaStorage'
-    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-
+    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
+                                        MEDIAFILES_LOCATION)
 else:
-
     STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
     STATIC_URL = '/static/'
-
     STATIC_ROOT = '/static/'
 
     MEDIA_URL = '/media/'
@@ -170,6 +170,3 @@ else:
 
 # do this later...maybe?
 # boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
-
-PHONENUMBER_DB_FORMAT = 'NATIONAL'
-PHONENUMBER_DEFAULT_REGION = 'US'

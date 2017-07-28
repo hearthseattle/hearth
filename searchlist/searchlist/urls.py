@@ -13,21 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from searchlist.views import (
     HomePageView,
-    # SearchFormView,
     CreateResource,
     EditResource,
     ResourceDetailView,
     DeleteResource
 )
-from django.conf import settings
-from django.conf.urls.static import static
-from django_filters.views import FilterView
-from searchlist.models import Resource
 
 
 urlpatterns = [
@@ -38,7 +35,6 @@ urlpatterns = [
         name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(),
         name='logout'),
-    # url(r'^$', SearchFormView.as_view(), name='search_results'),
     url(
         r'^resource/new/$',
         CreateResource.as_view(),
@@ -60,11 +56,7 @@ urlpatterns = [
             success_message="The resource has been successfully deleted"
         ),
         name="delete"
-    ),
-    url(
-        r'^resource_list/$', 
-        FilterView.as_view(model=Resource)
-    ),
+    )
 ]
 
 if settings.DEBUG:

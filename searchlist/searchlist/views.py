@@ -1,19 +1,17 @@
 """View page for our homeless to hearth app."""
 from __future__ import unicode_literals
-from django.core.files.storage import default_storage
-from django.db.models.fields.files import FieldFile
-from django.views.generic.base import TemplateView
-from django.views.generic.list import ListView
-from django.shortcuts import render
-import operator
-from django.db.models import Q
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.edit import (
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 from searchlist.models import Resource
 from taggit.models import Tag
-from django.contrib import messages
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
@@ -65,6 +63,7 @@ class DeleteResource(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def delete(self, request, *args, **kwargs):
+        """Delete override to add a success message."""
         messages.success(self.request, self.success_message)
         return super(DeleteResource, self).delete(request, *args, **kwargs)
 
@@ -77,7 +76,6 @@ class HomePageView(ListView):
 
     def get_context_data(self, **kwargs):
         """Get context to populate page with resources."""
-
         main_category = [
             ("Crisis", "Crisis"),
             ("Addiction", "Addiction"),
