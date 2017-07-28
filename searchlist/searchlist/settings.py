@@ -93,7 +93,10 @@ DATABASES = {
         'HOST': os.environ.get('DATABASE_HOST', ''),
         'PORT': '5432',
         'TEST': {
-            'NAME': 'test_db'
+            'NAME': os.environ.get('TEST_DATABASE_NAME', ''),
+            'USER': os.environ.get('TEST_DATABASE_USER', ''),
+            'PASSWORD': os.environ.get('TEST_DATABASE_PASSWORD', ''),
+            'HOST': os.environ.get('TEST_DATABASE_HOST', ''),
         },
     }
 }
@@ -159,7 +162,7 @@ else:
 
     STATIC_ROOT = '/static/'
 
-    MEDIA_URL = 'media/'
+    MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Simplified static file serving.
