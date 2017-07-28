@@ -101,27 +101,7 @@ class HomePageView(ListView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['choices'] = [category[0] for category in main_category]
         context['tags'] = Tag.objects.all()
-        # import pdb; pdb.set_trace()
         return context
-
-
-# class SearchFormView(ListView):
-#     """Display a Resource list filtered by a search query."""
-
-#     def get_queryset(self)
-#         """Get a query for our search."""
-#         result = super(SearchFormView, self).get_queryset()
-
-#         query = self.request.GET.get('q')
-#         if query:
-#             query_list = query.split()
-#             result = result.filter(
-#                 reduce(operator.and_,
-#                        (Q(tags__icontains=q) for q in query_list)) |
-#                 reduce(operator.and_,
-#                        (Q(tags__icontains=q) for q in query_list))
-#             )
-#         return result
 
 
 class ResourceDetailView(DetailView):
@@ -130,46 +110,3 @@ class ResourceDetailView(DetailView):
     template_name = "searchlist/resource_detail.html"
     model = Resource
     context_object_name = "resource"
-    # {% for tag in resource.tags.all %}
-    # <a href="{% url "search:tagged" tag.slug %}">{{ tag }}</a>,
-    # {% endfor %}
-
-
-# class resource_list(FilterView):
-#     """Filter view for our resource list."""
-
-#     f = ResourceFilter(reques.GET, queryset=Resource.objects.all())
-#     return render(request, 'searchlist/template.html', {'filter: f'})
-
-
-# def filter_resources(request=None, tags=None):
-#     query = Resource.objects.filter()
-#     if tags and tags != "All tags":
-#         try:
-#             tag = tags.objects.get(name=tags)
-#             query = query.filter(tags=tag)
-#         except:
-#             return None
-#     return query
-
-
-# def resource_list(request):
-#     d = getVariables(request)
-#     if request.method == "GET":
-#         form = ResourceForm(request.GET)
-#         try:
-#             t_name = request.GET["tags"]
-#         except:
-#             t_name = None
-#         d["t_name"] = t_name
-#         try:
-#             resources = filter_resources(request=request, tags=t_name)
-#         except Exception:
-#             return error404(request)
-#         if resources is None:
-#             return error404(request)
-#         if len(resources) == 0:
-#             d["not_found"] = "Oh hi there."
-#     else:
-#         form = ResourceForm()
-#     return render_to_response('searchlist/Resource_filter.html', d, context_instance=RequestContext(request))
