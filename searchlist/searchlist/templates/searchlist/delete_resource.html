@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shoe strap</title>
+    <title>Homeless to Hearth</title>
     <!-- Bootstrap3 CSS  -->
     <link href="{% static 'searchlist/css/bootstrap.min.css' %}" rel="stylesheet">
       <!-- Custom Fonts -->
@@ -48,14 +48,14 @@
 </nav>  
 
 {% block content %}
-<div class="wrapper" style="padding-top: 100px;padding-left: 45px;margin: 0 auto;width: 70%;>
+<div class="wrapper" style="padding-top: 175px;padding-left: 45px;margin: 0 auto;width: 70%;>
     <form action="" method="post">{% csrf_token %}
         <div class="row">
         <div class= "col-md-12" style="text-align: center;">
-        <h3>Are you sure you want to delete "{{ object.org_name }}"?</h3>
+        <h2>Are you sure you want to delete "{{ object.org_name }}"?</h2>
         </div>
         </div>
-        <div class="col-4 col-md-6" style="padding-top: 25px;">
+        <div class="col-4 col-md-6" style="padding-top: 25px;padding-left: 215px;">
             <input type="submit" class="btn btn-danger btn-md" value="Confirm" />
         </div>
         <div class="col-4 col-md-6" style="padding-top: 25px;">
