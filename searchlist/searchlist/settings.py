@@ -28,7 +28,8 @@ DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
 
 ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com',
                  'localhost',
-                 '127.0.0.1']
+                 '127.0.0.1',
+                 'homeless-to-hearth.s3.amazonaws.com']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
