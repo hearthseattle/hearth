@@ -15,12 +15,26 @@ import random
 
 fake = faker.Faker()
 
-MAIN_CATEGORY = (
-    ("center", "center"),
-    ("shelter", "shelter"),
-    ("food", "food"),
-    ("clinic", "clinic")
-)
+MAIN_CATEGORY = [
+    ("Crisis", "Crisis"),
+    ("Addiction", "Addiction"),
+    ("Childcare", "Childcare"),
+    ("Youth Services", "Youth Services"),
+    ("Veteran", "Veteran"),
+    ("Rehabilitation", "Rehabilitation"),
+    ("Mental/Physical Disability", "Mental/Physical Disability"),
+    ("Education", "Education"),
+    ("Employment", "Employment"),
+    ("Finances", "Finances"),
+    ("Clothing/Housewares", "Clothing/Housewares"),
+    ("Food", "Food"),
+    ("Healthcare", "Healthcare"),
+    ("Shelter", "Shelter"),
+    ("Legal", "Legal"),
+    ("Identification", "Identification"),
+    ("Spiritual", "Spiritual")
+]
+
 
 HERE = os.path.dirname(__file__)
 
@@ -38,7 +52,7 @@ class ResourceFactory(factory.django.DjangoModelFactory):
         lambda n: 'Resource{}'.format(n)
     )
     main_category = random.choice(MAIN_CATEGORY)[0]
-    description = fake.text(254)
+    description = fake.text(100)
     website = fake.domain_name()
     org_name = fake.name()
     phone_number = factory.Sequence(lambda n: '123-555-%04d' % n)
@@ -61,24 +75,24 @@ class ResourceTestModels(TestCase):
     def test_model_fields(self):
         """Test organization is created with designated fields."""
         test_org = Resource()
-        test_org.main_category = 'shelter'
+        test_org.main_category = 'Addiction'
         test_org.org_name = 'test_org'
         test_org.description = 'test case'
         test_org.website = 'http://www.test_org.com'
         test_org.phone_number = '1234567890'
-        test_org.tags = 'shelter'
+        test_org.tags = 'Addiction'
         test_org.save()
-        self.assertTrue(test_org.main_category == 'shelter')
+        self.assertTrue(test_org.main_category == 'Addiction')
         self.assertTrue(test_org.org_name == 'test_org')
         self.assertTrue(test_org.description == 'test case')
         self.assertTrue(test_org.website == 'http://www.test_org.com')
         self.assertTrue(test_org.phone_number == '1234567890')
-        self.assertTrue(test_org.tags == 'shelter')
+        self.assertTrue(test_org.tags == 'Addiction')
 
     def test_can_change_settings(self):
         """Test that settings can be changed for certain resources."""
         self.resource.main_category = MAIN_CATEGORY[1][0]
-        self.assertEqual(self.resource.main_category,"shelter")
+        self.assertEqual(self.resource.main_category,"Addiction")
 
     def test_delete_resources(self):
         """Test that delete works."""
@@ -206,7 +220,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
             self.client.login(username='fred', password='temporary')
             self.assertEqual(Resource.objects.count(), 1)
             idx = self.resource.id
-            response = self.client.get(reverse('delete', kwargs={'pk': idx}))
+            response = self.client.get(reverse_lazy('delete', kwargs={'pk': idx}))
             html = soup(response.content, 'html.parser')
             cancel = html.findAll('a', {'href': "/resource/1/edit/"})
             self.assertTrue(cancel)
@@ -216,7 +230,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         response = self.client.get(reverse_lazy('home'))
         html = soup(response.content, "html.parser")
         link = html.findAll("a", {"href": "/resource/2"})
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         self.assertTrue(link)
 
 
