@@ -1,19 +1,63 @@
-{% extends "searchlist/base.html" %}
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shoe strap</title>
+    <!-- Bootstrap3 CSS  -->
+    <link href="{% static 'searchlist/css/bootstrap.min.css' %}" rel="stylesheet">
+      <!-- Custom Fonts -->
+    <link href="{% static 'searchlist/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Plugin CSS -->
+    <link href="{% static 'searchlist/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link href="{% static 'searchlist/css/creative.min.css' %}" rel="stylesheet">
+</head>
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid" style="background-color: #1C2225;">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand page-scroll" href="{% url 'home' %}">Homeless to Hearth</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+              <li>
+                  <a class="page-scroll" href="{% url 'home' %}">Home</a>
+              </li>
+          </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>  
 {% block content %}
 
-<h1>{{ resource.org_name }}</h1>
-<ul>
-    <li>Website: {{ resource.website }}</li>
-    <li>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</li>
-    <li>Description: {{ resource.description }}</li>
+<h1 style="padding-top: 150px;padding-left: 40px;margin: 0 auto;width: 400px;">{{ resource.org_name }}</h1>
+<ul style="padding-top: 45px;padding-left: 45px;margin: 0 auto;width: 65%;">
+    <p>Website: {{ resource.website }}</p>
+    <p>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</p>
+    <p>Description: {{ resource.description }}</p>
 </ul>
-<iframe class="map-class "width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.org_name}}+{{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=14"></iframe>
+        <div class="row" style="margin: 0 auto;width: 225px;padding-top: 30px;">
+            <div class="col-2 col-md-2">
+            <a href="{% url 'edit_resource' resource.pk %}"><button type="button" class="btn btn-warning btn-lg">Edit Resource</button></a>
+            </div>
+        </div>
+<div class="map" style="margin: 0 auto;width: 900px;padding-top: 30px;">
+<iframe class="map-class "width="900" height="450" frameborder="0"  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.org_name}}+{{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=14"></iframe>
+</div>
 {% if resource.image %}
     <img src="{{resource.image.url}}"/>
 {% endif %}
 {% if user.is_authenticated %}
-        <div class="col-2 col-md-2">
-            <a href="{% url 'edit_resource' resource.pk %}"><button type="button" class="btn btn-warning btn-lg">Edit Resource</button></a>
-        </div>
 {% endif %}
 {% endblock %}
