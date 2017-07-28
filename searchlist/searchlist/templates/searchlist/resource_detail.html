@@ -54,18 +54,18 @@
     <p>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</p>
     <p>Description: {{ resource.description }}</p>
 </ul>
+{% if user.is_authenticated %}
         <div class="row" style="margin: 0 auto;width: 225px;padding-top: 30px;">
             <div class="col-2 col-md-2">
             <a href="{% url 'edit_resource' resource.pk %}"><button type="button" class="btn btn-warning btn-lg">Edit Resource</button></a>
             </div>
         </div>
+{% endif %}
 <div class="map" style="margin: 0 auto;width: 900px;padding-top: 30px;">
 <iframe class="map-class "width="900" height="450" frameborder="0"  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.org_name}}+{{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=14"></iframe>
 </div>
 {% if resource.image %}
     <img src="{{resource.image.url}}"/>
-{% endif %}
-{% if user.is_authenticated %}
 {% endif %}
 {% endblock %}
 

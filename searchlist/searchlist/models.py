@@ -4,8 +4,11 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import TaggableManager
-from localflavor.us.models import USStateField, USZipCodeField, PhoneNumberField
-import django_filters
+from localflavor.us.models import (
+    USStateField,
+    USZipCodeField,
+    PhoneNumberField
+)
 
 
 MAIN_CATEGORY = [
@@ -38,12 +41,12 @@ class Resource(models.Model):
         choices=MAIN_CATEGORY
     )
 
-    org_name = models.CharField(max_length=100, default='')
-    description = models.CharField(max_length=400, default='')
-    street = models.CharField(max_length=128, default='')
-    city = models.CharField(max_length=128, default='')
-    state = USStateField(default='')
-    zip_code = USZipCodeField(default='')
+    org_name = models.CharField(max_length=100)
+    description = models.TextField(max_length=400)
+    street = models.CharField(max_length=128, null=True, blank=True)
+    city = models.CharField(max_length=128, default='Seattle')
+    state = USStateField(default='Washington')
+    zip_code = USZipCodeField(null=True, blank=True)
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
     tags = TaggableManager(blank=True)
@@ -58,28 +61,16 @@ class Resource(models.Model):
         address: {} {}, {} {}
         website: {}
         phone_number: {}
-        """.format(self.org_name, self.description, self.main_category, self.street, self.city, self.state, self.zip_code, self.website, self.phone_number)
+        """.format(self.org_name,
+                   self.description,
+                   self.main_category,
+                   self.street,
+                   self.city,
+                   self.state,
+                   self.zip_code,
+                   self.website,
+                   self.phone_number)
 
     def __str__(self):
         """Print organization information."""
         return self.__repr__()
-
-
-class ResourceFilter(django_filters.FilterSet):
-    """Filter class for filtering our resources."""
-
-    org_name = django_filters.CharFilter(lookup_expr='iexact')
-
-    class Meta:
-        """Meta class for our resource filter."""
-
-        model = Resource
-        fields = ['description']
-
-    @property
-    def qs(self):
-        """Query for our resource list."""
-        parent = super(ResourceFilter, self).qs
-        tags = getattr(self.request, 'tags', None)
-
-        return parent.filter(tags=tags)
