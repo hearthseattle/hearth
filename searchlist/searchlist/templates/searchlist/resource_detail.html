@@ -1,16 +1,8 @@
 {% extends "searchlist/base.html" %}
 {% block content %}
 
-{% if user.is_authenticated %}
-    <a href="{% url 'edit_resource' resource.pk %}">Edit Resource</a>
-{% endif %}
-<h1>Organization: {{ resource.org_name }}</h1>
+<h1>{{ resource.org_name }}</h1>
 <ul>
-    <li>Main Category: {{ resource.main_category }}</li>
-    <li>Ratings: {{ resource.ratings }}</li>
-    {% for tag in resource.tags.all %}
-        <li>Tags:{{ tag.name }}</li>
-    {% endfor %}
     <li>Website: {{ resource.website }}</li>
     <li>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</li>
     <li>Description: {{ resource.description }}</li>
@@ -18,5 +10,10 @@
 <iframe class="map-class "width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAgPIVjOnke7nERCIiuF9oLzG2HRS1AwDs&q={{resource.org_name}}+{{resource.street}}+{{resource.city}}+,+{{resource.state}}+{{resource.zip_code}}&zoom=14"></iframe>
 {% if resource.image %}
     <img src="{{resource.image.url}}"/>
+{% endif %}
+{% if user.is_authenticated %}
+        <div class="col-2 col-md-2">
+            <a href="{% url 'edit_resource' resource.pk %}"><button type="button" class="btn btn-warning btn-lg">Edit Resource</button></a>
+        </div>
 {% endif %}
 {% endblock %}
