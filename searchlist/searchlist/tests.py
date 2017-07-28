@@ -199,21 +199,22 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
 
-    # def test_delete_resource_shows_cancel_button(self):
-    #         """Test cancel button shows on delete resource page."""
-    #         self.assertEqual(Resource.objects.count(), 1)
-    #         idx = self.resource.id
-    #         response = self.client.get(reverse('delete', kwargs={'id': idx}))
-    #         import pdb; pdb.set_trace()
-    #         # html = BeautifulSoup(response.content, 'Cancel')
-    #         self.assertEqual(response.status_code, 302)
-    #         self.assertEqual(Resource.objects.count(), 1)
+    def test_delete_resource_shows_cancel_button(self):
+            """Test cancel button shows on delete resource page."""
+            self.client.login(username='fred', password='temporary')
+            self.assertEqual(Resource.objects.count(), 1)
+            idx = self.resource.id
+            response = self.client.get(reverse('delete', kwargs={'pk': idx}))
+            html = soup(response.content, 'html.parser')
+            cancel = html.findAll('a', {'href': "/resource/1/edit/"})
+            self.assertTrue(cancel)
 
-    def test_homepage_view_links_to_a_singe_resource(self):
+    def test_homepage_view_links_to_a_single_resource(self):
         """Test homepage resource list total."""
         response = self.client.get(reverse_lazy('home'))
         html = soup(response.content, "html.parser")
-        link = html.findAll("a", {"href": "/resource/1"})
+        link = html.findAll("a", {"href": "/resource/\d+"})
+        import pdb; pdb.set_trace()
         self.assertTrue(link)
 
 
