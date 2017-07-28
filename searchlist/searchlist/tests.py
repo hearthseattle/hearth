@@ -1,16 +1,17 @@
 """Tests for views, model and user privileges."""
-
-from django.conf import settings
-from django.urls import reverse_lazy, reverse
-from django.test import TestCase, Client, RequestFactory
+from bs4 import BeautifulSoup as soup
 from django.contrib.auth.models import User
+from django.test import (
+    TestCase,
+    Client,
+    RequestFactory
+)
+from django.urls import reverse_lazy
 from searchlist.models import Resource
-from searchlist.views import CreateResource, EditResource, DeleteResource, HomePageView, ResourceDetailView
 import factory
 import faker
 import os
 import random
-from bs4 import BeautifulSoup as soup
 
 fake = faker.Faker()
 
@@ -102,6 +103,7 @@ class ViewRouteTest(TestCase):
     """Test for the various views."""
 
     def setUp(self):
+        """Set up for view tests."""
         self.client = Client()
         self.request = RequestFactory()
         self.resource = ResourceFactory.build()
@@ -172,7 +174,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
     """."""
 
     def setUp(self):
-        """."""
+        """Set up for resource tests."""
         self.client = Client()
         test_fred = User()
         test_fred.username = 'fred'
@@ -199,21 +201,22 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
 
-    # def test_delete_resource_shows_cancel_button(self):
-    #         """Test cancel button shows on delete resource page."""
-    #         self.assertEqual(Resource.objects.count(), 1)
-    #         idx = self.resource.id
-    #         response = self.client.get(reverse('delete', kwargs={'id': idx}))
-    #         import pdb; pdb.set_trace()
-    #         # html = BeautifulSoup(response.content, 'Cancel')
-    #         self.assertEqual(response.status_code, 302)
-    #         self.assertEqual(Resource.objects.count(), 1)
+    def test_delete_resource_shows_cancel_button(self):
+            """Test cancel button shows on delete resource page."""
+            self.client.login(username='fred', password='temporary')
+            self.assertEqual(Resource.objects.count(), 1)
+            idx = self.resource.id
+            response = self.client.get(reverse('delete', kwargs={'pk': idx}))
+            html = soup(response.content, 'html.parser')
+            cancel = html.findAll('a', {'href': "/resource/1/edit/"})
+            self.assertTrue(cancel)
 
-    def test_homepage_view_links_to_a_singe_resource(self):
+    def test_homepage_view_links_to_a_single_resource(self):
         """Test homepage resource list total."""
         response = self.client.get(reverse_lazy('home'))
         html = soup(response.content, "html.parser")
-        link = html.findAll("a", {"href": "/resource/1"})
+        link = html.findAll("a", {"href": "/resource/2"})
+        import pdb; pdb.set_trace()
         self.assertTrue(link)
 
 
