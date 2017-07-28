@@ -3,9 +3,19 @@
 {% block content %}
 <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Add/Update Image" />
+    <div class="row">
+        {% if edit %}
+        <div class="col-2 col-md-2">
+            <input type="submit" class="btn btn-info btn-lg" value="Update Resource" />
+        </div>
+        <div class ="col-2 col-md-2">
+<a href="{% url 'delete' pk=resource.id %}" class="btn btn-danger btn-lg">Delete Resource</a>
+        </div>
+        {% else %}
+        <div class="col-2 col-md-2">
+            <input type="submit" class="btn btn-info btn-lg" value="Add Resource" />
+        </div>
+        {% endif %}
+    </div>
 </form>
-{% if edit %}
-  <a href="{% url 'delete' pk=resource.id %}" type="button">Delete this resource</a>
-{% endif %}
 {% endblock %}

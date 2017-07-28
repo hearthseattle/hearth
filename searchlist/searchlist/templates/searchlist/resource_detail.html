@@ -4,13 +4,8 @@
 {% if user.is_authenticated %}
     <a href="{% url 'edit_resource' resource.pk %}">Edit Resource</a>
 {% endif %}
-<h1>Organization: {{ resource.org_name }}</h1>
+<h1>{{ resource.org_name }}</h1>
 <ul>
-    <li>Main Category: {{ resource.main_category }}</li>
-    <li>Ratings: {{ resource.ratings }}</li>
-    {% for tag in resource.tags.all %}
-        <li>Tags:{{ tag.name }}</li>
-    {% endfor %}
     <li>Website: {{ resource.website }}</li>
     <li>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</li>
     <li>Description: {{ resource.description }}</li>
