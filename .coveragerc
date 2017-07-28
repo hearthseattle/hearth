@@ -8,6 +8,7 @@ omit =
     */__init__.py
     */apps.py
     bootstrap3/
+    searchlist/searchlist/custom_storages.py
     searchlist/searchlist/settings.py
     searchlist/manage.py
     searchlist/searchlist/wsgi.py

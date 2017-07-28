@@ -236,35 +236,30 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         self.assertTrue(link)
 
 
-##### CSS Element Tests 
+##### CSS Element Tests
     def test_template_used_for_home_html_is_base(self):
         """Test that template used for home.html is the base.html."""
-        response = self.client.get('/home')
-        self.assertTemplateUsed(response, 'base.html')
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'searchlist/base.html')
 
     def test_template_not_used_for_home_html(self):
         """Test that template used for home.html is not 404.html."""
-        response = self.client.get('/home')
+        response = self.client.get('/')
         self.assertTemplateNotUsed(response, '404.html')
 
-    def test_template_used_for_delete_resource_html_is_base(self):
-        """Test that template used for home.html is the base.html."""
-        response = self.client.get('/delete')
-        self.assertTemplateUsed(response, 'delete_resource.html')
-
     def test_template_not_used_for_delete_resource_html(self):
-        """Test that template used for home.html is not base.html."""
+        """Test that template used for delete_resource.html is not base.html."""
         response = self.client.get('/delete')
         self.assertTemplateNotUsed(response, 'base.html')
 
-    def test_template_used_for_resource_detail_html_is_base(self):
-        """Test that template used for home.html is the base.html."""
-        response = self.client.get('/delete')
-        self.assertTemplateUsed(response, 'delete_resource.html')
-
     def test_template_not_used_for_resource_detail_html(self):
-        """Test that template used for home.html is not base.html."""
+        """Test that template used for resource_detail.html is not base.html."""
         response = self.client.get('/delete')
+        self.assertTemplateNotUsed(response, 'base.html')
+
+    def test_template_not_used_for_resource_form_html(self):
+        """Test that template used for resource_form.html is not base.html."""
+        response = self.client.get('/resource_detail')
         self.assertTemplateNotUsed(response, 'base.html')
 
 
