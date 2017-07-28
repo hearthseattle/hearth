@@ -35,15 +35,15 @@ class Resource(models.Model):
     """Model for the organization."""
 
     main_category = models.CharField(
-        max_length=25,
+        max_length=128,
         choices=MAIN_CATEGORY
     )
 
-    org_name = models.CharField(max_length=100)
-    description = models.TextField(max_length=400)
-    street = models.CharField(max_length=128, null=True, blank=True)
-    city = models.CharField(max_length=128, default='Seattle')
-    state = USStateField(default='Washington')
+    org_name = models.CharField(max_length=128)
+    description = models.TextField(max_length=512)
+    street = models.CharField(max_length=256, null=True, blank=True)
+    city = models.CharField(max_length=256, default='Seattle')
+    state = USStateField(default='')
     zip_code = USZipCodeField(null=True, blank=True)
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
