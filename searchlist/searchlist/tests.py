@@ -213,7 +213,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         """Test homepage resource list total."""
         response = self.client.get(reverse_lazy('home'))
         html = soup(response.content, "html.parser")
-        link = html.findAll("a", {"href": "/resource/\d+"})
+        link = html.findAll("a", {"href": "/resource/2"})
         import pdb; pdb.set_trace()
         self.assertTrue(link)
 
