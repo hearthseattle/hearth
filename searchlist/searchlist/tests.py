@@ -12,6 +12,8 @@ import factory
 import faker
 import os
 import random
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.contrib.staticfiles import finders
 
 fake = faker.Faker()
 
@@ -220,6 +222,38 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         self.assertTrue(link)
 
 
+##### CSS Element Tests 
+    def test_template_used_for_home_html_is_base(self):
+        """Test that template used for home.html is the base.html."""
+        response = self.client.get('/home')
+        self.assertTemplateUsed(response, 'base.html')
+
+    def test_template_not_used_for_home_html(self):
+        """Test that template used for home.html is not 404.html."""
+        response = self.client.get('/home')
+        self.assertTemplateNotUsed(response, '404.html')
+
+    def test_template_used_for_delete_resource_html_is_base(self):
+        """Test that template used for home.html is the base.html."""
+        response = self.client.get('/delete')
+        self.assertTemplateUsed(response, 'delete_resource.html')
+
+    def test_template_not_used_for_delete_resource_html(self):
+        """Test that template used for home.html is not base.html."""
+        response = self.client.get('/delete')
+        self.assertTemplateNotUsed(response, 'base.html')
+
+    def test_template_used_for_resource_detail_html_is_base(self):
+        """Test that template used for home.html is the base.html."""
+        response = self.client.get('/delete')
+        self.assertTemplateUsed(response, 'delete_resource.html')
+
+    def test_template_not_used_for_resource_detail_html(self):
+        """Test that template used for home.html is not base.html."""
+        response = self.client.get('/delete')
+        self.assertTemplateNotUsed(response, 'base.html')
+
+
     # def test_homepage_view_has_links_to_multiple_resources(self):
     #     """Test homepage resource list total."""
     #     ResourceFactory.build()
@@ -308,3 +342,6 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
 #         response = self.client.get('/resource/{}/delete/'.format(idx))
 #         html = BeautifulSoup(response.content, 'Edit')
 #         self.assertEqual(response.status_code, 302) #redirect to edit page
+
+############### BOOTSTRAP TESTS
+
