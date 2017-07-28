@@ -51,7 +51,7 @@ class Resource(models.Model):
 
     # @property
     # def get_tags(self):
-        
+ 
     def __repr__(self):
         """Print org info."""
         return """

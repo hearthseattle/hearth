@@ -6,14 +6,14 @@
     <div class="row">
         {% if edit %}
         <div class="col-2 col-md-2">
-            <input type="submit" class="btn btn-info btn-lg" value="Update Resource" />
+            <input type="submit" class="btn btn-info btn-md" value="Update Resource" />
         </div>
         <div class ="col-2 col-md-2">
-<a href="{% url 'delete' pk=resource.id %}" class="btn btn-danger btn-lg">Delete Resource</a>
+<a href="{% url 'delete' pk=resource.id %}" class="btn btn-danger btn-md">Delete Resource</a>
         </div>
         {% else %}
         <div class="col-2 col-md-2">
-            <input type="submit" class="btn btn-info btn-lg" value="Add Resource" />
+            <button><input type="submit" class="btn btn-info btn-md" value="Add Resource" /></button>
         </div>
         {% endif %}
     </div>
