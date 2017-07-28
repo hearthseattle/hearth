@@ -52,7 +52,7 @@
               <div class="row category_list {{ resource.main_category }}{% for tag in resource.tags.all %} {{ tag.name }}{% endfor %}">
                   <div class="col col-md-12 text-center">
                       <div class="service-box">
-                          <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
+                          <i class="fa fa-4x fa-heart text-primary sr-icons"></i>
                           <h3><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.org_name }}</a></h3>
                           <h5 class="text-muted"><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</a></h5>
                           <h6 class="text-muted">{{ resource.phone_number}}</h6>
@@ -67,7 +67,7 @@
             <div class="container">
                 <div class="row" style="background-color: #1C2225;color: white;">
                     <div class="col-lg-8 col-lg-offset-2 text-center">
-                        <h2 class="section-heading">Let's Get In Touch!</h2>
+                        <h2 class="section-heading" style="padding-top: 35px;">Let's Get In Touch!</h2>
                         <hr class="primary">
                         <p>Are you looking for a resource we don't have? Get in touch with us and we'll see what we can do to make our user experience better!</p>
                     </div>
