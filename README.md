@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_hearth/badge.svg?branch=master)](https://coveralls.io/github/kurtrm/homeless_to_hearth?branch=master)[![Build Status](https://travis-ci.org/kurtrm/homeless_to_hearth.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_hearth)
+[![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_hearth/badge.svg?branch=kurt-test-coveralls)](https://coveralls.io/github/kurtrm/homeless_to_hearth?branch=kurt-test-coveralls) [![Build Status](https://travis-ci.org/kurtrm/homeless_to_hearth.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_hearth)
 
 # Seattle Homeless to Hearth Pipeline
 
@@ -17,30 +17,28 @@ Our ultimate goal is to connect people in need to the care they require as quick
 
 
 ## Getting Started
-
-
-
 ### Prerequisites
-
+In order to run our application, you must have **Python** and **pip** installed.
 
 
 ### Installing
+To clone our repository, run the following command:
+
+    git clone git@github.com:kurtrm/homeless_to_hearth.git
+
+Navigate into the **homeless_to_hearth** directory then run the following command in order to install the required dependencies:
 
     pip install -r requirements.txt
 
 ## Running the tests
+Run the following command in the same directory as the **manage.py** file to run tests:
 
-
-## Deployment
-
+    ./manage.py test
 
 
 ## Built With
 
     Django and Bootstrap.js
-
-## Contributing
-
 
 
 ## Versioning
