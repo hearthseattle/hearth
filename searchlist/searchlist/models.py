@@ -47,11 +47,8 @@ class Resource(models.Model):
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
     tags = TaggableManager(blank=True)
-    image = models.ImageField(upload_to='photos', null=True)
+    image = models.ImageField(upload_to='photos', null=True, blank=True)
 
-    # @property
-    # def get_tags(self):
- 
     def __repr__(self):
         """Print org info."""
         return """
