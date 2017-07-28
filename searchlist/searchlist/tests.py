@@ -10,7 +10,7 @@ import factory
 import faker
 import os
 import random
-
+from bs4 import BeautifulSoup as soup
 
 fake = faker.Faker()
 
@@ -199,22 +199,34 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
 
-    def test_delete_resource_shows_cancel_button(self):
-            """Test cancel button."""
-            self.assertEqual(Resource.objects.count(), 1)
-            idx = self.resource.id
-            response = self.client.get(reverse('delete', kwargs={'pk': idx}))
-            import pdb; pdb.set_trace()
-            # html = BeautifulSoup(response.content, 'Cancel')
-            self.assertEqual(response.status_code, 302)
-            self.assertEqual(Resource.objects.count(), 1)
+    # def test_delete_resource_shows_cancel_button(self):
+    #         """Test cancel button shows on delete resource page."""
+    #         self.assertEqual(Resource.objects.count(), 1)
+    #         idx = self.resource.id
+    #         response = self.client.get(reverse('delete', kwargs={'id': idx}))
+    #         import pdb; pdb.set_trace()
+    #         # html = BeautifulSoup(response.content, 'Cancel')
+    #         self.assertEqual(response.status_code, 302)
+    #         self.assertEqual(Resource.objects.count(), 1)
 
-#need to work on syntax below
-#     def test_homepageview(self):
-#         """Test homepage resource list total."""
-#         response = self.client.get(reverse_lazy('home'))
-#         total number of resource_list = tot of list
-#
+    def test_homepage_view_links_to_a_singe_resource(self):
+        """Test homepage resource list total."""
+        response = self.client.get(reverse_lazy('home'))
+        html = soup(response.content, "html.parser")
+        link = html.findAll("a", {"href": "/resource/1"})
+        self.assertTrue(link)
+
+
+    def test_homepage_view_has_links_to_multiple_resources(self):
+        """Test homepage resource list total."""
+        ResourceFactory.build()
+        ResourceFactory.build()
+        response = self.client.get(reverse_lazy('home'))
+        html = soup(response.content, "html.parser")
+        link = html.findAll("a", {"href": "/resource/*"})
+        print(len(link))
+        self.assertTrue(len(link) == 3)
+
 #     def test_homepageview_checkbox(self):
 #         """Test homepage."""
 #         response = self.client.get(reverse_lazy('home'))
