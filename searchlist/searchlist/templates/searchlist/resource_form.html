@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load bootstrap %}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,9 +49,10 @@
 </nav>
 
 {% block content %}
-<div class="wrapper" style="padding-top: 100px;padding-left: 65px;padding-bottom: 35px;">
-    <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
+<div class="" style="padding-top: 100px;padding-left: 65px;padding-bottom: 35px;">
+    <form class="form-horizontal col-sm-10 col-md-8" enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+      <legend>Add Resource</legend>
+        {{ form|bootstrap_horizontal:'col-sm-2 col-md-2' }}
         <div class="row">
             {% if edit %}
             <div class="col-2 col-md-2">

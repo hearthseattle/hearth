@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'storages',
     'localflavor',
     'corsheaders',
+    'bootstrapform',
+    'bootstrap3'
 ]
 
 MIDDLEWARE = [

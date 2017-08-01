@@ -35,10 +35,16 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% block login %}
                     {% if user.is_authenticated %}
-                    <li><a href='{% url "logout" %}'>Logout</a></li>
-                    <li><a href='{% url "create_resource" %}'>Add Resource</a></li>
+                    <li>
+                        <a href='{% url "logout" %}'>Logout</a>
+                    </li>
+                    <li>
+                        <a href='{% url "create_resource" %}'>Add Resource</a>
+                    </li>
                     {% else %}
-                    <li><a href='{% url "login" %}' style="color: white;">Login</a></li>
+                    <li>
+                        <a href='{% url "login" %}'>Login</a>
+                    </li>
                     {% endif %}
                     {% endblock %}
                     <li>
