@@ -61,11 +61,11 @@ urlpatterns = [
         ),
         name="delete"
     ),
-    url(
-        r'^', include(router.urls),
-        r'^api-auth/', include('rest_framework.urls',
+    url(r'^', include(router.urls)
+        ),
+    url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')
-    )
+        )
 ]
 
 if settings.DEBUG:
