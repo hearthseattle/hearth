@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from rest_framework import routers
+from rest.views import ResourceViewSet
 from searchlist.views import (
     HomePageView,
     CreateResource,
@@ -26,6 +28,8 @@ from searchlist.views import (
     DeleteResource
 )
 
+router = routers.DefaultRouter()
+router.register(r'resources', ResourceViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -56,7 +60,12 @@ urlpatterns = [
             success_message="The resource has been successfully deleted"
         ),
         name="delete"
-    )
+    ),
+    url(r'^', include(router.urls)
+        ),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')
+        )
 ]
 
 if settings.DEBUG:

@@ -51,8 +51,17 @@ INSTALLED_APPS = [
     'localflavor',
     'corsheaders',
     'bootstrapform',
-    'bootstrap3'
+    'bootstrap3',
+    'rest',
+    'rest_framework'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
