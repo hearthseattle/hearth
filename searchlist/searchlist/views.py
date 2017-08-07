@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import (
@@ -12,6 +14,16 @@ from django.views.generic.edit import (
 )
 from searchlist.models import Resource
 from taggit.models import Tag
+
+
+class NotFound(View):
+    """Class based views for 404s."""
+
+    template_name = '404.html'
+
+    def get(self, request, *args, **kwargs):
+        """Override get method."""
+        return HttpResponseNotFound('success', content_type='text/plain')
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
