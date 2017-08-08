@@ -26,7 +26,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
 
-ALLOWED_HOSTS = ['ec2-52-89-210-22.us-west-2.compute.amazonaws.com',
+ALLOWED_HOSTS = ['ec2-35-161-235-121.us-west-2.compute.amazonaws.com',
                  'localhost',
                  '127.0.0.1',
                  'homeless-to-hearth.s3.amazonaws.com']
