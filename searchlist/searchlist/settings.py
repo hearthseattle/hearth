@@ -157,28 +157,28 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = 'home'
 
 
-if not DEBUG:
-    AWS_STORAGE_BUCKET_NAME = 'homeless-to-hearth'
-    AWS_ACCESS_KEY_ID = os.environ.get('IAM_USER_ACCESS_KEY_ID', '')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('IAM_USER_SECRET_ACCESS_KEY', '')
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# if not DEBUG:
+AWS_STORAGE_BUCKET_NAME = 'homeless-to-hearth'
+AWS_ACCESS_KEY_ID = os.environ.get('IAM_USER_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('IAM_USER_SECRET_ACCESS_KEY', '')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-    STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'searchlist.custom_storages.StaticStorage'
-    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
-                                         STATICFILES_LOCATION)
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'searchlist.custom_storages.StaticStorage'
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
+                                     STATICFILES_LOCATION)
 
-    MEDIAFILES_LOCATION = 'searchlist/media'
-    DEFAULT_FILE_STORAGE = 'searchlist.custom_storages.MediaStorage'
-    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
-                                        MEDIAFILES_LOCATION)
-else:
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
-    STATIC_URL = '/static/'
-    STATIC_ROOT = '/static/'
+MEDIAFILES_LOCATION = 'searchlist/media'
+DEFAULT_FILE_STORAGE = 'searchlist.custom_storages.MediaStorage'
+MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
+#                                         MEDIAFILES_LOCATION)
+# else:
+#     STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
+#     STATIC_URL = '/static/'
+#     STATIC_ROOT = '/static/'
 
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+#     MEDIA_URL = '/media/'
+#     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
