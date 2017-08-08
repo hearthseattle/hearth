@@ -24,7 +24,7 @@ SECRET_KEY = 'SECRET_KEY'
 CORS_ORIGIN_ALLOW_ALL = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
