@@ -1,0 +1,82 @@
+{% extends 'searchlist/base.html' %}
+{% load static %}
+{% block title %}Homeless to Hearth{% endblock %}
+
+{% block content %}
+<header>
+        <div class="header-content" style="padding-top: 45px;">
+            <div class="header-content-inner" style="background-color: rgba(204, 204, 204, 0.5);height: 425px;padding-top: 55px;">
+                <h1 id="homeHeading">Taking care of those in need.</h1>
+                <hr>
+                <p>Let us help you find your way.</p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Resources here!</a>
+            </div>
+        </div>
+</header>
+<div id="about">
+  <div class="container" style="margin-top: 75px;">
+          <div class="row categories">
+          {% for choice in choices %}
+                <div class="col-6 col-md-3 center-block" style="text-align:left;word-break:break-all;padding-left: 70px;">
+                  <div class="checkbox checkbox-primary">
+                    <input class type="checkbox" value="{{ choice }}">
+                    <label for="checkbox">{{ choice }}</label>
+                  </div>
+            </div>
+          {% endfor %}
+          {% for tag in tags %}
+                <div class="col-6 col-md-3 center-block" style="text-align:left;word-break:break-all;padding-left: 70px;">
+                  <div class="checkbox checkbox-primary">
+                    <input class type="checkbox" value="{{ tag }}">
+                    <label for="checkbox">{{ tag }}</label>
+                  </div>
+            </div>
+          {% endfor %}
+      </div>
+  </div>
+    <!-- New section from bootstrap -->
+    <section id="services">
+          <div class="container">
+                  <div class="col col-md-12 text-center">
+                      <h2 class="section-heading">Resources</h2>
+                      <hr class="primary">
+                  </div>
+          </div>
+          {% for resource in resource_list %}
+          <div class="container" style="">
+              <div class="row category_list {{ resource.main_category }}{% for tag in resource.tags.all %} {{ tag.name }}{% endfor %}">
+                  <div class="col col-md-12 text-center">
+                      <div class="service-box">
+                          <i class="fa fa-4x fa-heart text-primary sr-icons" crossorigin="anonymous"></i>
+                          <h3><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.org_name }}</a></h3>
+                          <h5 class="text-muted"><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</a></h5>
+                          <h6 class="text-muted">{{ resource.phone_number}}</h6>
+                          <p>{{ resource.description }}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </section>
+      <section id="contact">
+            <div class="container">
+                <div class="row" style="background-color: #1C2225;color: white;">
+                    <div class="col-lg-8 col-lg-offset-2 text-center">
+                        <h2 class="section-heading" style="padding-top: 35px;">Let's Get In Touch!</h2>
+                        <hr class="primary">
+                        <p>Are you looking for a resource we don't have? Get in touch with us and we'll see what we can do to make our user experience better!</p>
+                    </div>
+                    <div class="col-lg-4 col-lg-offset-2 text-center">
+                        <i class="fa fa-phone fa-3x sr-contact" crossorigin="anonymous"></i>
+                        <p>123-456-6789</p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <i class="fa fa-envelope-o fa-3x sr-contact" crossorigin="anonymous"></i>
+                        <p><a href="mailto:your-email@your-domain.com">feedback@homelesstohearth.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>   
+    </div>
+</div>
+{% endblock %}

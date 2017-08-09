@@ -1,0 +1,17 @@
+[run]
+source = 
+    searchlist
+omit = 
+    */migrations/*
+    */admin.py
+    */tests.py
+    */__init__.py
+    */apps.py
+    bootstrap3/
+    searchlist/searchlist/custom_storages.py
+    searchlist/searchlist/settings.py
+    searchlist/manage.py
+    searchlist/searchlist/wsgi.py
+
+[report]
+show_missing = True

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends 'searchlist/base.html' %}
+{% load static %}
+{% block content %}
+<div class="wrapper" style="padding-top: 175px;padding-left: 45px;margin: 0 auto;width: 70%;">
+    <form action="" method="post">{% csrf_token %}
+        <div class="row">
+        <div class= "col-md-12" style="text-align: center;">
+        <h2>Are you sure you want to delete "{{ object.org_name }}"?</h2>
+        </div>
+        </div>
+        <div class="col-4 col-md-6" style="padding-top: 25px;padding-left: 215px;">
+            <input type="submit" class="btn btn-danger btn-md" value="Confirm" />
+        </div>
+        <div class="col-4 col-md-6" style="padding-top: 25px;">
+            <a href="{% url 'edit_resource' pk=resource.id %}" class="btn btn-info btn-md">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
