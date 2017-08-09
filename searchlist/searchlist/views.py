@@ -110,6 +110,7 @@ class HomePageView(ListView):
 
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['choices'] = [category[0] for category in main_category]
+        context['clear_nav_bar'] = True
         context['tags'] = Tag.objects.all()
         return context
 
