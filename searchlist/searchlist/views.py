@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import Textarea
 from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views import View
@@ -12,6 +13,7 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
+from .forms import ResourceForm
 from searchlist.models import Resource
 from taggit.models import Tag
 
@@ -30,10 +32,11 @@ class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
     template_name = 'searchlist/resource_form.html'
-    model = Resource
-    fields = ['main_category', 'org_name',
-              'description', 'street', 'city', 'zip_code', 'website',
-              'phone_number', 'image', 'tags']
+    # model = Resource
+    # fields = ['main_category', 'org_name',
+    #           'description', 'street', 'city', 'zip_code', 'website',
+    #           'phone_number', 'image', 'tags']
+    form_class = ResourceForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
