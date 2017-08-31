@@ -32,7 +32,7 @@ class CreateResource(LoginRequiredMixin, CreateView):
     template_name = 'searchlist/resource_form.html'
     model = Resource
     fields = ['main_category', 'org_name',
-              'description', 'street', 'city', 'state', 'zip_code', 'website',
+              'description', 'street', 'city', 'zip_code', 'website',
               'phone_number', 'image', 'tags']
     success_url = reverse_lazy('home')
 

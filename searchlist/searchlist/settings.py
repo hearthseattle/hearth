@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'bootstrapform',
     'bootstrap3',
     'rest',
-    'rest_framework'
+    'rest_framework',
+    'multiselectfield'
 ]
 
 REST_FRAMEWORK = {
