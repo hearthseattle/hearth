@@ -14,7 +14,7 @@ def validate_zip(zip_code):
     """Ensure zip provided by user is in King County."""
     if zip_code not in zips:
         raise ValidationError(
-            '%(zip_code)s is not a valid King County zip code.',
+            '{} is not a valid King County zip code.'.format(zip_code),
             params={'zip_code': zip_code},
         )
 
@@ -37,6 +37,5 @@ class ResourceForm(ModelForm):
             'main_category': 'The core services your organization provides.',
         }
         widgets = {
-            'state': USStateSelect(attrs={'disabled': True, 'initial': 'WA'}),
-            # 'zip_code': forms.NumberInput(attrs={'validators': [validate_zip]})
+            'state': USStateSelect(),
         }

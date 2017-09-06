@@ -39,11 +39,11 @@ class CreateResource(LoginRequiredMixin, CreateView):
     form_class = ResourceForm
     success_url = reverse_lazy('home')
 
-    def form_valid(self, form):
-        """Save form if valid."""
-        self.object = form.save(commit=False)
-        self.object.save()
-        return super(CreateResource, self).form_valid(form)
+    # def form_valid(self, form):
+    #     """Save form if valid."""
+    #     self.object = form.save(commit=False)
+    #     self.object.save()
+    #     return super(CreateResource, self).form_valid(form)
 
 
 class EditResource(LoginRequiredMixin, UpdateView):
