@@ -23,12 +23,32 @@ class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
     zip_code = forms.IntegerField(validators=[validate_zip])
-    taggers = forms.ChoiceField(choices=[('Y', 'Yes'), ('N', 'No')], label='Are showers available?')
+    showers = forms.ChoiceField(choices=[('showers', 'Yes'), ('no_showers', 'No')],
+                                label='Are showers available?')
+    gender = forms.ChoiceField(choices=[('any_gender', 'Any'),
+                                        ('women', 'Women Only'),
+                                        ('men', 'Men Only')],
+                               label='Serve specific genders?')
+    age = forms.ChoiceField(widget=forms.RadioSelect(),
+                            choices=[('no_age', 'No'),
+                                     ('age', 'Yes')],
+                            label='Age requirements?')
+    language = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(),
+                                         choices=[('spanish', 'Spanish'),
+                                                  ('russian', 'Russian'),
+                                                  ('ukrainian', 'Ukrainian'),
+                                                  ('german', 'German'),
+                                                  ('french', 'French'),
+                                                  ('somali', 'Somali'),
+                                                  ('vietnamese', 'Vietnamese'),
+                                                  ('chinese', 'Chinese')],
+                                         label='Languages spoken other than English?')
 
     class Meta:
         model = Resource
         fields = ['main_category', 'org_name',
-                  'description', 'street', 'city', 'state', 'zip_code', 'website',
+                  'description', 'street', 'city',
+                  'zip_code', 'website',
                   'phone_number', 'image']
         labels = {
             'org_name': 'Name of Organization',
@@ -37,8 +57,3 @@ class ResourceForm(ModelForm):
         help_texts = {
             'main_category': 'The core services your organization provides.',
         }
-        widgets = {
-            'state': USStateSelect()
-        }
-
-
