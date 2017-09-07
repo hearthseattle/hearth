@@ -32,18 +32,8 @@ class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
     template_name = 'searchlist/resource_form.html'
-    # model = Resource
-    # fields = ['main_category', 'org_name',
-    #           'description', 'street', 'city', 'zip_code', 'website',
-    #           'phone_number', 'image', 'tags']
     form_class = ResourceForm
     success_url = reverse_lazy('home')
-
-    # def form_valid(self, form):
-    #     """Save form if valid."""
-    #     self.object = form.save(commit=False)
-    #     self.object.save()
-    #     return super(CreateResource, self).form_valid(form)
 
 
 class EditResource(LoginRequiredMixin, UpdateView):

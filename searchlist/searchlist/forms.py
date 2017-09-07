@@ -23,12 +23,13 @@ class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
     zip_code = forms.IntegerField(validators=[validate_zip])
+    taggers = forms.ChoiceField(choices=[('Y', 'Yes'), ('N', 'No')], label='Are showers available?')
 
     class Meta:
         model = Resource
         fields = ['main_category', 'org_name',
                   'description', 'street', 'city', 'state', 'zip_code', 'website',
-                  'phone_number', 'image', 'tags']
+                  'phone_number', 'image']
         labels = {
             'org_name': 'Name of Organization',
             'main_category': 'Main Categories',
@@ -37,5 +38,7 @@ class ResourceForm(ModelForm):
             'main_category': 'The core services your organization provides.',
         }
         widgets = {
-            'state': USStateSelect(),
+            'state': USStateSelect()
         }
+
+
