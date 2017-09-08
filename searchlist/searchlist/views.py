@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import Textarea
 from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views import View
@@ -34,6 +33,11 @@ class CreateResource(LoginRequiredMixin, CreateView):
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        import pdb; pdb.set_trace()
+        form.save()
+        return super(CreateResource, self).form_valid(form)
 
 
 class EditResource(LoginRequiredMixin, UpdateView):
