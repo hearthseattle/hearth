@@ -76,6 +76,7 @@ class Resource(models.Model):
         address: {} {}, {} {}
         website: {}
         phone_number: {}
+        tags: {}
         """.format(self.org_name,
                    self.description,
                    self.main_category,
@@ -84,7 +85,9 @@ class Resource(models.Model):
                    self.state,
                    self.zip_code,
                    self.website,
-                   self.phone_number)
+                   self.phone_number,
+                   [name for name in self.tags.names()])
+
 
     def __str__(self):
         """Print organization information."""

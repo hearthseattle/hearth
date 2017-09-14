@@ -48,6 +48,7 @@ class ResourceForm(ModelForm):
         model = Resource
         fields = ['main_category', 'org_name',
                   'description', 'street', 'city',
+                  'state',
                   'zip_code', 'website',
                   'phone_number', 'image']
         labels = {
@@ -56,4 +57,7 @@ class ResourceForm(ModelForm):
         }
         help_texts = {
             'main_category': 'The core services your organization provides.',
+        }
+        widgets = {
+            'state': USStateSelect(attrs={'readonly': True}),
         }
