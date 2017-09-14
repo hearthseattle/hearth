@@ -35,11 +35,12 @@ class CreateResource(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        import pdb; pdb.set_trace()
+        saved_model_form = form.save()
         for field in self.request.POST:
             if field in ['language', 'age', 'showers', 'gender']:
-                Resource.objects.tags.add(self.request.POST[field])
-        form.save()
+                import pdb; pdb.set_trace()
+                saved_model_form.tags.add(self.request.POST[field])
+                saved_model_form.save()
         return super(CreateResource, self).form_valid(form)
 
 
