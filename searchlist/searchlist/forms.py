@@ -23,7 +23,8 @@ class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
     zip_code = forms.IntegerField(validators=[validate_zip])
-    showers = forms.ChoiceField(choices=[('showers', 'Yes'), ('no_showers', 'No')],
+    showers = forms.ChoiceField(choices=[('showers', 'Yes'),
+                                         ('no_showers', 'No')],
                                 label='Are showers available?')
     gender = forms.ChoiceField(choices=[('any_gender', 'Any'),
                                         ('women', 'Women Only'),
@@ -43,6 +44,9 @@ class ResourceForm(ModelForm):
                                                   ('vietnamese', 'Vietnamese'),
                                                   ('chinese', 'Chinese')],
                                          label='Languages spoken other than English?')
+    citizenship = forms.ChoiceField(choices=[('any_citizenship', 'All welcome'),
+                                             ('us_citizens_only', 'US Citizens Only')],
+                                    label='Required citizenship status?')
 
     class Meta:
         model = Resource
