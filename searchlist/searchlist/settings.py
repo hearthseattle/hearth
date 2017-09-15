@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'bootstrap3',
     'rest',
     'rest_framework',
-    'multiselectfield'
+    'multiselectfield',
+    'taggit_serializer'
 ]
 
 REST_FRAMEWORK = {
