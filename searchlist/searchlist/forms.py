@@ -47,6 +47,9 @@ class ResourceForm(ModelForm):
     citizenship = forms.ChoiceField(choices=[('any_citizenship', 'All welcome'),
                                              ('us_citizens_only', 'US Citizens Only')],
                                     label='Required citizenship status?')
+    lgbtqia = forms.ChoiceField(choices=[('lgbtqia', 'LGBTQIA Welome'),
+                                         (None, 'LGBTQIA Not Accepted')],
+                                label='LGBTQIA Friendly?')
 
     class Meta:
         model = Resource
