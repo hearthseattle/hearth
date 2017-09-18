@@ -38,7 +38,7 @@ class CreateResource(LoginRequiredMixin, CreateView):
         saved_model_form = form.save()
         for field in self.request.POST:
             if field in ['language', 'age', 'showers', 'gender']:
-                import pdb; pdb.set_trace()
+                # import pdb; pdb.set_trace()
                 saved_model_form.tags.add(self.request.POST[field])
                 saved_model_form.save()
         return super(CreateResource, self).form_valid(form)

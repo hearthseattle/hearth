@@ -22,35 +22,92 @@ def validate_zip(zip_code):
 class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
-    zip_code = forms.IntegerField(validators=[validate_zip])
-    showers = forms.ChoiceField(choices=[('showers', 'Yes'),
-                                         ('no_showers', 'No')],
-                                label='Are showers available?')
-    gender = forms.ChoiceField(choices=[('any_gender', 'Any'),
-                                        ('women', 'Women Only'),
-                                        ('men', 'Men Only')],
-                               label='Serve specific genders?')
-    age = forms.ChoiceField(widget=forms.RadioSelect(),
-                            choices=[('no_age', 'No'),
-                                     ('age', 'Yes')],
-                            label='Age requirements?')
-    language = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(),
-                                         choices=[('spanish', 'Spanish'),
-                                                  ('russian', 'Russian'),
-                                                  ('ukrainian', 'Ukrainian'),
-                                                  ('german', 'German'),
-                                                  ('french', 'French'),
-                                                  ('somali', 'Somali'),
-                                                  ('vietnamese', 'Vietnamese'),
-                                                  ('chinese', 'Chinese')],
-                                         label='Languages spoken other than English?')
-    citizenship = forms.ChoiceField(choices=[('any_citizenship', 'All welcome'),
-                                             ('us_citizens_only', 'US Citizens Only')],
-                                    label='Required citizenship status?')
-    lgbtqia = forms.ChoiceField(choices=[('lgbtqia', 'LGBTQIA Welome'),
-                                         (None, 'LGBTQIA Not Accepted')],
-                                label='LGBTQIA Friendly?')
-
+    zip_code = forms.IntegerField(
+        validators=[validate_zip]
+    )
+    showers = forms.ChoiceField(
+        choices=[
+            ('showers', 'Yes'),
+            ('no_showers', 'No')
+        ],
+        label='Are showers available?'
+    )
+    gender = forms.ChoiceField(
+        choices=[
+            ('any_gender', 'Any'),
+            ('women', 'Women Only'),
+            ('men', 'Men Only')
+        ],
+        label='Serve specific genders?'
+    )
+    age = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=[
+            ('no_age', 'No'),
+            ('age', 'Yes')
+        ],
+        label='Age requirements?'
+    )
+    language = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple(),
+        choices=[
+            ('spanish', 'Spanish'),
+            ('russian', 'Russian'),
+            ('ukrainian', 'Ukrainian'),
+            ('german', 'German'),
+            ('french', 'French'),
+            ('somali', 'Somali'),
+            ('vietnamese', 'Vietnamese'),
+            ('chinese', 'Chinese')
+        ],
+        label='Languages spoken other than English?'
+    )
+    citizenship = forms.ChoiceField(
+        choices=[
+            ('any_citizenship', 'All welcome'),
+            ('us_citizens_only', 'US Citizens Only')
+        ],
+        label='Required citizenship status?'
+    )
+    lgbtqia = forms.ChoiceField(
+        choices=[
+            ('lgbtqia', 'LGBTQIA welome'),
+            ('', 'LGBTQIA not accepted')
+        ],
+        label='LGBTQIA Friendly?'
+    )
+    sobriety = forms.ChoiceField(
+        choices=[
+            ('sober', 'Must be sober'),
+            ('', 'Not required to be sober')
+        ],
+        label='Sobriety requirements?'
+    )
+    costs = forms.ChoiceField(
+        choices=[
+            ('free', 'All services free of charge'),
+            ('free', 'Some services free of charge'),
+            ('not_free', 'No services are free of charge')
+        ],
+        label='Do you offer services free of charge?'
+    )
+    case_managers = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=[
+            ('case_managers', 'Yes'),
+            ('', 'No')
+        ],
+        label='Are case managers available?'
+    )
+    counselors = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=[
+            ('counselors', 'Yes'),
+            ('', 'No')
+        ],
+        label='Are counselors available?'
+    )
+    
     class Meta:
         model = Resource
         fields = ['main_category', 'org_name',
@@ -65,6 +122,6 @@ class ResourceForm(ModelForm):
         help_texts = {
             'main_category': 'The core services your organization provides.',
         }
-        widgets = {
-            'state': USStateSelect(attrs={'readonly': True}),
-        }
+        # widgets = {
+        #     'state': USStateSelect(attrs={'readonly': True}),
+        # }
