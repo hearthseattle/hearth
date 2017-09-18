@@ -58,7 +58,8 @@ class ResourceForm(ModelForm):
             ('french', 'French'),
             ('somali', 'Somali'),
             ('vietnamese', 'Vietnamese'),
-            ('chinese', 'Chinese')
+            ('chinese', 'Chinese'),
+            ('', 'None')
         ],
         label='Languages spoken other than English?'
     )
@@ -72,14 +73,14 @@ class ResourceForm(ModelForm):
     lgbtqia = forms.ChoiceField(
         choices=[
             ('lgbtqia', 'LGBTQIA welome'),
-            ('', 'LGBTQIA not accepted')
+            ('no_lgbtqia', 'LGBTQIA not accepted')
         ],
         label='LGBTQIA Friendly?'
     )
     sobriety = forms.ChoiceField(
         choices=[
             ('sober', 'Must be sober'),
-            ('', 'Not required to be sober')
+            ('sober_free', 'Not required to be sober')
         ],
         label='Sobriety requirements?'
     )
@@ -92,10 +93,10 @@ class ResourceForm(ModelForm):
         label='Do you offer services free of charge?'
     )
     case_managers = forms.ChoiceField(
-        widget=forms.RadioSelect(),
+        widget=forms.RadioSelect(attrs={'blank': True}),
         choices=[
             ('case_managers', 'Yes'),
-            ('', 'No')
+            ('no_case_managers', 'No')
         ],
         label='Are case managers available?'
     )
@@ -103,11 +104,19 @@ class ResourceForm(ModelForm):
         widget=forms.RadioSelect(),
         choices=[
             ('counselors', 'Yes'),
-            ('', 'No')
+            ('no_counselors', 'No')
         ],
         label='Are counselors available?'
     )
-    
+    always_open = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=[
+            ('24', 'Yes'),
+            ('no_24', 'No')
+        ],
+        label='Are you open 24 hours?'
+    )
+
     class Meta:
         model = Resource
         fields = ['main_category', 'org_name',
