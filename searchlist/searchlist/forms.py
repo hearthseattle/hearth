@@ -22,6 +22,13 @@ def validate_zip(zip_code):
 class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
+    states = forms.ChoiceField(
+        choices=[('Washington', 'Washington')],
+        initial='Washington',
+        disabled=True,
+        label='State'
+    )
+
     zip_code = forms.IntegerField(
         validators=[validate_zip]
     )
@@ -149,7 +156,7 @@ class ResourceForm(ModelForm):
         model = Resource
         fields = ['main_category', 'org_name',
                   'description', 'street', 'city',
-                  'state',
+                  'states',
                   'zip_code', 'website',
                   'phone_number', 'image']
         labels = {
