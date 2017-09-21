@@ -1,6 +1,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/kurtrm/homeless_to_hearth/badge.svg?branch=kurt-test-coveralls)](https://coveralls.io/github/kurtrm/homeless_to_hearth?branch=kurt-test-coveralls) [![Build Status](https://travis-ci.org/kurtrm/homeless_to_hearth.svg?branch=master)](https://travis-ci.org/kurtrm/homeless_to_hearth)
 
-# Seattle Homeless to Hearth Pipeline
+# Hearth Seattle Project
 
    Seattle has the third largest homeless population in the country. Fortunately, it also has some of the best and numerous 
 resources to offer people in need. As organizations continue to pop up and support networks grow, it is becoming increasingly
@@ -24,9 +24,9 @@ In order to run our application, you must have **Python** and **pip** installed.
 ### Installing
 To clone our repository, run the following command:
 
-    git clone git@github.com:kurtrm/homeless_to_hearth.git
+    git clone https://github.com/hearthseattle/hearth.git
 
-Navigate into the **homeless_to_hearth** directory then run the following command in order to install the required dependencies:
+Navigate into the **hearth** directory then run the following command in order to install the required dependencies:
 
     pip install -r requirements.txt
 
@@ -38,7 +38,9 @@ Run the following command in the same directory as the **manage.py** file to run
 
 ## Built With
 
-    Django and Bootstrap.js
+    - Django
+    - Django Rest Framework
+    - Bootstrap.js
 
 
 ## Versioning
@@ -63,3 +65,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * **Robert Snow**
 * **Austin Briggs**
 * **Wes Moore**
+* **James Warren**
