@@ -22,15 +22,17 @@ def validate_zip(zip_code):
 class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
+    states = forms.ChoiceField(
+        choices=[('Washington', 'Washington')],
+        initial='Washington',
+        disabled=True,
+        label='State'
+    )
+
+    website = forms.URLField(initial='http://')
+
     zip_code = forms.IntegerField(
         validators=[validate_zip]
-    )
-    showers = forms.ChoiceField(
-        choices=[
-            ('showers', 'Yes'),
-            ('no_showers', 'No')
-        ],
-        label='Are showers available?'
     )
     gender = forms.ChoiceField(
         choices=[
@@ -116,12 +118,47 @@ class ResourceForm(ModelForm):
         ],
         label='Are you open 24 hours?'
     )
+    pets = forms.ChoiceField(
+        widget=forms.RadioSelect(),
+        choices=[
+            ('pets', 'Yes'),
+            ('no_pets', 'No'),
+            ('service_animals', 'Service animals only')
+        ],
+        label='Are pets allowed?'
+    )
+    various = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=[
+            ('trauma', 'Post trauma'),
+            ('trafficking', 'Post human trafficking'),
+            ('domestic_violence', 'Post domestic violence'),
+            ('legal', 'Legal assistance'),
+            ('short_term', 'Short-term housing'),
+            ('long_term', 'Long-term housing'),
+            ('welfare', 'Welfare assistance'),
+            ('meals', 'Meals'),
+            ('electronics', 'Electronics'),
+            ('transportation', 'Transportation'),
+            ('winter', 'Winter Availability'),
+            ('storage', 'Storage'),
+            ('showers', 'Showers'),
+            ('sex_offender', 'Sex offender restrictions'),
+            ('criminal_record', 'Criminal record restrictions'),
+            ('refugees', 'Refugee assistance'),
+        ],
+        label='Please select specific services you provide '
+              'or additional requirements.'
+    )
 
     class Meta:
+        """Meta class for the model."""
+
         model = Resource
         fields = ['main_category', 'org_name',
                   'description', 'street', 'city',
-                  'state',
+                  'states',
                   'zip_code', 'website',
                   'phone_number', 'image']
         labels = {
