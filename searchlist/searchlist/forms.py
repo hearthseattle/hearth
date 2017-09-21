@@ -29,6 +29,8 @@ class ResourceForm(ModelForm):
         label='State'
     )
 
+    website = forms.URLField(initial='http://')
+
     zip_code = forms.IntegerField(
         validators=[validate_zip]
     )
