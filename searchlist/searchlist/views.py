@@ -30,33 +30,51 @@ class NotFound(View):
 class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
-    import pdb; pdb.set_trace()
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
+        # import pdb; pdb.set_trace()
         tag_fields = ['language', 'age', 'gender', 'citizenship',
                       'lgbtqia', 'sobriety', 'costs', 'case_managers',
                       'counselors', 'always_open', 'pets', 'various']
-        saved_model_form = form.save(commit=False)
+        saved_model_form = form.save()
         for field in self.request.POST:
             if field in tag_fields:
                 saved_model_form.tags.add(self.request.POST[field])
-                saved_model_form.save(commit=False)
-            saved_model_form.save()
+                saved_model_form.save()
         return super(CreateResource, self).form_valid(form)
 
 
 class EditResource(LoginRequiredMixin, UpdateView):
     """Class-based view to edit resources."""
 
+    model = Resource
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
 
+    def get_form_kwargs(self):
+        """Override get_form_kwargs to specificy certain inital values."""
+        # import pdb; pdb.set_trace()
+        resource_id = self.kwargs['pk']
+        resource_objects = Resource.tags.get(id=resource_id).name
+        tag_fields = ['language', 'age', 'gender', 'citizenship',
+                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                      'counselors', 'always_open', 'pets', 'various']
+        edit_form = self.get_form()
+        edit_form_fields = edit_form.fields
+        return super(EditResource, self).get_form_kwargs()
+
     def form_valid(self, form):
         """Save form if valid."""
+        tag_fields = ['language', 'age', 'gender', 'citizenship',
+                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                      'counselors', 'always_open', 'pets', 'various']
+        edit_form = self.get_form()
+        edit_form_fields = edit_form.fields
+
         self.model_form = form.save(commit=False)
 
         self.model_form.save()
