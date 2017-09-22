@@ -30,17 +30,21 @@ class NotFound(View):
 class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
+    import pdb; pdb.set_trace()
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        saved_model_form = form.save()
+        tag_fields = ['language', 'age', 'gender', 'citizenship',
+                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                      'counselors', 'always_open', 'pets', 'various']
+        saved_model_form = form.save(commit=False)
         for field in self.request.POST:
-            if field in ['language', 'age', 'showers', 'gender']:
-                # import pdb; pdb.set_trace()
+            if field in tag_fields:
                 saved_model_form.tags.add(self.request.POST[field])
-                saved_model_form.save()
+                saved_model_form.save(commit=False)
+            saved_model_form.save()
         return super(CreateResource, self).form_valid(form)
 
 
@@ -48,16 +52,14 @@ class EditResource(LoginRequiredMixin, UpdateView):
     """Class-based view to edit resources."""
 
     template_name = 'searchlist/resource_form.html'
-    model = Resource
-    fields = ['main_category', 'org_name',
-              'description', 'street', 'city', 'state', 'zip_code', 'website',
-              'phone_number', 'image', 'tags']
+    form_class = ResourceForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         """Save form if valid."""
-        self.object = form.save(commit=False)
-        self.object.save()
+        self.model_form = form.save(commit=False)
+
+        self.model_form.save()
         return super(EditResource, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
