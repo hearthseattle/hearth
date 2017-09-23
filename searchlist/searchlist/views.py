@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django import forms
 from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views import View
@@ -85,23 +86,35 @@ class EditResource(LoginRequiredMixin, UpdateView):
                       'lgbtqia', 'sobriety', 'costs', 'case_managers',
                       'counselors', 'always_open', 'pets', 'various']
         import pdb; pdb.set_trace()
-        form_fields = form.fields
         for field in form.changed_data:
             if field in tag_fields:
-                if isinstance(form.initial[field], list):
-                    for tag in form.initial[field]:
-                        resource_tags.remove(tag)
+                if isinstance(form.fields[field], forms.fields.MultipleChoiceField):
+                    POST_list = self.request.POST.getlist(field)
+                    for tag in resource_tags.names():
+                        resource_tags.remove(form.initial[field])
                         form.save()
-                    for tag in self.request.POST[field].getlist():
+                    for tag in POST_list:
                         resource_tags.add(tag)
                         form.save()
-                else:
-                    for tag in resource_tags.names():
-                        resource_tags.remove(form.initial[tag])
-                        form.save()
-                    for tag in self.request.POST[tag].getlist():
-                            resource_tags.add(self.request.POST[tag])
-                            form.save()
+
+        # for field in form.changed_data:
+        #     if field in tag_fields:
+        #         if isinstance(form.initial[field], list):
+        #                 for tag in form.initial[field]:
+        #                     resource_tags.remove(tag)
+        #                     form.save()
+        #                 for tag in self.request.POST[field].getlist():
+        #                     resource_tags.add(tag)
+        #                     form.save()
+        #         else:
+        #             # if form.initial[field] != self.request.POST[field]:
+        #             post_tags = self.request.POST.getlist('')
+        #             for tag in resource_tags.names():
+        #                 resource_tags.remove(form.initial[tag])
+        #                 form.save()
+        #             for tag in post_tags:
+        #                     resource_tags.add(tag)
+        #                     form.save()
         return super(EditResource, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
