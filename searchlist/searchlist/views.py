@@ -72,7 +72,6 @@ class EditResource(LoginRequiredMixin, UpdateView):
         for field in tag_fields:
             choices = edit_form_fields[field].choices
             tags, selections = zip(*choices)
-            # No two tags are alike
             intersection = [tag for tag in tags if tag in resource_tags][0]
             self.initial[field] = intersection
 
@@ -80,15 +79,27 @@ class EditResource(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         """Save form if valid."""
+        resource_id = self.kwargs['pk']
+        resource_tags = Resource.objects.get(id=resource_id).tags
         tag_fields = ['language', 'age', 'gender', 'citizenship',
                       'lgbtqia', 'sobriety', 'costs', 'case_managers',
                       'counselors', 'always_open', 'pets', 'various']
-        edit_form = self.get_form()
-        edit_form_fields = edit_form.fields
-
-        self.model_form = form.save(commit=False)
-
-        self.model_form.save()
+        import pdb; pdb.set_trace()
+        form_fields = form.fields
+        for field in form.changed_data:
+            if field in tag_fields:
+                if isinstance(form.initial[field], list):
+                    for tag in form.initial[field]:
+                        resource_tags.remove(tag)
+                        form.save()
+                    for tag in self.request.POST[field]:
+                        resource_tags.add(tag)
+                        form.save()
+                else:
+                    for tag in resource_tags.names():
+                        resource_tags.remove(form.initial[field])
+                        resource_tags.add(self.request.POST[field])
+                        form.save()
         return super(EditResource, self).form_valid(form)
 
     def get_context_data(self, **kwargs):

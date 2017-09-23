@@ -62,8 +62,7 @@ class ResourceForm(ModelForm):
             ('vietnamese', 'Vietnamese'),
             ('chinese', 'Chinese')
         ],
-        label='Languages spoken other than English?',
-        required=False
+        label='Languages spoken other than English?'
     )
     citizenship = forms.ChoiceField(
         choices=[
