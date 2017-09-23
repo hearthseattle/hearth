@@ -72,6 +72,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
         for field in tag_fields:
             choices = edit_form_fields[field].choices
             tags, selections = zip(*choices)
+            # No two tags are alike
             intersection = [tag for tag in tags if tag in resource_tags][0]
             self.initial[field] = intersection
 
