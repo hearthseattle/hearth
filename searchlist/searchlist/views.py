@@ -35,10 +35,13 @@ class CreateResource(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
+        # import pdb; pdb.set_trace()
+        tag_fields = ['language', 'age', 'gender', 'citizenship',
+                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                      'counselors', 'always_open', 'pets', 'various']
         saved_model_form = form.save()
         for field in self.request.POST:
-            if field in ['language', 'age', 'showers', 'gender']:
-                # import pdb; pdb.set_trace()
+            if field in tag_fields:
                 saved_model_form.tags.add(self.request.POST[field])
                 saved_model_form.save()
         return super(CreateResource, self).form_valid(form)
@@ -47,17 +50,45 @@ class CreateResource(LoginRequiredMixin, CreateView):
 class EditResource(LoginRequiredMixin, UpdateView):
     """Class-based view to edit resources."""
 
-    template_name = 'searchlist/resource_form.html'
     model = Resource
-    fields = ['main_category', 'org_name',
-              'description', 'street', 'city', 'state', 'zip_code', 'website',
-              'phone_number', 'image', 'tags']
+    template_name = 'searchlist/resource_form.html'
+    form_class = ResourceForm
     success_url = reverse_lazy('home')
+
+    def get_form_kwargs(self):
+        """
+        Override get_form_kwargs, get all the tags on the edited resource,
+        get the form_class choices, find the tag in the resources tags and
+        get the index of that tag, and set the initial value of the field
+        to it's choice label.
+        """
+        resource_id = self.kwargs['pk']
+        resource_tags = Resource.objects.get(id=resource_id).tags.names()
+        tag_fields = ['language', 'age', 'gender', 'citizenship',
+                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                      'counselors', 'always_open', 'pets', 'various']
+        edit_form = self.form_class()
+        edit_form_fields = edit_form.fields
+        for field in tag_fields:
+            choices = edit_form_fields[field].choices
+            tags, selections = zip(*choices)
+            # No two tags are alike
+            intersection = [tag for tag in tags if tag in resource_tags][0]
+            self.initial[field] = intersection
+
+        return super(EditResource, self).get_form_kwargs()
 
     def form_valid(self, form):
         """Save form if valid."""
-        self.object = form.save(commit=False)
-        self.object.save()
+        tag_fields = ['language', 'age', 'gender', 'citizenship',
+                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                      'counselors', 'always_open', 'pets', 'various']
+        edit_form = self.get_form()
+        edit_form_fields = edit_form.fields
+
+        self.model_form = form.save(commit=False)
+
+        self.model_form.save()
         return super(EditResource, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
