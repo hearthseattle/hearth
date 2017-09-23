@@ -92,14 +92,16 @@ class EditResource(LoginRequiredMixin, UpdateView):
                     for tag in form.initial[field]:
                         resource_tags.remove(tag)
                         form.save()
-                    for tag in self.request.POST[field]:
+                    for tag in self.request.POST[field].getlist():
                         resource_tags.add(tag)
                         form.save()
                 else:
                     for tag in resource_tags.names():
-                        resource_tags.remove(form.initial[field])
-                        resource_tags.add(self.request.POST[field])
+                        resource_tags.remove(form.initial[tag])
                         form.save()
+                    for tag in self.request.POST[tag].getlist():
+                            resource_tags.add(self.request.POST[tag])
+                            form.save()
         return super(EditResource, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
