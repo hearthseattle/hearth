@@ -73,8 +73,11 @@ class EditResource(LoginRequiredMixin, UpdateView):
         for field in tag_fields:
             choices = edit_form_fields[field].choices
             tags, selections = zip(*choices)
-            intersection = [tag for tag in tags if tag in resource_tags][0]
-            self.initial[field] = intersection
+            intersection = [tag for tag in tags if tag in resource_tags]
+            if isinstance(edit_form_fields[field], forms.fields.MultipleChoiceField):
+                self.initial[field] = intersection
+            else:
+                self.initial[field] = intersection[0]
 
         return super(EditResource, self).get_form_kwargs()
 
@@ -85,17 +88,31 @@ class EditResource(LoginRequiredMixin, UpdateView):
         tag_fields = ['language', 'age', 'gender', 'citizenship',
                       'lgbtqia', 'sobriety', 'costs', 'case_managers',
                       'counselors', 'always_open', 'pets', 'various']
-        import pdb; pdb.set_trace()
         for field in form.changed_data:
             if field in tag_fields:
                 if isinstance(form.fields[field], forms.fields.MultipleChoiceField):
                     POST_list = self.request.POST.getlist(field)
-                    for tag in resource_tags.names():
-                        resource_tags.remove(form.initial[field])
-                        form.save()
+                    for tag in POST_list:
+                        if tag in resource_tags.names():
+                            resource_tags.remove(form.initial[field])
+                            form.save()
                     for tag in POST_list:
                         resource_tags.add(tag)
                         form.save()
+                else:
+                    choices = form.fields[field].choices
+                    tags, selections = zip(*choices)
+                    post = self.request.POST[field]
+                    for tag in tags:
+                        if tag in resource_tags.names():
+                            resource_tags.remove(tag)
+                            form.save()
+                    resource_tags.add(post)
+                    form.save()
+
+
+                    # if post not in resource_tags.names():
+                    #     resource_tags.
 
         # for field in form.changed_data:
         #     if field in tag_fields:
