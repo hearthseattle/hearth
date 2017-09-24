@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django import forms
 from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views import View
@@ -72,23 +73,65 @@ class EditResource(LoginRequiredMixin, UpdateView):
         for field in tag_fields:
             choices = edit_form_fields[field].choices
             tags, selections = zip(*choices)
-            # No two tags are alike
-            intersection = [tag for tag in tags if tag in resource_tags][0]
-            self.initial[field] = intersection
+            intersection = [tag for tag in tags if tag in resource_tags]
+            if isinstance(edit_form_fields[field], forms.fields.MultipleChoiceField):
+                self.initial[field] = intersection
+            else:
+                self.initial[field] = intersection[0]
 
         return super(EditResource, self).get_form_kwargs()
 
     def form_valid(self, form):
         """Save form if valid."""
+        resource_id = self.kwargs['pk']
+        resource_tags = Resource.objects.get(id=resource_id).tags
         tag_fields = ['language', 'age', 'gender', 'citizenship',
                       'lgbtqia', 'sobriety', 'costs', 'case_managers',
                       'counselors', 'always_open', 'pets', 'various']
-        edit_form = self.get_form()
-        edit_form_fields = edit_form.fields
+        for field in form.changed_data:
+            if field in tag_fields:
+                if isinstance(form.fields[field], forms.fields.MultipleChoiceField):
+                    POST_list = self.request.POST.getlist(field)
+                    for tag in POST_list:
+                        if tag in resource_tags.names():
+                            resource_tags.remove(form.initial[field])
+                            form.save()
+                    for tag in POST_list:
+                        resource_tags.add(tag)
+                        form.save()
+                else:
+                    choices = form.fields[field].choices
+                    tags, selections = zip(*choices)
+                    post = self.request.POST[field]
+                    for tag in tags:
+                        if tag in resource_tags.names():
+                            resource_tags.remove(tag)
+                            form.save()
+                    resource_tags.add(post)
+                    form.save()
 
-        self.model_form = form.save(commit=False)
 
-        self.model_form.save()
+                    # if post not in resource_tags.names():
+                    #     resource_tags.
+
+        # for field in form.changed_data:
+        #     if field in tag_fields:
+        #         if isinstance(form.initial[field], list):
+        #                 for tag in form.initial[field]:
+        #                     resource_tags.remove(tag)
+        #                     form.save()
+        #                 for tag in self.request.POST[field].getlist():
+        #                     resource_tags.add(tag)
+        #                     form.save()
+        #         else:
+        #             # if form.initial[field] != self.request.POST[field]:
+        #             post_tags = self.request.POST.getlist('')
+        #             for tag in resource_tags.names():
+        #                 resource_tags.remove(form.initial[tag])
+        #                 form.save()
+        #             for tag in post_tags:
+        #                     resource_tags.add(tag)
+        #                     form.save()
         return super(EditResource, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
