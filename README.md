@@ -17,6 +17,11 @@ Our ultimate goal is to connect people in need to the care they require as quick
 
 
 ## Getting Started
+
+### Contributing to Hearth
+
+If you think you can contribute to our project, please take a look at the issues tab. There are a number of things that we could use help fixing and improving. 
+
 ### Prerequisites
 In order to run our application, you must have **Python** and **pip** installed.
 
