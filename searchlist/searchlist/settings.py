@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'SECRET_KEY'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 CORS_ORIGIN_ALLOW_ALL = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -98,9 +99,6 @@ WSGI_APPLICATION = 'searchlist.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-
-# dj-database-url takes care of setting database variables for us.... I hope
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -116,6 +114,42 @@ DATABASES = {
             'HOST': os.environ.get('TEST_DATABASE_HOST', ''),
         },
     }
+}
+
+# Logging
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(process)-5d %(thread)d %(name)-50s %(levelname)-8s %(message)s'
+        },
+        'simple': {
+            'format': '[%(asctime)s] %(name)s %(levelname)s %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'syslog': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.SysLogHandler',
+            'facility': 'local7',
+            'address': '/dev/log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'propegate': True,
+        },
+    },
 }
 
 
@@ -172,7 +206,7 @@ if not DEBUG:
     MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
                                         MEDIAFILES_LOCATION)
 else:
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')# Extra places for collectstatic to find static files.
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), '/var/www/static/')
     STATIC_URL = '/static/'
     STATIC_ROOT = '/static/'
 

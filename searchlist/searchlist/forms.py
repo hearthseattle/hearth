@@ -1,6 +1,7 @@
 """File containing the form for the edit/creation views."""
 from django import forms
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from django.forms import (
     ModelForm,
     Form
@@ -8,9 +9,10 @@ from django.forms import (
 from .models import Resource
 from localflavor.us.forms import USStateSelect
 from localflavor.us.forms import USZipCodeField
+import os
 import pickle
 
-zips = pickle.load(open('../zips.p', "rb"))
+zips = pickle.load(open(os.path.join(settings.BASE_DIR, '../zips.p'), "rb"))
 
 
 def validate_zip(zip_code):
