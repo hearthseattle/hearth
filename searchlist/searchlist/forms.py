@@ -175,6 +175,31 @@ class ResourceForm(ModelForm):
 class FilterForm(Form):
     """Form for the filtering of resources on the home page."""
 
+    nearby = forms.ChoiceField(
+        required=False,
+        widget=forms.RadioSelect(),
+        choices=[
+            ('.3', '.3 miles'),
+            ('5', '5 miles'),
+            ('10', '10 miles'),
+            ('20', '20 miles'),
+        ]
+    )
+
+    open_24 = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('24', 'Yes'),  # show
+        ],
+        label='Open 24 hours'
+    )
+
+    hours_range = forms.TimeField(
+        required=False,
+        label='Hours open'
+    )
+
     gender = forms.ChoiceField(
         required=False,
         widget=forms.RadioSelect(),

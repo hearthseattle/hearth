@@ -15,6 +15,9 @@
 </header>
 <div id="about">
   <div class="container" style="margin-top: 75px;">
+      <div class="container" style="margin-top: 75px;">
+        {{ form.as_p }}
+      </div>
       <div class="row categories">
           {% for choice in choices %}
               <div class="col-6 col-md-3 center-block" style="text-align:left;word-break:break-all;padding-left: 70px;">
@@ -24,9 +27,6 @@
                   </div>
               </div>
           {% endfor %}
-      </div>
-      <div class="container" style="margin-top: 75px;">
-        {{ form.as_ul }}
       </div>
   </div>
     <!-- New section from bootstrap -->
