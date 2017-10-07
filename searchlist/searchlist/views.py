@@ -13,8 +13,14 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
-from .forms import ResourceForm
-from searchlist.models import Resource
+from .forms import (
+    ResourceForm,
+    FilterForm
+)
+from searchlist.models import (
+    Resource,
+    SERVICES
+)
 from taggit.models import Tag
 
 
@@ -34,15 +40,15 @@ class CreateResource(LoginRequiredMixin, CreateView):
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
+    tag_fields = ['language', 'age', 'gender', 'citizenship',
+                  'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                  'counselors', 'always_open', 'pets', 'various']
 
     def form_valid(self, form):
-        # import pdb; pdb.set_trace()
-        tag_fields = ['language', 'age', 'gender', 'citizenship',
-                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
-                      'counselors', 'always_open', 'pets', 'various']
+        """Add the tags through fields instead of a text area."""
         saved_model_form = form.save()
         for field in self.request.POST:
-            if field in tag_fields:
+            if field in self.tag_fields:
                 saved_model_form.tags.add(self.request.POST[field])
                 saved_model_form.save()
         return super(CreateResource, self).form_valid(form)
@@ -55,6 +61,9 @@ class EditResource(LoginRequiredMixin, UpdateView):
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
+    tag_fields = ['language', 'age', 'gender', 'citizenship',
+                  'lgbtqia', 'sobriety', 'costs', 'case_managers',
+                  'counselors', 'always_open', 'pets', 'various']
 
     def get_form_kwargs(self):
         """
@@ -65,16 +74,14 @@ class EditResource(LoginRequiredMixin, UpdateView):
         """
         resource_id = self.kwargs['pk']
         resource_tags = Resource.objects.get(id=resource_id).tags.names()
-        tag_fields = ['language', 'age', 'gender', 'citizenship',
-                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
-                      'counselors', 'always_open', 'pets', 'various']
         edit_form = self.form_class()
         edit_form_fields = edit_form.fields
-        for field in tag_fields:
+        for field in self.tag_fields:
             choices = edit_form_fields[field].choices
             tags, selections = zip(*choices)
             intersection = [tag for tag in tags if tag in resource_tags]
-            if isinstance(edit_form_fields[field], forms.fields.MultipleChoiceField):
+            if isinstance(edit_form_fields[field],
+                          forms.fields.MultipleChoiceField):
                 self.initial[field] = intersection
             else:
                 self.initial[field] = intersection[0]
@@ -85,12 +92,10 @@ class EditResource(LoginRequiredMixin, UpdateView):
         """Save form if valid."""
         resource_id = self.kwargs['pk']
         resource_tags = Resource.objects.get(id=resource_id).tags
-        tag_fields = ['language', 'age', 'gender', 'citizenship',
-                      'lgbtqia', 'sobriety', 'costs', 'case_managers',
-                      'counselors', 'always_open', 'pets', 'various']
         for field in form.changed_data:
-            if field in tag_fields:
-                if isinstance(form.fields[field], forms.fields.MultipleChoiceField):
+            if field in self.tag_fields:
+                if isinstance(form.fields[field],
+                              forms.fields.MultipleChoiceField):
                     POST_list = self.request.POST.getlist(field)
                     for tag in POST_list:
                         if tag in resource_tags.names():
@@ -115,7 +120,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
                     #     resource_tags.
 
         # for field in form.changed_data:
-        #     if field in tag_fields:
+        #     if field in self.tag_fields:
         #         if isinstance(form.initial[field], list):
         #                 for tag in form.initial[field]:
         #                     resource_tags.remove(tag)
@@ -160,31 +165,14 @@ class HomePageView(ListView):
 
     template_name = "searchlist/home.html"
     model = Resource
+    form_class = FilterForm
 
     def get_context_data(self, **kwargs):
         """Get context to populate page with resources."""
-        main_category = [
-            ("Crisis", "Crisis"),
-            ("Addiction", "Addiction"),
-            ("Childcare", "Childcare"),
-            ("Youth Services", "Youth Services"),
-            ("Veteran", "Veteran"),
-            ("Rehabilitation", "Rehabilitation"),
-            ("Mental/Physical Disability", "Mental/Physical Disability"),
-            ("Education", "Education"),
-            ("Employment", "Employment"),
-            ("Finances", "Finances"),
-            ("Clothing/Housewares", "Clothing/Housewares"),
-            ("Food", "Food"),
-            ("Healthcare", "Healthcare"),
-            ("Shelter", "Shelter"),
-            ("Legal", "Legal"),
-            ("Identification", "Identification"),
-            ("Spiritual", "Spiritual")
-        ]
 
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context['choices'] = [category[0] for category in main_category]
+        context['choices'] = [service[1] for service in SERVICES]
+        context['form'] = self.form_class()
         context['clear_nav_bar'] = True
         context['tags'] = Tag.objects.all()
         return context
