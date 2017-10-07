@@ -13,8 +13,14 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
-from .forms import ResourceForm
-from searchlist.models import Resource
+from .forms import (
+    ResourceForm,
+    FilterForm
+)
+from searchlist.models import (
+    Resource,
+    SERVICES
+)
 from taggit.models import Tag
 
 
@@ -159,31 +165,14 @@ class HomePageView(ListView):
 
     template_name = "searchlist/home.html"
     model = Resource
+    form_class = FilterForm
 
     def get_context_data(self, **kwargs):
         """Get context to populate page with resources."""
-        main_category = [
-            ("Crisis", "Crisis"),
-            ("Addiction", "Addiction"),
-            ("Childcare", "Childcare"),
-            ("Youth Services", "Youth Services"),
-            ("Veteran", "Veteran"),
-            ("Rehabilitation", "Rehabilitation"),
-            ("Mental/Physical Disability", "Mental/Physical Disability"),
-            ("Education", "Education"),
-            ("Employment", "Employment"),
-            ("Finances", "Finances"),
-            ("Clothing/Housewares", "Clothing/Housewares"),
-            ("Food", "Food"),
-            ("Healthcare", "Healthcare"),
-            ("Shelter", "Shelter"),
-            ("Legal", "Legal"),
-            ("Identification", "Identification"),
-            ("Spiritual", "Spiritual")
-        ]
 
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context['choices'] = [category[0] for category in main_category]
+        context['choices'] = [service[1] for service in SERVICES]
+        context['form'] = self.form_class()
         context['clear_nav_bar'] = True
         context['tags'] = Tag.objects.all()
         return context

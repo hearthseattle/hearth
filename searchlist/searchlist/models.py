@@ -10,90 +10,92 @@ from multiselectfield import MultiSelectField
 from taggit.managers import TaggableManager
 
 
+CRISIS = 'CR'
+ADDICTION = 'AD'
+CHILDCARE = 'CH'
+YOUTH = 'YS'
+VETERAN = 'VE'
+REHAB = 'RE'
+DISAB = 'MP'
+EDUCATION = 'ED'
+EMPLOYMENT = 'EM'
+FINANCES = 'FI'
+SUPPLIES = 'SU'
+FOOD = 'FO'
+HEALTH = 'HC'
+SHELTER = 'SH'
+LEGAL = 'LE'
+ID = 'ID'
+SPIRITUAL = 'SP'
+MEDICAL = 'MD'
+HOUSING = 'HS'
+COUNSELING = 'CS'
+CITIZENSHIP = 'CZ'
+JOB = 'JB'
+SUBSTANCE = 'SB'
+D_VIOLENCE = 'DV'
+H_TRAFFICKING = 'HT'
+CASE_MANAGEMENT = 'CM'
+MENTAL_HEALTH = 'MH'
+TRAUMA = 'TR'
+HOTLINE = 'HL'
+WELFARE = 'WF'
+CLOTHING = 'CL'
+TECH = 'TE'
+DENTAL = 'DT'
+PHARMACY = 'PH'
+TRANSPORTATION = 'TP'
+WINTER = 'WI'
+STORAGE = 'ST'
+
+SERVICES = [
+    (MEDICAL, "Medical Care"),
+    (HOUSING, "Housing"),
+    (COUNSELING, "Counseling"),
+    (CITIZENSHIP, "Citizenship"),
+    (JOB, "Job Assistance"),
+    (SUBSTANCE, "Substance Recovery"),
+    (D_VIOLENCE, "Fleeing Domestic Violence"),
+    (H_TRAFFICKING, "Fleeing Human Trafficking"),
+    (CASE_MANAGEMENT, "Case Management"),
+    (MENTAL_HEALTH, "Mental Health Treatment"),
+    (TRAUMA, "Trauma"),
+    (HOTLINE, "Hotline"),
+    (WELFARE, "Welfare"),
+    (CLOTHING, "Clothing"),
+    (TECH, "Technology"),
+    (DENTAL, "Dental"),
+    (PHARMACY, "Pharmacy"),
+    (TRANSPORTATION, "Transportation"),
+    (WINTER, "Winter"),
+    (STORAGE, "Storage"),
+    (CRISIS, "Crisis"),
+    (ADDICTION, "Addiction"),
+    (CHILDCARE, "Childcare"),
+    (YOUTH, "Youth Services"),
+    (VETERAN, "Veteran"),
+    (REHAB, "Rehabilitation"),
+    (DISAB, "Mental/Physical Disability"),
+    (EDUCATION, "Education"),
+    (EMPLOYMENT, "Employment"),
+    (FINANCES, "Financal Assistance"),
+    (SUPPLIES, "Clothing/Housewares"),
+    (FOOD, "Food"),
+    (HEALTH, "Healthcare"),
+    (SHELTER, "Shelter"),
+    (LEGAL, "Legal Assistance"),
+    (ID, "Identification"),
+    (SPIRITUAL, "Spiritual")
+]
+
+
 @python_2_unicode_compatible
 class Resource(models.Model):
     """Model for the organization."""
 
-    CRISIS = 'CR'
-    ADDICTION = 'AD'
-    CHILDCARE = 'CH'
-    YOUTH = 'YS'
-    VETERAN = 'VE'
-    REHAB = 'RE'
-    DISAB = 'MP'
-    EDUCATION = 'ED'
-    EMPLOYMENT = 'EM'
-    FINANCES = 'FI'
-    SUPPLIES = 'SU'
-    FOOD = 'FO'
-    HEALTH = 'HC'
-    SHELTER = 'SH'
-    LEGAL = 'LE'
-    ID = 'ID'
-    SPIRITUAL = 'SP'
-    MEDICAL = 'MD'
-    HOUSING = 'HS'
-    COUNSELING = 'CS'
-    CITIZENSHIP = 'CZ'
-    JOB = 'JB'
-    SUBSTANCE = 'SB'
-    D_VIOLENCE = 'DV'
-    H_TRAFFICKING = 'HT'
-    CASE_MANAGEMENT = 'CM'
-    MENTAL_HEALTH = 'MH'
-    TRAUMA = 'TR'
-    HOTLINE = 'HL'
-    WELFARE = 'WF'
-    CLOTHING = 'CL'
-    TECH = 'TE'
-    DENTAL = 'DT'
-    PHARMACY = 'PH'
-    TRANSPORTATION = 'TP'
-    WINTER = 'WI'
-    STORAGE = 'ST'
-
-    SERVICES = [
-        (MEDICAL, "Medical Care"),
-        (HOUSING, "Housing"),
-        (COUNSELING, "Counseling"),
-        (CITIZENSHIP, "Citizenship"),
-        (JOB, "Job Assistance"),
-        (SUBSTANCE, "Substance Recovery"),
-        (D_VIOLENCE, "Fleeing Domestic Violence"),
-        (H_TRAFFICKING, "Fleeing Human Trafficking"),
-        (CASE_MANAGEMENT, "Case Management"),
-        (MENTAL_HEALTH, "Mental Health Treatment"),
-        (TRAUMA, "Trauma"),
-        (HOTLINE, "Hotline"),
-        (WELFARE, "Welfare"),
-        (CLOTHING, "Clothing"),
-        (TECH, "Technology"),
-        (DENTAL, "Dental"),
-        (PHARMACY, "Pharmacy"),
-        (TRANSPORTATION, "Transportation"),
-        (WINTER, "Winter"),
-        (STORAGE, "Storage"),
-        (CRISIS, "Crisis"),
-        (ADDICTION, "Addiction"),
-        (CHILDCARE, "Childcare"),
-        (YOUTH, "Youth Services"),
-        (VETERAN, "Veteran"),
-        (REHAB, "Rehabilitation"),
-        (DISAB, "Mental/Physical Disability"),
-        (EDUCATION, "Education"),
-        (EMPLOYMENT, "Employment"),
-        (FINANCES, "Financal Assistance"),
-        (SUPPLIES, "Clothing/Housewares"),
-        (FOOD, "Food"),
-        (HEALTH, "Healthcare"),
-        (SHELTER, "Shelter"),
-        (LEGAL, "Legal Assistance"),
-        (ID, "Identification"),
-        (SPIRITUAL, "Spiritual")
-    ]
-
     services = MultiSelectField(
-        choices=SERVICES
+        choices=SERVICES,
+        default='None'
     )
 
     org_name = models.CharField(max_length=128)

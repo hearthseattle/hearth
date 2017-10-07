@@ -1,7 +1,10 @@
 """File containing the form for the edit/creation views."""
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.forms import (
+    ModelForm,
+    Form
+)
 from .models import Resource
 from localflavor.us.forms import USStateSelect
 from localflavor.us.forms import USZipCodeField
@@ -155,18 +158,111 @@ class ResourceForm(ModelForm):
         """Meta class for the model."""
 
         model = Resource
-        fields = ['main_category', 'org_name',
+        fields = ['services', 'org_name',
                   'description', 'street', 'city',
                   'states',
                   'zip_code', 'website',
                   'phone_number', 'image']
         labels = {
             'org_name': 'Name of Organization',
-            'main_category': 'Main Categories',
+            'services': 'Services',
         }
         help_texts = {
-            'main_category': 'The core services your organization provides.',
+            'services': 'The core services your organization provides.',
         }
-        # widgets = {
-        #     'state': USStateSelect(attrs={'readonly': True}),
-        # }
+
+
+class FilterForm(Form):
+    """Form for the filtering of resources on the home page."""
+
+    gender = forms.ChoiceField(
+        required=False,
+        widget=forms.RadioSelect(),
+        choices=[
+            ('women', 'Male'),  # Remove any elements with 'women'
+            ('men', 'Female'),  # See above comment
+            ('no_lgbtqia', 'LGBTQIA')  # See above
+        ],
+        label='Gender'
+    )
+
+    criminal_record = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('criminal_record', 'Yes'),  # Remove
+        ],
+        label='Criminal Record'
+    )
+
+    sex_offender_record = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('sex_offender', 'Yes'),  # Remove
+        ],
+        label='Sex Offender Record'
+    )
+
+    disability = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple(),
+        choices=[
+            ('learning', 'Learning'),
+            ('mental', 'Mental'),
+            ('physical', 'Physical'),
+        ],
+        label='Disability'
+    )
+
+    service_animal = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('no_pets', 'Yes'),  # Remove
+        ],
+        label='Service animal'
+    )
+
+    pets = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('pets', 'Yes'),  # Add
+        ],
+        label='Pets'
+    )
+
+    incarcerated = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('', 'Yes'),
+        ],
+        label='Incarcerated'
+    )
+
+    not_sober = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('sober_free', 'Yes')
+        ],
+        label='Not sober'
+    )
+
+    languages = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple(),
+        choices=[
+            ('spanish', 'Spanish'),
+            ('russian', 'Russian'),
+            ('ukrainian', 'Ukrainian'),
+            ('german', 'German'),
+            ('french', 'French'),
+            ('somali', 'Somali'),
+            ('vietnamese', 'Vietnamese'),
+            ('chinese', 'Chinese')
+        ],
+        label='Languages'
+    )
