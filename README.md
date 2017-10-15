@@ -16,24 +16,54 @@ in the following ways:
 Our ultimate goal is to connect people in need to the care they require as quickly and easily as possible.
 
 
-## Getting Started
-
 ### Contributing to Hearth
 
-If you think you can contribute to our project, please take a look at the issues tab. There are a number of things that we could use help fixing and improving. 
+Hearth has been built on the Django Web Framework, styled with Bootstrap, and deployed to AWS using Ansible. It is a collaborative project that always needs your help for improvement. If you think you can contribute to the project, please take a look at the issues tab and tackle whatever issues you feel you are equipped to handle. Our long term goal is to transition to a React or Vue front end with Django Rest Framework (DRF) on the backend and to completely move away from using Django templates.
 
 ### Prerequisites
-In order to run our application, you must have **Python** and **pip** installed.
 
+To make the project as accessible as possible, we are transitioning to a Vagrant environment setup. We'll have steps to use this tool soon.
 
 ### Installing
 To clone our repository, run the following command:
 
     git clone https://github.com/hearthseattle/hearth.git
 
-Navigate into the **hearth** directory then run the following command in order to install the required dependencies:
+Set up an environment using the following command:
+
+    python3 -m venv ENV
+
+Activate your environment with:
+
+    source ENV/bin/activate
+
+Navigate into the **hearth** (root) directory then run the following command in order to install the required dependencies:
 
     pip install -r requirements.txt
+    
+Ensure you have postgreSQL installed and create a database:
+
+    createdb (whatever-you-name-your-database)
+
+Set the following environment variables by opening ENV/bin/activate in your preferred text editor:
+
+    export SECRET_KEY='(secret_key_of_your_choice)'
+    export DATABASE_NAME='(name_of_your_database)'
+    export DATABASE_PASSWORD='(password_if_required)'
+    export DATABASE_HOST='(127.0.0.1)'
+    export DATABASE_USERNAME='(username_if_required)'
+    export DEBUG='True'
+ 
+Navigate to the same director as manage.py and tell Django to setup your models in the database:
+
+    ./manage.py makemigrations
+
+Then:
+
+    ./manage.py migrate
+
+Feel free to visit the Django [tutorial](https://docs.djangoproject.com/en/1.11/intro/) to gain some familiarity.
+   
 
 ## Running the tests
 Run the following command in the same directory as the **manage.py** file to run tests:
