@@ -81,7 +81,7 @@ class ResourceForm(ModelForm):
             ('lgbtqia', 'LGBTQIA welome'),
             ('no_lgbtqia', 'LGBTQIA not accepted')
         ],
-        label='LGBTQIA Friendly?'
+        label='LGBTQIA friendly?'
     )
     sobriety = forms.ChoiceField(
         choices=[
@@ -177,31 +177,6 @@ class ResourceForm(ModelForm):
 class FilterForm(Form):
     """Form for the filtering of resources on the home page."""
 
-    nearby = forms.ChoiceField(
-        required=False,
-        widget=forms.RadioSelect(),
-        choices=[
-            ('.3', '.3 miles'),
-            ('5', '5 miles'),
-            ('10', '10 miles'),
-            ('20', '20 miles'),
-        ]
-    )
-
-    open_24 = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('24', 'Yes'),  # show
-        ],
-        label='Open 24 hours'
-    )
-
-    hours_range = forms.TimeField(
-        required=False,
-        label='Hours open'
-    )
-
     gender = forms.ChoiceField(
         required=False,
         widget=forms.RadioSelect(),
@@ -211,71 +186,6 @@ class FilterForm(Form):
             ('no_lgbtqia', 'LGBTQIA')  # See above
         ],
         label='Gender'
-    )
-
-    criminal_record = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('criminal_record', 'Yes'),  # Remove
-        ],
-        label='Criminal Record'
-    )
-
-    sex_offender_record = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('sex_offender', 'Yes'),  # Remove
-        ],
-        label='Sex Offender Record'
-    )
-
-    disability = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxSelectMultiple(),
-        choices=[
-            ('learning', 'Learning'),
-            ('mental', 'Mental'),
-            ('physical', 'Physical'),
-        ],
-        label='Disability'
-    )
-
-    service_animal = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('no_pets', 'Yes'),  # Remove
-        ],
-        label='Service animal'
-    )
-
-    pets = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('pets', 'Yes'),  # Add
-        ],
-        label='Pets'
-    )
-
-    incarcerated = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('', 'Yes'),
-        ],
-        label='Incarcerated'
-    )
-
-    not_sober = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('sober_free', 'Yes')
-        ],
-        label='Not sober'
     )
 
     languages = forms.ChoiceField(
@@ -291,5 +201,95 @@ class FilterForm(Form):
             ('vietnamese', 'Vietnamese'),
             ('chinese', 'Chinese')
         ],
-        label='Languages'
+        label='Languages Spoken (other than English)'
     )
+
+    criminal_record = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('criminal_record', 'Yes'),  # Remove
+        ],
+        label='Criminal Record'
+    )
+
+    service_animal = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('no_pets', 'Yes'),  # Remove
+        ],
+        label='Service Animal'
+    )
+
+    pets = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('pets', 'Yes'),  # Add
+        ],
+        label='Pets'
+    )
+
+    sex_offender_record = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('sex_offender', 'Yes'),  # Remove
+        ],
+        label='Sex Offender Record'
+    )
+
+    not_sober = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('sober', 'Yes')
+        ],
+        label='Sober Only'
+    )
+
+    open_24 = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('24', 'Yes'),  # show
+        ],
+        label='Open 24 Hours'
+    )
+
+    # disability = forms.ChoiceField(
+    #     required=False,
+    #     widget=forms.CheckboxSelectMultiple(),
+    #     choices=[
+    #         ('learning', 'Learning'),
+    #         ('mental', 'Mental'),
+    #         ('physical', 'Physical'),
+    #     ],
+    #     label='Disability'
+    # )
+
+    # nearby = forms.ChoiceField(
+    #     required=False,
+    #     widget=forms.RadioSelect(),
+    #     choices=[
+    #         ('.3', '.3 miles'),
+    #         ('5', '5 miles'),
+    #         ('10', '10 miles'),
+    #         ('20', '20 miles'),
+    #     ]
+    # )
+
+    # hours_range = forms.TimeField(
+    #     required=False,
+    #     label='Hours Open'
+    # )
+
+    # incarcerated = forms.ChoiceField(
+    #     required=False,
+    #     widget=forms.CheckboxInput(),
+    #     choices=[
+    #         ('', 'Yes'),
+    #     ],
+    #     label='Currently Incarcerated'
+    # )
