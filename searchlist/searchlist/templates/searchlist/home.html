@@ -1,9 +1,9 @@
-{% extends 'searchlist/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}Hearth{% endblock %}
 
 {% block content %}
-<header>
+<header style="margin-top: -70px;">
         <div class="header-content" style="padding-top: 45px;">
             <div class="header-content-inner" style="background-color: rgba(204, 204, 204, 0.5);height: 425px;padding-top: 55px;">
                 <h1 id="homeHeading">Taking care of those in need.</h1>
@@ -15,12 +15,12 @@
 </header>
 <div id="about">
   <div class="container" style="margin-top: 75px;">
-      <div class="container" style="margin-top: 75px;">
+      <div class="row container" style="margin-top: 75px;">
         {{ form.as_p }}
       </div>
       <div class="row categories">
           {% for choice in choices %}
-              <div class="col-6 col-md-3 center-block" style="text-align:left;word-break:break-all;padding-left: 70px;">
+              <div class="col-6 col-md-3 center-block" style="text-align:left;padding-left: 70px;">
                   <div class="checkbox checkbox-primary">
                       <input class type="checkbox" value="{{ choice }}">
                       <label for="checkbox">{{ choice }}</label>

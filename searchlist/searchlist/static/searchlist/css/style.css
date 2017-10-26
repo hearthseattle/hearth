@@ -1,0 +1,9 @@
+/* Custom Style Tweaks */
+
+.container ul {
+  list-style: none;
+}
+
+.container p {
+    margin-bottom: 10px;
+}
