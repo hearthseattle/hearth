@@ -99,7 +99,7 @@ class Resource(models.Model):
     )
 
     org_name = models.CharField(max_length=128)
-    description = models.TextField(max_length=512)
+    description = models.TextField()
     street = models.CharField(max_length=256, null=True, blank=True)
     city = models.CharField(max_length=256, default='Seattle')
     state = USStateField(default='WA')
@@ -111,24 +111,7 @@ class Resource(models.Model):
 
     def __repr__(self):
         """Print org info."""
-        return """
-        org_name: {}
-        description: {}
-        services: {}
-        address: {} {}, {} {}
-        website: {}
-        phone_number: {}
-        tags: {}
-        """.format(self.org_name,
-                   self.description,
-                   self.main_category,
-                   self.street,
-                   self.city,
-                   self.state,
-                   self.zip_code,
-                   self.website,
-                   self.phone_number,
-                   [name for name in self.tags.names()])
+        return "<[{}] {}, {}>".format(self.id, self.org_name, self.city)
 
     def __str__(self):
         """Print organization information."""

@@ -12,8 +12,7 @@ import factory
 import faker
 import os
 import random
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.contrib.staticfiles import finders
+
 
 fake = faker.Faker()
 
@@ -53,12 +52,12 @@ class ResourceFactory(factory.django.DjangoModelFactory):
     org_name = factory.Sequence(
         lambda n: 'Resource{}'.format(n)
     )
-    main_category = random.choice(MAIN_CATEGORY)[0]
+    services = random.choice(MAIN_CATEGORY)[0]
     description = fake.text(100)
     website = fake.domain_name()
-    org_name = fake.name()
     phone_number = factory.Sequence(lambda n: '123-555-%04d' % n)
-    tags = ['substance recovery', 'mental health', 'disability', 'food', 'domestic violence', 'service animals']
+    tags = random.choice(['substance recovery', 'mental health', 'disability', 'food',
+                          'domestic violence', 'service animals'])
 
 
 class ResourceTestModels(TestCase):
@@ -77,14 +76,14 @@ class ResourceTestModels(TestCase):
     def test_model_fields(self):
         """Test organization is created with designated fields."""
         test_org = Resource()
-        test_org.main_category = 'Addiction'
+        test_org.services = 'Addiction'
         test_org.org_name = 'test_org'
         test_org.description = 'test case'
         test_org.website = 'http://www.test_org.com'
         test_org.phone_number = '1234567890'
         test_org.tags = 'Addiction'
         test_org.save()
-        self.assertTrue(test_org.main_category == 'Addiction')
+        self.assertTrue(test_org.services == 'Addiction')
         self.assertTrue(test_org.org_name == 'test_org')
         self.assertTrue(test_org.description == 'test case')
         self.assertTrue(test_org.website == 'http://www.test_org.com')
@@ -93,8 +92,8 @@ class ResourceTestModels(TestCase):
 
     def test_can_change_settings(self):
         """Test that settings can be changed for certain resources."""
-        self.resource.main_category = MAIN_CATEGORY[1][0]
-        self.assertEqual(self.resource.main_category,"Addiction")
+        self.resource.services = MAIN_CATEGORY[1][0]
+        self.assertEqual(self.resource.services, "Addiction")
 
     def test_delete_resources(self):
         """Test that delete works."""
@@ -235,8 +234,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
     #     # import pdb; pdb.set_trace()
     #     self.assertTrue(link)
 
-
-##### CSS Element Tests
+    ##### CSS Element Tests
     def test_template_used_for_home_html_is_base(self):
         """Test that template used for home.html is the base.html."""
         response = self.client.get('/')
@@ -280,7 +278,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         """Test that the email link works in home page."""
         response = self.client.get('/')
         html = soup(response.content, "html.parser")
-        link = html.findAll("a", {"href": "mailto:your-email@your-domain.com"})
+        link = html.findAll("a", {"href": "mailto:admin@hearthseattle.org"})
         self.assertTrue(link)
 
     def test_home_contains_contact_in_navbar(self):
@@ -289,7 +287,6 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
         html = soup(response.content, "html.parser")
         link = html.findAll("a", {"href": "#contact"})
         self.assertTrue(link)
-
 
     # def test_homepage_view_has_links_to_multiple_resources(self):
     #     """Test homepage resource list total."""
@@ -325,7 +322,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
 #     def test_createresource(self):
 #         """Test adding resource."""
 #         self.assertEqual(Resource.objects.count(), 1)
-#         add resource:fields = ['main_category', 'org_name',
+#         add resource:fields = ['services', 'org_name',
 #               'description', 'street', 'city', 'state', 'zip_code', 'website',
 #               'phone_number', 'tags']
 #         resource.object.save()
@@ -335,7 +332,7 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
 #     def test_updateresource(self):
 #         """Test updating resource."""
 #         current resource = etc.
-#         change some fields = ['main_category', 'org_name',
+#         change some fields = ['services', 'org_name',
 #               'description', 'street', 'city', 'state', 'zip_code', 'website',
 #               'phone_number', 'tags']
 #         resource.oject.save()
@@ -379,6 +376,3 @@ class RegistrationCreateEditDeleteResourceTest(TestCase):
 #         response = self.client.get('/resource/{}/delete/'.format(idx))
 #         html = BeautifulSoup(response.content, 'Edit')
 #         self.assertEqual(response.status_code, 302) #redirect to edit page
-
-############### BOOTSTRAP TESTS
-

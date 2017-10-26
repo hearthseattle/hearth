@@ -24,16 +24,6 @@ from searchlist.models import (
 from taggit.models import Tag
 
 
-class NotFound(View):
-    """Class based views for 404s."""
-
-    template_name = '404.html'
-
-    def get(self, request, *args, **kwargs):
-        """Override get method."""
-        return HttpResponseNotFound('success', content_type='text/plain')
-
-
 class CreateResource(LoginRequiredMixin, CreateView):
     """Class-based view to create new resources."""
 
@@ -114,7 +104,6 @@ class EditResource(LoginRequiredMixin, UpdateView):
                             form.save()
                     resource_tags.add(post)
                     form.save()
-
 
                     # if post not in resource_tags.names():
                     #     resource_tags.
