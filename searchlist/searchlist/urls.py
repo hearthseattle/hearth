@@ -17,8 +17,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import (
     url,
-    include,
-    handler404
+    include
 )
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -35,16 +34,13 @@ from searchlist.views import (
 router = routers.DefaultRouter()
 router.register(r'resources', ResourceViewSet)
 
-handler404 = 'searchlist.views.NotFound'
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomePageView.as_view(), name='home'),
     url(r'^login/$', auth_views.LoginView.as_view(
         template_name='registration/login.html'),
         name='login'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(),
-        name='logout'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     url(
         r'^resource/new/$',
         CreateResource.as_view(),
@@ -67,7 +63,7 @@ urlpatterns = [
         ),
         name="delete"
     ),
-    url(r'^', include(router.urls)
+    url(r'^api/', include(router.urls)
         ),
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')

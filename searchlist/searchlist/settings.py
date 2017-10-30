@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'rest',
     'rest_framework',
     'multiselectfield',
-    'taggit_serializer'
+    'taggit_serializer',
+    'django_extensions'
 ]
 
 REST_FRAMEWORK = {
@@ -206,7 +207,6 @@ if not DEBUG:
     MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN,
                                         MEDIAFILES_LOCATION)
 else:
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
     STATIC_URL = '/static/'
     STATIC_ROOT = '/var/www/static/'
 

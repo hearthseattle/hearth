@@ -240,13 +240,13 @@ class FilterForm(Form):
         label='Sex Offender Record'
     )
 
-    not_sober = forms.ChoiceField(
+    sober = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
             ('sober', 'Yes')
         ],
-        label='Sober Only'
+        label='Sober'
     )
 
     open_24 = forms.ChoiceField(
