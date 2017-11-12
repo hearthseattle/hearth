@@ -7,8 +7,6 @@ from django.forms import (
     Form
 )
 from .models import Resource
-from localflavor.us.forms import USStateSelect
-from localflavor.us.forms import USZipCodeField
 import os
 import pickle
 
@@ -57,6 +55,7 @@ class ResourceForm(ModelForm):
     )
     language = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(),
+        required=False,
         choices=[
             ('spanish', 'Spanish'),
             ('russian', 'Russian'),
@@ -148,7 +147,6 @@ class ResourceForm(ModelForm):
             ('winter', 'Winter Availability'),
             ('storage', 'Storage'),
             ('showers', 'Showers'),
-            ('sex_offender', 'Sex offender restrictions'),
             ('criminal_record', 'Criminal record restrictions'),
             ('refugees', 'Refugee assistance'),
         ],
@@ -229,15 +227,6 @@ class FilterForm(Form):
             ('pets', 'Yes'),  # Add
         ],
         label='Pets'
-    )
-
-    sex_offender_record = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            ('sex_offender', 'Yes'),  # Remove
-        ],
-        label='Sex Offender Record'
     )
 
     sober = forms.ChoiceField(

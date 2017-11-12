@@ -1,11 +1,11 @@
 """View page for our homeless to hearth app."""
 from __future__ import unicode_literals
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django import forms
-from django.http import HttpResponseNotFound
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import (
@@ -33,15 +33,18 @@ class CreateResource(LoginRequiredMixin, CreateView):
     tag_fields = ['language', 'age', 'gender', 'citizenship',
                   'lgbtqia', 'sobriety', 'costs', 'case_managers',
                   'counselors', 'always_open', 'pets', 'various']
+    exclude = ['created_by']
 
     def form_valid(self, form):
         """Add the tags through fields instead of a text area."""
-        saved_model_form = form.save()
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.save()
         for field in self.request.POST:
             if field in self.tag_fields:
-                saved_model_form.tags.add(self.request.POST[field])
-                saved_model_form.save()
-        return super(CreateResource, self).form_valid(form)
+                self.object.tags.add(self.request.POST[field])
+                self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class EditResource(LoginRequiredMixin, UpdateView):
@@ -54,6 +57,13 @@ class EditResource(LoginRequiredMixin, UpdateView):
     tag_fields = ['language', 'age', 'gender', 'citizenship',
                   'lgbtqia', 'sobriety', 'costs', 'case_managers',
                   'counselors', 'always_open', 'pets', 'various']
+
+    def get_object(self, *args, **kwargs):
+        """Implement permission check."""
+        obj = super().get_object(*args, **kwargs)
+        if not obj.created_by == self.request.user or self.request.user.is_staff:
+            raise PermissionDenied
+        return obj
 
     def get_form_kwargs(self):
         """
@@ -143,6 +153,13 @@ class DeleteResource(LoginRequiredMixin, DeleteView):
     model = Resource
     success_url = reverse_lazy('home')
 
+    def get_object(self, *args, **kwargs):
+        """Implement permission check."""
+        obj = super().get_object(*args, **kwargs)
+        if not obj.created_by == self.request.user or self.request.user.is_staff:
+            raise PermissionDenied
+        return obj
+
     def delete(self, request, *args, **kwargs):
         """Delete override to add a success message."""
         messages.success(self.request, self.success_message)
@@ -158,7 +175,6 @@ class HomePageView(ListView):
 
     def get_context_data(self, **kwargs):
         """Get context to populate page with resources."""
-
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['choices'] = [service[1] for service in SERVICES]
         context['form'] = self.form_class()
