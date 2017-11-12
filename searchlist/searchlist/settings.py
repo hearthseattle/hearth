@@ -22,25 +22,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-CORS_ORIGIN_ALLOW_ALL = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
 
 ALLOWED_HOSTS = ['*']
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-# Application definition
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -82,7 +78,10 @@ ROOT_URLCONF = 'searchlist.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # Override registration templates with our own
+            os.path.join(BASE_DIR, 'searchlist/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,8 +97,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'searchlist.wsgi.application'
 
 
+######################################################################
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+######################################################################
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -117,9 +119,13 @@ DATABASES = {
     }
 }
 
+
+######################################################################
 # Logging
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize logging configuration
+######################################################################
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -154,8 +160,10 @@ LOGGING = {
 }
 
 
+######################################################################
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+######################################################################
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -172,9 +180,40 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ADMINS = [
+    ('Web Master', 'webmaster@hearthseattle.org')
+]
 
+
+######################################################################
+# Django Registration Redux
+######################################################################
+
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_DEFAULT_FROM_EMAIL = 'info@hearthseattle.org'
+REGISTRATION_ADMINS = ADMINS + [
+    ('Info', 'info@hearthseattle.org')
+]
+
+
+######################################################################
+# SMTP SETTINGS
+######################################################################
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_HOST = 'email-smtp.us-west-2.amazonaws.com'
+    EMAIL_PORT = 25
+    EMAIL_HOST_USER = os.environ.get('EMAIL_USER', '')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
+    EMAIL_USE_TLS = True
+
+
+######################################################################
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
+######################################################################
 
 LANGUAGE_CODE = 'en-us'
 
@@ -187,9 +226,10 @@ USE_L10N = True
 USE_TZ = True
 
 
+######################################################################
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+######################################################################
 
 if not DEBUG:
     AWS_STORAGE_BUCKET_NAME = 'hearthassets'
@@ -212,9 +252,3 @@ else:
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-# do this later...maybe?
-# boto-rsync /path/to/media s3://<your bucket name>/media -a <your AWS ACCESS KEY ID> -s <your AWS SECRET ACCESS KEY>
