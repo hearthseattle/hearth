@@ -1,5 +1,5 @@
 """Model for search profiles."""
-from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from localflavor.us.models import (
@@ -7,9 +7,6 @@ from localflavor.us.models import (
     USZipCodeField,
     PhoneNumberField
 )
-from multiselectfield import MultiSelectField
-from taggit.managers import TaggableManager
-
 
 CRISIS = 'CR'
 ADDICTION = 'AD'
@@ -91,29 +88,79 @@ SERVICES = [
 
 
 @python_2_unicode_compatible
-class Resource(models.Model):
-    """Model for the organization."""
+class Service(models.Model):
+    """Model for all services."""
 
-    services = MultiSelectField(
-        choices=SERVICES,
-        default='None'
+    services = models.CharField(max_length=255)
+
+    def __repr__(self):
+        """Display strings, not objects."""
+        return self.services
+
+    def __str__(self):
+        """Redundant string form."""
+        return self.__repr__()
+
+
+@python_2_unicode_compatible
+class Language(models.Model):
+    """Model to contain languages."""
+
+    languages = models.CharField(max_length=255)
+
+    def __repr__(self):
+        """Display strings, not objects."""
+        return self.languages
+
+    def __str__(self):
+        """Redundant string form."""
+        return self.__repr__()
+
+
+@python_2_unicode_compatible
+class Resource(models.Model):
+    """Model for each organization."""
+
+    gender_choices = (
+        ('M', 'Men Only'),
+        ('W', 'Women Only'),
+        ('A', 'Any')
     )
 
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
-    org_name = models.CharField(max_length=128)
+    name = models.CharField(max_length=255)
     description = models.TextField()
-    street = models.CharField(max_length=256, null=True, blank=True)
-    city = models.CharField(max_length=256, default='Seattle')
+    street = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, default='Seattle')
     state = USStateField(default='WA')
     zip_code = USZipCodeField(null=True, blank=True)
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
-    tags = TaggableManager(blank=True)
     image = models.ImageField(upload_to='photos', null=True, blank=True)
+    gender = models.CharField(
+        max_length=255,
+        choices=gender_choices,
+        default='A'
+    )
+    services = models.ManyToManyField(Service)
+    lower_age = models.PositiveSmallIntegerField(default=0)
+    upper_age = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(150)],
+        default=150
+    )
+    languages = models.ManyToManyField(Language)
+    us_citizens_only = models.BooleanField()
+    sober_only = models.BooleanField()
+    case_managers = models.BooleanField()
+    open_24_hours = models.BooleanField()
+    service_animals = models.BooleanField()
+    pets = models.BooleanField()
+    accepts_sex_offenders = models.BooleanField()
+    accepts_criminals = models.BooleanField()
+    accepts_incarcerated = models.BooleanField()
 
     def __repr__(self):
         """Print org info."""
-        return "<[{}] {}, {}>".format(self.id, self.org_name, self.city)
+        return "<[{}] {}, {}>".format(self.id, self.name, self.city)
 
     def __str__(self):
         """Print organization information."""

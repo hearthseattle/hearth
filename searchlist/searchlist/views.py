@@ -17,10 +17,8 @@ from .forms import (
     ResourceForm,
     FilterForm
 )
-from searchlist.models import (
-    Resource,
-    SERVICES
-)
+from searchlist.models import Resource
+from searchlist.models import SERVICES
 from taggit.models import Tag
 
 
@@ -29,21 +27,12 @@ class CreateResource(LoginRequiredMixin, CreateView):
 
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
+    # form_class = ResourceForm
     success_url = reverse_lazy('home')
-    tag_fields = ['language', 'age', 'gender', 'citizenship',
-                  'lgbtqia', 'sobriety', 'costs', 'case_managers',
-                  'counselors', 'always_open', 'pets', 'various']
-    exclude = ['created_by']
 
     def form_valid(self, form):
         """Add the tags through fields instead of a text area."""
-        self.object = form.save(commit=False)
-        self.object.created_by = self.request.user
-        self.object.save()
-        for field in self.request.POST:
-            if field in self.tag_fields:
-                self.object.tags.add(self.request.POST[field])
-                self.object.save()
+        super().form_valid(self, form)
         return HttpResponseRedirect(self.get_success_url())
 
 

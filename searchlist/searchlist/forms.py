@@ -24,152 +24,156 @@ def validate_zip(zip_code):
 
 class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
-
-    states = forms.ChoiceField(
-        choices=[('Washington', 'Washington')],
-        initial='Washington',
-        disabled=True,
-        label='State'
-    )
-
-    website = forms.URLField(initial='http://')
-
-    zip_code = forms.IntegerField(
-        validators=[validate_zip]
-    )
-    gender = forms.ChoiceField(
-        choices=[
-            ('any_gender', 'Any'),
-            ('women', 'Women Only'),
-            ('men', 'Men Only')
-        ],
-        label='Serve specific genders?'
-    )
-    age = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=[
-            ('no_age', 'No'),
-            ('age', 'Yes')
-        ],
-        label='Age requirements?'
-    )
-    language = forms.MultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple(),
-        required=False,
-        choices=[
-            ('spanish', 'Spanish'),
-            ('russian', 'Russian'),
-            ('ukrainian', 'Ukrainian'),
-            ('german', 'German'),
-            ('french', 'French'),
-            ('somali', 'Somali'),
-            ('vietnamese', 'Vietnamese'),
-            ('chinese', 'Chinese')
-        ],
-        label='Languages spoken other than English?'
-    )
-    citizenship = forms.ChoiceField(
-        choices=[
-            ('any_citizenship', 'All welcome'),
-            ('us_citizens_only', 'US Citizens Only')
-        ],
-        label='Required citizenship status?'
-    )
-    lgbtqia = forms.ChoiceField(
-        choices=[
-            ('lgbtqia', 'LGBTQIA welome'),
-            ('no_lgbtqia', 'LGBTQIA not accepted')
-        ],
-        label='LGBTQIA friendly?'
-    )
-    sobriety = forms.ChoiceField(
-        choices=[
-            ('sober', 'Must be sober'),
-            ('sober_free', 'Not required to be sober')
-        ],
-        label='Sobriety requirements?'
-    )
-    costs = forms.ChoiceField(
-        choices=[
-            ('free', 'All services free of charge'),
-            ('free', 'Some services free of charge'),
-            ('not_free', 'No services are free of charge')
-        ],
-        label='Do you offer services free of charge?'
-    )
-    case_managers = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs={'blank': True}),
-        choices=[
-            ('case_managers', 'Yes'),
-            ('no_case_managers', 'No')
-        ],
-        label='Are case managers available?'
-    )
-    counselors = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=[
-            ('counselors', 'Yes'),
-            ('no_counselors', 'No')
-        ],
-        label='Are counselors available?'
-    )
-    always_open = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=[
-            ('24', 'Yes'),
-            ('no_24', 'No')
-        ],
-        label='Are you open 24 hours?'
-    )
-    pets = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=[
-            ('pets', 'Yes'),
-            ('no_pets', 'No'),
-            ('service_animals', 'Service animals only')
-        ],
-        label='Are pets allowed?'
-    )
-    various = forms.MultipleChoiceField(
-        required=False,
-        widget=forms.CheckboxSelectMultiple,
-        choices=[
-            ('trauma', 'Post trauma'),
-            ('trafficking', 'Post human trafficking'),
-            ('domestic_violence', 'Post domestic violence'),
-            ('legal', 'Legal assistance'),
-            ('short_term', 'Short-term housing'),
-            ('long_term', 'Long-term housing'),
-            ('welfare', 'Welfare assistance'),
-            ('meals', 'Meals'),
-            ('electronics', 'Electronics'),
-            ('transportation', 'Transportation'),
-            ('winter', 'Winter Availability'),
-            ('storage', 'Storage'),
-            ('showers', 'Showers'),
-            ('criminal_record', 'Criminal record restrictions'),
-            ('refugees', 'Refugee assistance'),
-        ],
-        label='Please select specific services you provide '
-              'or additional requirements.'
-    )
-
     class Meta:
-        """Meta class for the model."""
-
         model = Resource
-        fields = ['services', 'org_name',
-                  'description', 'street', 'city',
-                  'states',
-                  'zip_code', 'website',
-                  'phone_number', 'image']
-        labels = {
-            'org_name': 'Name of Organization',
-            'services': 'Services',
-        }
-        help_texts = {
-            'services': 'The core services your organization provides.',
-        }
+        fields = '__all__'
+
+
+#     states = forms.ChoiceField(
+#         choices=[('Washington', 'Washington')],
+#         initial='Washington',
+#         disabled=True,
+#         label='State'
+#     )
+
+#     website = forms.URLField(initial='http://')
+
+#     zip_code = forms.IntegerField(
+#         validators=[validate_zip]
+#     )
+#     gender = forms.ChoiceField(
+#         choices=[
+#             ('any_gender', 'Any'),
+#             ('women', 'Women Only'),
+#             ('men', 'Men Only')
+#         ],
+#         label='Serve specific genders?'
+#     )
+#     age = forms.ChoiceField(
+#         widget=forms.RadioSelect(),
+#         choices=[
+#             ('no_age', 'No'),
+#             ('age', 'Yes')
+#         ],
+#         label='Age requirements?'
+#     )
+#     language = forms.MultipleChoiceField(
+#         widget=forms.CheckboxSelectMultiple(),
+#         required=False,
+#         choices=[
+#             ('spanish', 'Spanish'),
+#             ('russian', 'Russian'),
+#             ('ukrainian', 'Ukrainian'),
+#             ('german', 'German'),
+#             ('french', 'French'),
+#             ('somali', 'Somali'),
+#             ('vietnamese', 'Vietnamese'),
+#             ('chinese', 'Chinese')
+#         ],
+#         label='Languages spoken other than English?'
+#     )
+#     citizenship = forms.ChoiceField(
+#         choices=[
+#             ('any_citizenship', 'All welcome'),
+#             ('us_citizens_only', 'US Citizens Only')
+#         ],
+#         label='Required citizenship status?'
+#     )
+#     lgbtqia = forms.ChoiceField(
+#         choices=[
+#             ('lgbtqia', 'LGBTQIA welome'),
+#             ('no_lgbtqia', 'LGBTQIA not accepted')
+#         ],
+#         label='LGBTQIA friendly?'
+#     )
+#     sobriety = forms.ChoiceField(
+#         choices=[
+#             ('sober', 'Must be sober'),
+#             ('sober_free', 'Not required to be sober')
+#         ],
+#         label='Sobriety requirements?'
+#     )
+#     costs = forms.ChoiceField(
+#         choices=[
+#             ('free', 'All services free of charge'),
+#             ('free', 'Some services free of charge'),
+#             ('not_free', 'No services are free of charge')
+#         ],
+#         label='Do you offer services free of charge?'
+#     )
+#     case_managers = forms.ChoiceField(
+#         widget=forms.RadioSelect(attrs={'blank': True}),
+#         choices=[
+#             ('case_managers', 'Yes'),
+#             ('no_case_managers', 'No')
+#         ],
+#         label='Are case managers available?'
+#     )
+#     counselors = forms.ChoiceField(
+#         widget=forms.RadioSelect(),
+#         choices=[
+#             ('counselors', 'Yes'),
+#             ('no_counselors', 'No')
+#         ],
+#         label='Are counselors available?'
+#     )
+#     always_open = forms.ChoiceField(
+#         widget=forms.RadioSelect(),
+#         choices=[
+#             ('24', 'Yes'),
+#             ('no_24', 'No')
+#         ],
+#         label='Are you open 24 hours?'
+#     )
+#     pets = forms.ChoiceField(
+#         widget=forms.RadioSelect(),
+#         choices=[
+#             ('pets', 'Yes'),
+#             ('no_pets', 'No'),
+#             ('service_animals', 'Service animals only')
+#         ],
+#         label='Are pets allowed?'
+#     )
+#     various = forms.MultipleChoiceField(
+#         required=False,
+#         widget=forms.CheckboxSelectMultiple,
+#         choices=[
+#             ('trauma', 'Post trauma'),
+#             ('trafficking', 'Post human trafficking'),
+#             ('domestic_violence', 'Post domestic violence'),
+#             ('legal', 'Legal assistance'),
+#             ('short_term', 'Short-term housing'),
+#             ('long_term', 'Long-term housing'),
+#             ('welfare', 'Welfare assistance'),
+#             ('meals', 'Meals'),
+#             ('electronics', 'Electronics'),
+#             ('transportation', 'Transportation'),
+#             ('winter', 'Winter Availability'),
+#             ('storage', 'Storage'),
+#             ('showers', 'Showers'),
+#             ('criminal_record', 'Criminal record restrictions'),
+#             ('refugees', 'Refugee assistance'),
+#         ],
+#         label='Please select specific services you provide '
+#               'or additional requirements.'
+#     )
+
+#     class Meta:
+#         """Meta class for the model."""
+
+#         model = Resource
+#         fields = ['services', 'name',
+#                   'description', 'street', 'city',
+#                   'states',
+#                   'zip_code', 'website',
+#                   'phone_number', 'image']
+#         labels = {
+#             'name': 'Name of Organization',
+#             'services': 'Services',
+#         }
+#         help_texts = {
+#             'services': 'The core services your organization provides.',
+#         }
 
 
 class FilterForm(Form):
@@ -247,38 +251,38 @@ class FilterForm(Form):
         label='Open 24 Hours'
     )
 
-    # disability = forms.ChoiceField(
-    #     required=False,
-    #     widget=forms.CheckboxSelectMultiple(),
-    #     choices=[
-    #         ('learning', 'Learning'),
-    #         ('mental', 'Mental'),
-    #         ('physical', 'Physical'),
-    #     ],
-    #     label='Disability'
-    # )
+    disability = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple(),
+        choices=[
+            ('learning', 'Learning'),
+            ('mental', 'Mental'),
+            ('physical', 'Physical'),
+        ],
+        label='Disability'
+    )
 
-    # nearby = forms.ChoiceField(
-    #     required=False,
-    #     widget=forms.RadioSelect(),
-    #     choices=[
-    #         ('.3', '.3 miles'),
-    #         ('5', '5 miles'),
-    #         ('10', '10 miles'),
-    #         ('20', '20 miles'),
-    #     ]
-    # )
+    nearby = forms.ChoiceField(
+        required=False,
+        widget=forms.RadioSelect(),
+        choices=[
+            ('.3', '.3 miles'),
+            ('5', '5 miles'),
+            ('10', '10 miles'),
+            ('20', '20 miles'),
+        ]
+    )
 
-    # hours_range = forms.TimeField(
-    #     required=False,
-    #     label='Hours Open'
-    # )
+    hours_range = forms.TimeField(
+        required=False,
+        label='Hours Open'
+    )
 
-    # incarcerated = forms.ChoiceField(
-    #     required=False,
-    #     widget=forms.CheckboxInput(),
-    #     choices=[
-    #         ('', 'Yes'),
-    #     ],
-    #     label='Currently Incarcerated'
-    # )
+    incarcerated = forms.ChoiceField(
+        required=False,
+        widget=forms.CheckboxInput(),
+        choices=[
+            ('', 'Yes'),
+        ],
+        label='Currently Incarcerated'
+    )

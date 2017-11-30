@@ -6,6 +6,6 @@ from searchlist.models import Resource
 class ResourcesAdmin(admin.ModelAdmin):
     """Just show organization name in resources model admin."""
 
-    list_display = ["org_name"]
+    list_display = ["name"]
 
 admin.site.register(Resource, ResourcesAdmin)
