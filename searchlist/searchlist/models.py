@@ -157,6 +157,7 @@ class Resource(models.Model):
     accepts_sex_offenders = models.BooleanField()
     accepts_criminals = models.BooleanField()
     accepts_incarcerated = models.BooleanField()
+    orca_cards_available = models.BooleanField(default=False)
 
     def __repr__(self):
         """Print org info."""
