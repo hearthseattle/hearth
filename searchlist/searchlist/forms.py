@@ -27,7 +27,11 @@ class ResourceForm(ModelForm):
     class Meta:
         model = Resource
         fields = '__all__'
+        widgets = {
+            'languages': forms.CheckboxSelectMultiple()
+        }
 
+    # services = forms.MultipleChoiceField()
 
 #     states = forms.ChoiceField(
 #         choices=[('Washington', 'Washington')],
