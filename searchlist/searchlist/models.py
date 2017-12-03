@@ -90,7 +90,20 @@ SERVICES = [
 ]
 
 
-@python_2_unicode_compatible
+class ResourceTag(models.Model):
+    """Tag for related resources."""
+
+    family = models.CharField(max_length=256, db_index=True)
+    value = models.CharField(max_length=256)
+
+    def __repr__(self):
+        """Helpful representation."""
+        return "{}: {}".format(self.family, self.value)
+
+    class Meta:  # noqa: D101
+        unique_together = ("family", "value")
+
+
 class Resource(models.Model):
     """Model for the organization."""
 
@@ -102,13 +115,13 @@ class Resource(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     org_name = models.CharField(max_length=128)
     description = models.TextField()
-    street = models.CharField(max_length=256, null=True, blank=True)
+    street = models.CharField(max_length=256, blank=True)
     city = models.CharField(max_length=256, default='Seattle')
     state = USStateField(default='WA')
     zip_code = USZipCodeField(null=True, blank=True)
-    website = models.URLField(blank=True, null=True)
+    website = models.URLField(blank=True)
     phone_number = PhoneNumberField()
-    tags = TaggableManager(blank=True)
+    tags = models.ManyToManyField(ResourceTag, blank=True)
     image = models.ImageField(upload_to='photos', null=True, blank=True)
 
     def __repr__(self):

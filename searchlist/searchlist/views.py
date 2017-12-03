@@ -19,6 +19,7 @@ from .forms import (
 )
 from searchlist.models import (
     Resource,
+    ResourceTag,
     SERVICES
 )
 from taggit.models import Tag
@@ -30,9 +31,7 @@ class CreateResource(LoginRequiredMixin, CreateView):
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
-    tag_fields = ['language', 'age', 'gender', 'citizenship',
-                  'lgbtqia', 'sobriety', 'costs', 'case_managers',
-                  'counselors', 'always_open', 'pets', 'various']
+    tag_fields = ResourceTag.objects.values_list('family', flat=True).distinct()
     exclude = ['created_by']
 
     def form_valid(self, form):
@@ -42,8 +41,8 @@ class CreateResource(LoginRequiredMixin, CreateView):
         self.object.save()
         for field in self.request.POST:
             if field in self.tag_fields:
-                self.object.tags.add(self.request.POST[field])
-                self.object.save()
+                tag = ResourceTag.objects.get(family=field, value=self.request.POST[field])
+                self.object.tags.add(tag)
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -54,9 +53,7 @@ class EditResource(LoginRequiredMixin, UpdateView):
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
-    tag_fields = ['language', 'age', 'gender', 'citizenship',
-                  'lgbtqia', 'sobriety', 'costs', 'case_managers',
-                  'counselors', 'always_open', 'pets', 'various']
+    tag_fields = ResourceTag.objects.values_list('family', flat=True).distinct()
 
     def get_object(self, *args, **kwargs):
         """Implement permission check."""
@@ -73,13 +70,16 @@ class EditResource(LoginRequiredMixin, UpdateView):
         to it's choice label.
         """
         resource_id = self.kwargs['pk']
-        resource_tags = Resource.objects.get(id=resource_id).tags.names()
+        resource_tags = Resource.objects.get(id=resource_id).tags.all().values_list('family', 'value')
         edit_form = self.form_class()
         edit_form_fields = edit_form.fields
         for field in self.tag_fields:
             choices = edit_form_fields[field].choices
             tags, selections = zip(*choices)
-            intersection = [tag for tag in tags if tag in resource_tags]
+            intersection = [(t[0], t[1]) for t in tags if t in resource_tags]
+            print('choices is {}'.format(choices))
+            print('tags, selections: {}, {}'.format(tags, selections))
+            print('intersection is {}'.format(intersection))
             if isinstance(edit_form_fields[field],
                           forms.fields.MultipleChoiceField):
                 self.initial[field] = intersection
@@ -90,53 +90,13 @@ class EditResource(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         """Save form if valid."""
-        resource_id = self.kwargs['pk']
-        resource_tags = Resource.objects.get(id=resource_id).tags
-        for field in form.changed_data:
+        self.object = form.save()
+        Resource.objects.get(id=self.kwargs['pk']).tags.clear()
+        for field in self.request.POST:
             if field in self.tag_fields:
-                if isinstance(form.fields[field],
-                              forms.fields.MultipleChoiceField):
-                    POST_list = self.request.POST.getlist(field)
-                    for tag in POST_list:
-                        if tag in resource_tags.names():
-                            resource_tags.remove(form.initial[field])
-                            form.save()
-                    for tag in POST_list:
-                        resource_tags.add(tag)
-                        form.save()
-                else:
-                    choices = form.fields[field].choices
-                    tags, selections = zip(*choices)
-                    post = self.request.POST[field]
-                    for tag in tags:
-                        if tag in resource_tags.names():
-                            resource_tags.remove(tag)
-                            form.save()
-                    resource_tags.add(post)
-                    form.save()
-
-                    # if post not in resource_tags.names():
-                    #     resource_tags.
-
-        # for field in form.changed_data:
-        #     if field in self.tag_fields:
-        #         if isinstance(form.initial[field], list):
-        #                 for tag in form.initial[field]:
-        #                     resource_tags.remove(tag)
-        #                     form.save()
-        #                 for tag in self.request.POST[field].getlist():
-        #                     resource_tags.add(tag)
-        #                     form.save()
-        #         else:
-        #             # if form.initial[field] != self.request.POST[field]:
-        #             post_tags = self.request.POST.getlist('')
-        #             for tag in resource_tags.names():
-        #                 resource_tags.remove(form.initial[tag])
-        #                 form.save()
-        #             for tag in post_tags:
-        #                     resource_tags.add(tag)
-        #                     form.save()
-        return super(EditResource, self).form_valid(form)
+                tag = ResourceTag.objects.get(family=field, value=self.request.POST[field])
+                self.object.tags.add(tag)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
         """."""
