@@ -31,7 +31,7 @@ class CreateResource(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         """Add the tags through fields instead of a text area."""
-        super().form_valid(self, form)
+        super().form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
 
 

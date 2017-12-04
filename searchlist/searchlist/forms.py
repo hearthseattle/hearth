@@ -43,7 +43,8 @@ class ResourceForm(ModelForm):
         fields = ['name', 'description', 'street', 'city', 'states',
                   'zip_code', 'website', 'phone_number', 'image', 'gender',
                   'languages', 'services', 'lower_age', 'upper_age',
-                  'us_citizens_only', 'case_managers', 'open_24_hours',
+                  'us_citizens_only', 'sober_only', 'case_managers',
+                  'open_24_hours',
                   'service_animals', 'pets', 'accepts_sex_offenders',
                   'accepts_criminals', 'accepts_incarcerated',
                   'orca_cards_available']
@@ -57,90 +58,9 @@ class ResourceForm(ModelForm):
             'gender': 'Gender restrictions?'
         }
 
-#     costs = forms.ChoiceField(
-#         choices=[
-#             ('free', 'All services free of charge'),
-#             ('free', 'Some services free of charge'),
-#             ('not_free', 'No services are free of charge')
-#         ],
-#         label='Do you offer services free of charge?'
-#     )
-#     case_managers = forms.ChoiceField(
-#         widget=forms.RadioSelect(attrs={'blank': True}),
-#         choices=[
-#             ('case_managers', 'Yes'),
-#             ('no_case_managers', 'No')
-#         ],
-#         label='Are case managers available?'
-#     )
-#     counselors = forms.ChoiceField(
-#         widget=forms.RadioSelect(),
-#         choices=[
-#             ('counselors', 'Yes'),
-#             ('no_counselors', 'No')
-#         ],
-#         label='Are counselors available?'
-#     )
-#     always_open = forms.ChoiceField(
-#         widget=forms.RadioSelect(),
-#         choices=[
-#             ('24', 'Yes'),
-#             ('no_24', 'No')
-#         ],
-#         label='Are you open 24 hours?'
-#     )
-#     pets = forms.ChoiceField(
-#         widget=forms.RadioSelect(),
-#         choices=[
-#             ('pets', 'Yes'),
-#             ('no_pets', 'No'),
-#             ('service_animals', 'Service animals only')
-#         ],
-#         label='Are pets allowed?'
-#     )
-#     various = forms.MultipleChoiceField(
-#         required=False,
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('trauma', 'Post trauma'),
-#             ('trafficking', 'Post human trafficking'),
-#             ('domestic_violence', 'Post domestic violence'),
-#             ('legal', 'Legal assistance'),
-#             ('short_term', 'Short-term housing'),
-#             ('long_term', 'Long-term housing'),
-#             ('welfare', 'Welfare assistance'),
-#             ('meals', 'Meals'),
-#             ('electronics', 'Electronics'),
-#             ('transportation', 'Transportation'),
-#             ('winter', 'Winter Availability'),
-#             ('storage', 'Storage'),
-#             ('showers', 'Showers'),
-#             ('criminal_record', 'Criminal record restrictions'),
-#             ('refugees', 'Refugee assistance'),
-#         ],
-#         label='Please select specific services you provide '
-#               'or additional requirements.'
-#     )
-
-#     class Meta:
-#         """Meta class for the model."""
-
-#         model = Resource
-#         fields = ['services', 'name',
-#                   'description', 'street', 'city',
-#                   'states',
-#                   'zip_code', 'website',
-#                   'phone_number', 'image']
-#         labels = {
-#             'name': 'Name of Organization',
-#             'services': 'Services',
-#         }
-#         help_texts = {
-#             'services': 'The core services your organization provides.',
-#         }
     def clean(self):
         """Overridden clean method for validation of the age inputs."""
-        if self.cleaned_data['upper'] <= self.cleaned_data['lower']:
+        if self.cleaned_data['upper_age'] <= self.cleaned_data['lower_age']:
             raise ValidationError(
                 'Invalid entries for lower and upper age ranges.'
             )
