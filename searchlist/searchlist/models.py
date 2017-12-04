@@ -1,6 +1,7 @@
 """Model for search profiles."""
 from django.core.validators import MaxValueValidator
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 from localflavor.us.models import (
     USStateField,
@@ -126,7 +127,8 @@ class Resource(models.Model):
         ('W', 'Women Only'),
         ('A', 'Any')
     )
-
+    created_by = models.ForeignKey(to=User, on_delete=models.SET_NULL,
+                                   blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     street = models.CharField(max_length=255)
