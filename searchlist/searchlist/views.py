@@ -1,9 +1,6 @@
 """View page for our homeless to hearth app."""
 from __future__ import unicode_literals
-from django import forms
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
@@ -42,6 +39,7 @@ class EditResource(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
     success_url = reverse_lazy('home')
+    raise_exception = True
 
     def form_valid(self, form):
         """Save form if valid."""
@@ -60,25 +58,20 @@ class EditResource(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return user_created or user_is_staff
 
 
-class DeleteResource(LoginRequiredMixin, DeleteView):
+class DeleteResource(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """Class-based view for deleting resources."""
 
     template_name = 'searchlist/delete_resource.html'
     success_message = "Resource was deleted successfully."
     model = Resource
     success_url = reverse_lazy('home')
+    raise_exception = True
 
-    def get_object(self, *args, **kwargs):
-        """Implement permission check."""
-        obj = super().get_object(*args, **kwargs)
-        if not obj.created_by == self.request.user or self.request.user.is_staff:
-            raise PermissionDenied
-        return obj
-
-    def delete(self, request, *args, **kwargs):
-        """Delete override to add a success message."""
-        messages.success(self.request, self.success_message)
-        return super(DeleteResource, self).delete(request, *args, **kwargs)
+    def test_func(self):
+        """Permission test using Django mixin."""
+        user_created = self.get_object().created_by == self.request.user
+        user_is_staff = self.request.user.is_staff
+        return user_created or user_is_staff
 
 
 class HomePageView(ListView):
