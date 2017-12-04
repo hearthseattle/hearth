@@ -42,24 +42,20 @@ class ResourceForm(ModelForm):
         model = Resource
         fields = ['name', 'description', 'street', 'city', 'states',
                   'zip_code', 'website', 'phone_number', 'image', 'gender',
-                  'languages', 'services', 'lower_age', 'upper_age']
+                  'languages', 'services', 'lower_age', 'upper_age',
+                  'us_citizens_only', 'case_managers', 'open_24_hours',
+                  'service_animals', 'pets', 'accepts_sex_offenders',
+                  'accepts_criminals', 'accepts_incarcerated',
+                  'orca_cards_available']
         widgets = {
             'languages': forms.CheckboxSelectMultiple(),
             'services': forms.CheckboxSelectMultiple()
         }
         labels = {
             'languages': 'Languages spoken other than English?',
-            'services': 'Select all services your organization provides.'
+            'services': 'Select all services your organization provides.',
+            'gender': 'Gender restrictions?'
         }
-
-    gender = forms.ChoiceField(
-        choices=[
-            ('any_gender', 'Any'),
-            ('women', 'Women Only'),
-            ('men', 'Men Only')
-        ],
-        label='Serve specific genders?'
-    )
 
 #     costs = forms.ChoiceField(
 #         choices=[
@@ -142,6 +138,13 @@ class ResourceForm(ModelForm):
 #         help_texts = {
 #             'services': 'The core services your organization provides.',
 #         }
+    def clean(self):
+        """Overridden clean method for validation of the age inputs."""
+        if self.cleaned_data['upper'] <= self.cleaned_data['lower']:
+            raise ValidationError(
+                'Invalid entries for lower and upper age ranges.'
+            )
+        return self.cleaned_data
 
 
 class FilterForm(Form):
