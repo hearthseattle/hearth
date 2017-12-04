@@ -24,79 +24,43 @@ def validate_zip(zip_code):
 
 class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
+
+    states = forms.ChoiceField(
+        choices=[('Washington', 'Washington')],
+        initial='Washington',
+        disabled=True,
+        label='State'
+    )
+
+    website = forms.URLField(initial='http://')
+
+    zip_code = forms.IntegerField(
+        validators=[validate_zip]
+    )
+
     class Meta:
         model = Resource
-        fields = '__all__'
+        fields = ['name', 'description', 'street', 'city', 'states',
+                  'zip_code', 'website', 'phone_number', 'image', 'gender',
+                  'languages', 'services', 'lower_age', 'upper_age']
         widgets = {
-            'languages': forms.CheckboxSelectMultiple()
+            'languages': forms.CheckboxSelectMultiple(),
+            'services': forms.CheckboxSelectMultiple()
+        }
+        labels = {
+            'languages': 'Languages spoken other than English?',
+            'services': 'Select all services your organization provides.'
         }
 
-    # services = forms.MultipleChoiceField()
+    gender = forms.ChoiceField(
+        choices=[
+            ('any_gender', 'Any'),
+            ('women', 'Women Only'),
+            ('men', 'Men Only')
+        ],
+        label='Serve specific genders?'
+    )
 
-#     states = forms.ChoiceField(
-#         choices=[('Washington', 'Washington')],
-#         initial='Washington',
-#         disabled=True,
-#         label='State'
-#     )
-
-#     website = forms.URLField(initial='http://')
-
-#     zip_code = forms.IntegerField(
-#         validators=[validate_zip]
-#     )
-#     gender = forms.ChoiceField(
-#         choices=[
-#             ('any_gender', 'Any'),
-#             ('women', 'Women Only'),
-#             ('men', 'Men Only')
-#         ],
-#         label='Serve specific genders?'
-#     )
-#     age = forms.ChoiceField(
-#         widget=forms.RadioSelect(),
-#         choices=[
-#             ('no_age', 'No'),
-#             ('age', 'Yes')
-#         ],
-#         label='Age requirements?'
-#     )
-#     language = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple(),
-#         required=False,
-#         choices=[
-#             ('spanish', 'Spanish'),
-#             ('russian', 'Russian'),
-#             ('ukrainian', 'Ukrainian'),
-#             ('german', 'German'),
-#             ('french', 'French'),
-#             ('somali', 'Somali'),
-#             ('vietnamese', 'Vietnamese'),
-#             ('chinese', 'Chinese')
-#         ],
-#         label='Languages spoken other than English?'
-#     )
-#     citizenship = forms.ChoiceField(
-#         choices=[
-#             ('any_citizenship', 'All welcome'),
-#             ('us_citizens_only', 'US Citizens Only')
-#         ],
-#         label='Required citizenship status?'
-#     )
-#     lgbtqia = forms.ChoiceField(
-#         choices=[
-#             ('lgbtqia', 'LGBTQIA welome'),
-#             ('no_lgbtqia', 'LGBTQIA not accepted')
-#         ],
-#         label='LGBTQIA friendly?'
-#     )
-#     sobriety = forms.ChoiceField(
-#         choices=[
-#             ('sober', 'Must be sober'),
-#             ('sober_free', 'Not required to be sober')
-#         ],
-#         label='Sobriety requirements?'
-#     )
 #     costs = forms.ChoiceField(
 #         choices=[
 #             ('free', 'All services free of charge'),

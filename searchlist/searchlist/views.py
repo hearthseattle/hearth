@@ -27,7 +27,6 @@ class CreateResource(LoginRequiredMixin, CreateView):
 
     template_name = 'searchlist/resource_form.html'
     form_class = ResourceForm
-    # form_class = ResourceForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
