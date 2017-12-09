@@ -6,20 +6,7 @@ from django.forms import (
     ModelForm,
     Form
 )
-from .models import Resource
-import os
-import pickle
-
-zips = pickle.load(open(os.path.join(settings.BASE_DIR, '../zips.p'), "rb"))
-
-
-def validate_zip(zip_code):
-    """Ensure zip provided by user is in King County."""
-    if zip_code not in zips:
-        raise ValidationError(
-            '{} is not a valid King County zip code.'.format(zip_code),
-            params={'zip_code': zip_code},
-        )
+from .models import Resource, SERVICES
 
 
 class ResourceForm(ModelForm):
@@ -33,10 +20,6 @@ class ResourceForm(ModelForm):
     )
 
     website = forms.URLField(initial='http://')
-
-    zip_code = forms.IntegerField(
-        validators=[validate_zip]
-    )
 
     class Meta:
         model = Resource
@@ -71,22 +54,27 @@ class ResourceForm(ModelForm):
 
 class FilterForm(Form):
     """Form for the filtering of resources on the home page."""
-
+    age = forms.IntegerField()
     gender = forms.ChoiceField(
         required=False,
         widget=forms.RadioSelect(),
         choices=[
-            ('women', 'Male'),  # Remove any elements with 'women'
-            ('men', 'Female'),  # See above comment
-            ('no_lgbtqia', 'LGBTQIA')  # See above
+            ('women', 'Male'),
+            ('men', 'Female'),
+            ('no_lgbtqia', 'LGBTQIA')
         ],
         label='Gender'
     )
-
+    services = forms.ChoiceField(
+        required=True,
+        widget=forms.CheckboxSelectMultiple(),
+        choices=zip(SERVICES, SERVICES.copy())
+        )
     languages = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxSelectMultiple(),
         choices=[
+            ('english', 'English'),
             ('spanish', 'Spanish'),
             ('russian', 'Russian'),
             ('ukrainian', 'Ukrainian'),
@@ -96,14 +84,14 @@ class FilterForm(Form):
             ('vietnamese', 'Vietnamese'),
             ('chinese', 'Chinese')
         ],
-        label='Languages Spoken (other than English)'
+        label='Languages spoken'
     )
 
     criminal_record = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
-            ('criminal_record', 'Yes'),  # Remove
+            (True, 'Yes'),
         ],
         label='Criminal Record'
     )
@@ -112,16 +100,16 @@ class FilterForm(Form):
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
-            ('no_pets', 'Yes'),  # Remove
+            (True, 'Yes'),
         ],
-        label='Service Animal'
+        label='Service animal'
     )
 
     pets = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
-            ('pets', 'Yes'),  # Add
+            (True, 'Yes'),
         ],
         label='Pets'
     )
@@ -130,7 +118,7 @@ class FilterForm(Form):
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
-            ('sober', 'Yes')
+            (True, 'Yes')
         ],
         label='Sober'
     )
@@ -139,43 +127,23 @@ class FilterForm(Form):
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
-            ('24', 'Yes'),  # show
+            (True, 'Yes'),
         ],
-        label='Open 24 Hours'
+        label='Open 24 hours'
     )
 
-    disability = forms.ChoiceField(
+    family = forms.ChoiceField(
         required=False,
-        widget=forms.CheckboxSelectMultiple(),
-        choices=[
-            ('learning', 'Learning'),
-            ('mental', 'Mental'),
-            ('physical', 'Physical'),
-        ],
-        label='Disability'
-    )
+        widget=forms.CheckboxInput(),
+        label='Family')
 
-    nearby = forms.ChoiceField(
+    orca_cards = forms.ChoiceField(
         required=False,
-        widget=forms.RadioSelect(),
-        choices=[
-            ('.3', '.3 miles'),
-            ('5', '5 miles'),
-            ('10', '10 miles'),
-            ('20', '20 miles'),
-        ]
-    )
-
-    hours_range = forms.TimeField(
-        required=False,
-        label='Hours Open'
-    )
-
+        widget=forms.CheckboxInput(),
+        label='Orca cards'
+        )
     incarcerated = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
-        choices=[
-            ('', 'Yes'),
-        ],
-        label='Currently Incarcerated'
-    )
+        label='Incarcerated'
+        )
