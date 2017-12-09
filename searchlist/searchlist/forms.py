@@ -47,7 +47,7 @@ class ResourceForm(ModelForm):
                   'open_24_hours',
                   'service_animals', 'pets', 'accepts_sex_offenders',
                   'accepts_criminals', 'accepts_incarcerated',
-                  'orca_cards_available']
+                  'family_friendly', 'orca_cards_available']
         widgets = {
             'languages': forms.CheckboxSelectMultiple(),
             'services': forms.CheckboxSelectMultiple()
@@ -55,7 +55,9 @@ class ResourceForm(ModelForm):
         labels = {
             'languages': 'Languages spoken other than English?',
             'services': 'Select all services your organization provides.',
-            'gender': 'Gender restrictions?'
+            'gender': 'Gender restrictions?',
+            'lower_age': 'Lower age limit',
+            'upper_age': 'Upper age limit'
         }
 
     def clean(self):

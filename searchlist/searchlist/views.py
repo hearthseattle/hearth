@@ -26,11 +26,6 @@ class CreateResource(LoginRequiredMixin, CreateView):
     form_class = ResourceForm
     success_url = reverse_lazy('home')
 
-    def form_valid(self, form):
-        """Add the tags through fields instead of a text area."""
-        super().form_valid(form)
-        return HttpResponseRedirect(self.get_success_url())
-
 
 class EditResource(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """Class-based view to edit resources."""

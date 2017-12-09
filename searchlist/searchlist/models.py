@@ -122,6 +122,7 @@ class Resource(models.Model):
     accepts_sex_offenders = models.BooleanField()
     accepts_criminals = models.BooleanField()
     accepts_incarcerated = models.BooleanField()
+    family_friendly = models.BooleanField(default=False)
     orca_cards_available = models.BooleanField(default=False)
 
     def __repr__(self):
