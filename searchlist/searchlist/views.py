@@ -8,6 +8,7 @@ from django.views.generic.edit import (
     CreateView,
     UpdateView,
     DeleteView,
+    ProcessFormView,
     FormMixin
 )
 from .forms import (
@@ -63,7 +64,7 @@ class DeleteResource(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return user_created or user_is_staff
 
 
-class HomePageView(FormMixin, ListView):
+class HomePageView(FormMixin, ListView, ProcessFormView):
     """Class home page view."""
 
     template_name = "searchlist/home.html"
@@ -74,6 +75,11 @@ class HomePageView(FormMixin, ListView):
         """Get context to populate page with resources."""
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['clear_nav_bar'] = True
+        resources = Resource.objects.all()
+        import pdb; pdb.set_trace()
+        if self.request.POST:
+            for query in self.request.POST:
+                pass
         return context
 
 
