@@ -74,15 +74,15 @@ class FilterForm(Form):
         required=False,
         widget=forms.CheckboxSelectMultiple(),
         choices=[
-            ('english', 'English'),
-            ('spanish', 'Spanish'),
-            ('russian', 'Russian'),
-            ('ukrainian', 'Ukrainian'),
-            ('german', 'German'),
-            ('french', 'French'),
-            ('somali', 'Somali'),
-            ('vietnamese', 'Vietnamese'),
-            ('chinese', 'Chinese')
+            ('English', 'English'),
+            ('Spanish', 'Spanish'),
+            ('Russian', 'Russian'),
+            ('Ukrainian', 'Ukrainian'),
+            ('German', 'German'),
+            ('French', 'French'),
+            ('Somali', 'Somali'),
+            ('Vietnamese', 'Vietnamese'),
+            ('Chinese', 'Chinese')
         ],
         label='Languages spoken'
     )

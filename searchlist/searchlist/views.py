@@ -17,6 +17,7 @@ from .forms import (
     FilterForm
 )
 from searchlist.models import Resource
+from searchlist.filters import ResourceFilter
 
 
 class CreateResource(LoginRequiredMixin, CreateView):
@@ -76,11 +77,6 @@ class HomePageView(FormView):
         """Get context to populate page with resources."""
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['clear_nav_bar'] = True
-        resources = Resource.objects.all()
-        import pdb; pdb.set_trace()
-        if self.request.POST:
-            for query in self.request.POST:
-                pass
         return context
 
 
@@ -96,3 +92,11 @@ class ResultsView(ListView):
     """View to show search results."""
 
     template_name = "searchlist/results.html"
+    model = Resource
+
+    def get_queryset(self):
+        """Overriding to accept query params in url."""
+        query = super(ResultsView, self).get_queryset()
+        filtered = ResourceFilter(self.request.POST, query)
+        import pdb; pdb.set_trace()
+        return filtered

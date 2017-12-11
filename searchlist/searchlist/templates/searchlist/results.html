@@ -10,16 +10,15 @@
                   <hr class="primary">
               </div>
       </div>
-      {% for resource in resource_list %}
+      {% for resource in filtered.qs %}
       <div class="container" style="">
           <div class="row category_list">
               <div class="col col-md-12 text-center">
                   <div class="service-box">
                       <i class="fa fa-4x fa-heart text-primary sr-icons" crossorigin="anonymous"></i>
-                      <h3><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.org_name }}</a></h3>
+                      <h3><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.name }}</a></h3>
                       <h5 class="text-muted"><a href="{% url 'resource_detail' pk=resource.id %}">{{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</a></h5>
                       <h6 class="text-muted">{{ resource.phone_number}}</h6>
-                      <p>{{ resource.description }}</p>
                   </div>
               </div>
           </div>

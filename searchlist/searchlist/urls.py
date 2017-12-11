@@ -10,6 +10,7 @@ from searchlist.views import (
     CreateResource,
     EditResource,
     ResourceDetailView,
+    ResultsView,
     DeleteResource
 )
 
@@ -18,7 +19,7 @@ router.register(r'resources', ResourceViewSet)
 
 urlpatterns = [
     url(r'^$', HomePageView.as_view(), name='home'),
-    url(r'^search-results/$', ResultsView.as_view(), name='search')
+    url(r'^search-results/$', ResultsView.as_view(), name='search'),
     url(r'^adminhearth/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.admin_approval.urls')),
     url(r'^resource/new/$', CreateResource.as_view(), name='create_resource'),
