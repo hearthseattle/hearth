@@ -98,5 +98,5 @@ class ResultsView(ListView):
         """Overriding to accept query params in url."""
         query = super(ResultsView, self).get_queryset()
         filtered = ResourceFilter(self.request.POST, query)
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         return filtered
