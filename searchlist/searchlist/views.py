@@ -9,7 +9,8 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView,
     ProcessFormView,
-    FormMixin
+    FormMixin,
+    FormView
 )
 from .forms import (
     ResourceForm,
@@ -64,7 +65,7 @@ class DeleteResource(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return user_created or user_is_staff
 
 
-class HomePageView(FormMixin, ListView, ProcessFormView):
+class HomePageView(FormView):
     """Class home page view."""
 
     template_name = "searchlist/home.html"
@@ -89,3 +90,9 @@ class ResourceDetailView(DetailView):
     template_name = "searchlist/resource_detail.html"
     model = Resource
     context_object_name = "resource"
+
+
+class ResultsView(ListView):
+    """View to show search results."""
+
+    template_name = "searchlist/results.html"
