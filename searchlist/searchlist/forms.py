@@ -105,12 +105,8 @@ class FilterForm(Form):
         label='Service animal'
     )
 
-    pets = forms.ChoiceField(
+    pets = forms.BooleanField(
         required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            (True, 'Yes'),
-        ],
         label='Pets'
     )
 
@@ -137,9 +133,8 @@ class FilterForm(Form):
         widget=forms.CheckboxInput(),
         label='Family')
 
-    orca_cards = forms.ChoiceField(
+    orca_cards = forms.BooleanField(
         required=False,
-        widget=forms.CheckboxInput(),
         label='Orca cards'
         )
     incarcerated = forms.ChoiceField(
