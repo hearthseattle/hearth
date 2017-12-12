@@ -97,5 +97,10 @@ class ResultsView(ListView):
     def get_queryset(self):
         """Overriding to accept query params in url."""
         query = super(ResultsView, self).get_queryset()
-        filtered = ResourceFilter(self.request.GET, query)
+        modified_query = self.request.GET.dict()
+        for key, value in modified_query.items():
+            if value == 'on':
+                modified_query[key] = True
+        # import pdb; pdb.set_trace()
+        filtered = ResourceFilter(modified_query, query)
         return filtered

@@ -59,9 +59,9 @@ class FilterForm(Form):
         required=False,
         widget=forms.RadioSelect(),
         choices=[
-            ('women', 'Male'),
-            ('men', 'Female'),
-            ('no_lgbtqia', 'LGBTQIA')
+            ('M', 'Male'),
+            ('W', 'Female'),
+            ('A', 'LGBTQIA')
         ],
         label='Gender'
     )
