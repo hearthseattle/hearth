@@ -8,8 +8,6 @@ from django.views.generic.edit import (
     CreateView,
     UpdateView,
     DeleteView,
-    ProcessFormView,
-    FormMixin,
     FormView
 )
 from .forms import (
@@ -101,6 +99,8 @@ class ResultsView(ListView):
         for key, value in modified_query.items():
             if value == 'on':
                 modified_query[key] = True
-        # import pdb; pdb.set_trace()
+        modified_query['upper_age'] = modified_query['age']
+        modified_query['lower_age'] = modified_query['age']
+        del modified_query['age']
         filtered = ResourceFilter(modified_query, query)
         return filtered

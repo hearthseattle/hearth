@@ -4,10 +4,10 @@ import django_filters
 
 class ResourceFilter(django_filters.FilterSet):
     """Filter to filter down results."""
-    upper_age = django_filters.NumberFilter(name='upper_age', lookup_expr='lte')
-    lower_age = django_filters.NumberFilter(name='lower_age', lookup_expr='gte')
-    languages__languages = django_filters.CharFilter(name='languages__languages', lookup_expr='in')
-    services__services = django_filters.CharFilter(name='services__services', lookup_expr='in')
+    upper_age = django_filters.NumberFilter(name='upper_age', lookup_expr='gte')
+    lower_age = django_filters.NumberFilter(name='lower_age', lookup_expr='lte')
+    languages__languages = django_filters.CharFilter(name='languages__languages')
+    services__services = django_filters.CharFilter(name='services__services')
 
     class Meta:
         model = Resource

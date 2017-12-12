@@ -65,12 +65,12 @@ class FilterForm(Form):
         ],
         label='Gender'
     )
-    services = forms.ChoiceField(
+    services__services = forms.ChoiceField(
         required=True,
         widget=forms.CheckboxSelectMultiple(),
         choices=zip(SERVICES, SERVICES.copy())
         )
-    languages = forms.ChoiceField(
+    languages__languages = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxSelectMultiple(),
         choices=[
@@ -87,7 +87,7 @@ class FilterForm(Form):
         label='Languages spoken'
     )
 
-    criminal_record = forms.ChoiceField(
+    accepts_criminals = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
@@ -96,7 +96,7 @@ class FilterForm(Form):
         label='Criminal Record'
     )
 
-    service_animal = forms.ChoiceField(
+    service_animals = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
@@ -110,7 +110,7 @@ class FilterForm(Form):
         label='Pets'
     )
 
-    sober = forms.ChoiceField(
+    sober_only = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
@@ -119,7 +119,7 @@ class FilterForm(Form):
         label='Sober'
     )
 
-    open_24 = forms.ChoiceField(
+    open_24_hours = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         choices=[
@@ -128,16 +128,16 @@ class FilterForm(Form):
         label='Open 24 hours'
     )
 
-    family = forms.ChoiceField(
+    family_friendly = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         label='Family')
 
-    orca_cards = forms.BooleanField(
+    orca_cards_available = forms.BooleanField(
         required=False,
         label='Orca cards'
         )
-    incarcerated = forms.ChoiceField(
+    accepts_incarcerated = forms.ChoiceField(
         required=False,
         widget=forms.CheckboxInput(),
         label='Incarcerated'
