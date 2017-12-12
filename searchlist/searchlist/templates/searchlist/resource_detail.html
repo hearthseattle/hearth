@@ -7,8 +7,36 @@
 <ul style="padding-top: 45px;padding-left: 45px;margin: 0 auto;width: 65%;">
     <p>Address: {{ resource.street }} {{ resource.city }}, {{ resource.state }} {{ resource.zip_code }}</p>
     <p>Description: {{ resource.description }}</p>
-</ul>
-
+    <p>Phone: {{ resource.phone_number }}</p>
+    <p>Services:</p>
+    <ul>
+        {% for service in services %}
+        <li>{{ service }}</li>
+        {% endfor %}
+    </ul>
+<div>
+    <p>Serves: </p>
+    {% if resource.us_citizens_only %}
+        <p>US citizens only.</p>
+    {% endif %}
+    {% if resource.sober_only %}
+        <p>Sober individuals only.</p>
+    {% endif %}
+    {% if resource.service_animals or resource.pets %}
+        <p>People who have service animals or pets.</p>
+    {% endif %}
+    {% if resource.accepts_criminals %}
+        <p>Those currently incarcerated.</p>
+    {% endif %}
+    {% if resource.family_friendly %}
+        <p>Families.</p>
+    {% endif %}
+</div>
+<div>
+    {% if resource.orca_cards_available %}
+    <p>Orca cards are available here.</p>
+    {% endif %}
+</div>
 {% if user.is_staff or resource.created_by.id == user.id %}
 <div class="row" style="margin: 0 auto;width: 225px;padding-top: 30px;">
     <div class="col-2 col-md-2">

@@ -85,6 +85,11 @@ class ResourceDetailView(DetailView):
     model = Resource
     context_object_name = "resource"
 
+    def get_context_data(self, **kwargs):
+        """Override this method in order to get services."""
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['services'] = context['resource'].services.all()
+        return context
 
 class ResultsView(ListView):
     """View to show search results."""
