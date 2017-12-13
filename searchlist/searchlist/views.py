@@ -75,6 +75,7 @@ class HomePageView(FormView):
         """Get context to populate page with resources."""
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['clear_nav_bar'] = True
+        context['resources'] = Resource.objects.all()
         return context
 
 
@@ -90,6 +91,7 @@ class ResourceDetailView(DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['services'] = context['resource'].services.all()
         return context
+
 
 class ResultsView(ListView):
     """View to show search results."""

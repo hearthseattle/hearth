@@ -68,7 +68,8 @@ class FilterForm(Form):
     services__services = forms.ChoiceField(
         required=True,
         widget=forms.CheckboxSelectMultiple(),
-        choices=zip(SERVICES, SERVICES.copy())
+        choices=zip(SERVICES, SERVICES.copy()),
+        label='Services'
         )
     languages__languages = forms.ChoiceField(
         required=False,
