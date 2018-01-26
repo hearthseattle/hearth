@@ -94,13 +94,14 @@ class Resource(models.Model):
                                    blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
-    street = models.CharField(max_length=255)
+    street = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, default='Seattle')
     state = USStateField(default='WA')
     zip_code = USZipCodeField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(blank=True, null=True)
     phone_number = PhoneNumberField()
+    fax_number = PhoneNumberField(null=True, blank=True)
     image = models.ImageField(upload_to='photos', null=True, blank=True)
     gender = models.CharField(
         max_length=255,
