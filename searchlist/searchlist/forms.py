@@ -27,9 +27,8 @@ class ResourceForm(ModelForm):
                   'zip_code', 'website', 'phone_number', 'image', 'gender',
                   'languages', 'services', 'lower_age', 'upper_age',
                   'us_citizens_only', 'sober_only', 'case_managers',
-                  'open_24_hours',
-                  'service_animals', 'pets', 'accepts_sex_offenders',
-                  'accepts_criminals', 'accepts_incarcerated',
+                  'open_24_hours', 'pets', 'accepts_sex_offender_records',
+                  'accepts_criminal_records', 'accepts_incarcerated',
                   'family_friendly', 'orca_cards_available']
         widgets = {
             'languages': forms.CheckboxSelectMultiple(),
@@ -40,7 +39,8 @@ class ResourceForm(ModelForm):
             'services': 'Select all services your organization provides.',
             'gender': 'Gender restrictions?',
             'lower_age': 'Lower age limit',
-            'upper_age': 'Upper age limit'
+            'upper_age': 'Upper age limit',
+            'pets': 'Pets allowed'
         }
 
     def clean(self):
@@ -97,18 +97,9 @@ class FilterForm(Form):
         label='Criminal Record'
     )
 
-    service_animals = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            (True, 'Yes'),
-        ],
-        label='Service animal'
-    )
-
     pets = forms.BooleanField(
         required=False,
-        label='Pets'
+        label='Pets Allowed'
     )
 
     sober_only = forms.ChoiceField(
