@@ -7,40 +7,52 @@ from django.forms import (
     Form
 )
 from .models import Resource, SERVICES
+from localflavor.us.forms import (
+    USPhoneNumberField,
+    USZipCodeField
+)
 
 
 class ResourceForm(ModelForm):
     """Form for editing and creating resources."""
 
-    states = forms.ChoiceField(
+    state = forms.ChoiceField(
         choices=[('Washington', 'Washington')],
         initial='Washington',
         disabled=True,
         label='State'
     )
 
-    website = forms.URLField(initial='http://')
+    street = forms.CharField(required=False)
+
+    zip_code = USZipCodeField(required=False)
+
+    phone_number = USPhoneNumberField(required=False)
+
+    fax_number = USPhoneNumberField(required=False)
+
+    website = forms.URLField(initial='http://', required=False)
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'street', 'city', 'states',
-                  'zip_code', 'website', 'phone_number', 'image', 'gender',
+        fields = ['name', 'description', 'street', 'city', 'state',
+                  'zip_code', 'website', 'phone_number', 'fax_number', 'email', 'image', 'gender',
                   'languages', 'services', 'lower_age', 'upper_age',
                   'us_citizens_only', 'sober_only', 'case_managers',
-                  'open_24_hours',
-                  'service_animals', 'pets', 'accepts_sex_offenders',
-                  'accepts_criminals', 'accepts_incarcerated',
+                  'open_24_hours', 'pets', 'accepts_sex_offender_records',
+                  'accepts_criminal_records', 'accepts_incarcerated',
                   'family_friendly', 'orca_cards_available']
         widgets = {
             'languages': forms.CheckboxSelectMultiple(),
             'services': forms.CheckboxSelectMultiple()
         }
         labels = {
-            'languages': 'Languages spoken other than English?',
+            'languages': 'Languages spoken:',
             'services': 'Select all services your organization provides.',
             'gender': 'Gender restrictions?',
             'lower_age': 'Lower age limit',
-            'upper_age': 'Upper age limit'
+            'upper_age': 'Upper age limit',
+            'pets': 'Pets allowed'
         }
 
     def clean(self):
@@ -97,18 +109,9 @@ class FilterForm(Form):
         label='Criminal Record'
     )
 
-    service_animals = forms.ChoiceField(
-        required=False,
-        widget=forms.CheckboxInput(),
-        choices=[
-            (True, 'Yes'),
-        ],
-        label='Service animal'
-    )
-
     pets = forms.BooleanField(
         required=False,
-        label='Pets'
+        label='Pets Allowed'
     )
 
     sober_only = forms.ChoiceField(

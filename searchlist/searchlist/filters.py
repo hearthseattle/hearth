@@ -12,6 +12,6 @@ class ResourceFilter(django_filters.FilterSet):
     class Meta:
         model = Resource
         fields = ['upper_age', 'lower_age', 'gender', 'services__services',
-                  'languages__languages', 'accepts_criminals', 'service_animals',
+                  'languages__languages', 'accepts_criminal_records',
                   'pets', 'sober_only', 'open_24_hours', 'family_friendly',
                   'orca_cards_available', 'accepts_incarcerated']
