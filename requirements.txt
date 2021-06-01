@@ -49,7 +49,7 @@ simplegeneric==0.8.1
 six==1.10.0
 static3==0.7.0
 traitlets==4.3.2
-urllib3==1.22
+urllib3==1.26.5
 wcwidth==0.1.7
 whitenoise==3.3.0
 wrapt==1.10.10
