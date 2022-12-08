@@ -4,7 +4,7 @@ Babel==2.4.0
 beautifulsoup4==4.6.0
 boto==2.48.0
 bs4==0.0.1
-certifi==2017.7.27.1
+certifi==2022.12.7
 chardet==3.0.4
 decorator==4.1.2
 dj-database-url==0.4.2
